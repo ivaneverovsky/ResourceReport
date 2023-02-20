@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -577,7 +578,7 @@ namespace ResourceReport.Data
         //collect results  
         public int CollectCounter() { return _stor.EML.Count + _stor.EMLRecord.Count + _stor.FPS.Count + _stor.IaaS.Count + _stor.VDS.Count + _stor.VDSRecord.Count; }
 
-        //result builder
+        //result builder TODO: collect changes
         public void MursCount()
         {
             List<Murs> mursList = new List<Murs>();
@@ -626,6 +627,29 @@ namespace ResourceReport.Data
                         mursList.RemoveAt(j);
                         j--;
                     }
+        }
+        public void VDSCount()
+        {
+            List<Rds> rdsList = new List<Rds>();
+
+            DateTime last30 = DateTime.Today.AddDays(-30);
+            CultureInfo.CurrentCulture = new CultureInfo("ru-RU");
+
+            foreach (var item in _stor.Rds)
+                if (item.Company.ToLower().Contains("айэмти") || item.Company.ToLower().Contains("экспертек") || item.Company.ToLower().Contains("сибинтек-софт") || item.ExtensionAttribute.ToLower().Contains("усиито") || item.ExtensionAttribute.ToLower().Contains("дитиавп"))
+                    rdsList.Add(item);
+            int k = 0;
+            for (int i = 0; i < _stor.Rds.Count; i++)
+            {
+                for (int j = 0; j < rdsList.Count; j++)
+                {
+                    if (_stor.Rds[i].SAMAccountName == rdsList[j].SAMAccountName && DateTime.Parse(rdsList[j].LastConnection) >= last30)
+                    {
+                        k++;
+                    }
+                }
+            }
+            MessageBox.Show(k.ToString());
         }
     }
 }

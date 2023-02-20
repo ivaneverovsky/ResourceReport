@@ -3,8 +3,10 @@ using Microsoft.Win32;
 using ResourceReport.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace ResourceReport.Data
@@ -285,7 +287,34 @@ namespace ResourceReport.Data
         public int Check() { return _calc.CollectCounter(); }
         public void Work()
         {
-            _calc.MursCount();
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
+
+            //Task[] tasks = new Task[4]
+            //{
+            //    new Task(() => _calc.MursCount()),
+            //    new Task(() => _calc.VDSCount()),
+            //    new Task(() => _calc.MursCount()),
+            //    new Task(() => _calc.MursCount())
+            //};
+
+            //foreach (var task in tasks)
+            //    task.Start();
+
+            //try
+            //{
+            //    Task.WaitAll(tasks);
+            //    sw.Stop();
+            //    MessageBox.Show("Обновил данные за: " + sw.Elapsed.ToString(), "Посчитал");
+            //    sw.Reset();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Ошибка");
+            //}
+
+            //_calc.MursCount();
+            _calc.VDSCount();
         }
     }
 }
