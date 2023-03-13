@@ -71,6 +71,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\FileLoader.cs" />
+    <Compile Include="Models\EML.cs" />
+    <Compile Include="Models\EMLRecord.cs" />
+    <Compile Include="Models\FPS.cs" />
+    <Compile Include="Models\IaaS.cs" />
+    <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\ReportRN.cs" />
+    <Compile Include="Models\VDS.cs" />
+    <Compile Include="Models\VDSRecord.cs" />
     <Compile Include="UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
