@@ -70,7 +70,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Data\Calculations.cs" />
     <Compile Include="Data\FileLoader.cs" />
+    <Compile Include="Data\Storage.cs" />
     <Compile Include="Models\EML.cs" />
     <Compile Include="Models\EMLRecord.cs" />
     <Compile Include="Models\FPS.cs" />
