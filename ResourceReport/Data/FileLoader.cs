@@ -30,17 +30,17 @@ namespace ResourceReport.Data
 
                             switch (tablename)
                             {
-                                //case "iaas":
-                                //    List<object> iaas = new List<object>();
-                                //    for (int j = 0; j < table.Rows.Count; j++)
-                                //    {
-                                //        List<object> rows = new List<object>();
-                                //        for (int k = 0; k < table.Columns.Count; k++)
-                                //            rows.Add(table.Rows[j][k]);
-                                //        iaas.Add(rows);
-                                //    }
-                                //    _calc.CreateIaaS(iaas);
-                                //    break;
+                                case "iaas":
+                                    List<object> iaas = new List<object>();
+                                    for (int j = 0; j < table.Rows.Count; j++)
+                                    {
+                                        List<object> rows = new List<object>();
+                                        for (int k = 0; k < table.Columns.Count; k++)
+                                            rows.Add(table.Rows[j][k]);
+                                        iaas.Add(rows);
+                                    }
+                                    _calc.CreateIaaS(iaas);
+                                    break;
                                 case "eml":
                                     List<object> eml = new List<object>();
                                     for (int j = 0; j < table.Rows.Count; j++)

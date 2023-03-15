@@ -2,7 +2,7 @@
 
 namespace ResourceReport.UI
 {
-    public partial class NewEMLWindow : Window
+    public partial class NewEMLRecordWindow : Window
     {
         public int id0 { get; set; }
         public int id1 { get; set; }
@@ -18,16 +18,8 @@ namespace ResourceReport.UI
         public int id11 { get; set; }
         public int id12 { get; set; }
         public int id13 { get; set; }
-        public int id14 { get; set; }
-        public int id15 { get; set; }
-        public int id16 { get; set; }
-        public int id17 { get; set; }
-        public int id18 { get; set; }
-        public int id19 { get; set; }
-        public int id20 { get; set; }
-        public int id21 { get; set; }
         public bool Bull { get; set; }
-        public NewEMLWindow()
+        public NewEMLRecordWindow()
         {
             InitializeComponent();
             Bull = false;
@@ -45,16 +37,7 @@ namespace ResourceReport.UI
             combo1_Copy10.SelectedIndex = 11;
             combo1_Copy11.SelectedIndex = 12;
             combo1_Copy12.SelectedIndex = 13;
-            combo1_Copy13.SelectedIndex = 14;
-            combo1_Copy14.SelectedIndex = 15;
-            combo1_Copy15.SelectedIndex = 16;
-            combo1_Copy16.SelectedIndex = 17;
-            combo1_Copy17.SelectedIndex = 18;
-            combo1_Copy18.SelectedIndex = 19;
-            combo1_Copy19.SelectedIndex = 20;
-            combo1_Copy20.SelectedIndex = 21;
         }
-
         private void ChooseColumns(object sender, RoutedEventArgs e)
         {
             id0 = combo1.SelectedIndex;
@@ -71,14 +54,6 @@ namespace ResourceReport.UI
             id11 = combo1_Copy10.SelectedIndex;
             id12 = combo1_Copy11.SelectedIndex;
             id13 = combo1_Copy12.SelectedIndex;
-            id14 = combo1_Copy13.SelectedIndex;
-            id15 = combo1_Copy14.SelectedIndex;
-            id16 = combo1_Copy15.SelectedIndex;
-            id17 = combo1_Copy16.SelectedIndex;
-            id18 = combo1_Copy17.SelectedIndex;
-            id19 = combo1_Copy18.SelectedIndex;
-            id20 = combo1_Copy19.SelectedIndex;
-            id21 = combo1_Copy20.SelectedIndex;
 
             if (id0 != -1)
                 Bull = true;

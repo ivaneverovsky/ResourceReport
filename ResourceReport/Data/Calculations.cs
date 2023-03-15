@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -64,7 +65,7 @@ namespace ResourceReport.Data
                 return;
             }
 
-            for (int i = 1; i < iaas.Count; i++)
+            for (int i = 1; i < iaas.Count - 1; i++)
             {
                 List<object> value = (List<object>)iaas[i];
 
@@ -161,7 +162,7 @@ namespace ResourceReport.Data
                 return;
             }
 
-            for (int i = 0; i < eml.Count; i++)
+            for (int i = 1; i < eml.Count - 1; i++)
             {
                 List<object> value = (List<object>)eml[i];
                 while (value.Count < 22)
@@ -209,6 +210,21 @@ namespace ResourceReport.Data
         }
         public void CreateEMLRec(List<object> eml_rec)
         {
+            string mailBoxType = "";
+            string company = "";
+            string samAccountName = "";
+            string tenant = "";
+            string department = "";
+            string occupation = "";
+            string tenantMail = "";
+            string utilizeTenant = "";
+            string utilizeBackup = "";
+            string utilizeBackupTape = "";
+            string quota = "";
+            string lastConnection = "";
+            string price = "";
+            string security = "";
+
             List<object> columns = (List<object>)eml_rec[0];
             for (int i = 0; i < columns.Count; i++)
             {
@@ -219,6 +235,57 @@ namespace ResourceReport.Data
                 }
             }
             columns.Add("(нет)");
+
+            NewEMLRecordWindow nemlrw = new NewEMLRecordWindow
+            {
+                DataContext = columns,
+                Title = "EML Record"
+            };
+            nemlrw.ShowDialog();
+
+            if (!nemlrw.Bull)
+            {
+                MessageBox.Show("Данные на листе EML Архив не были обработаны.", "Внимание");
+                return;
+            }
+
+            for (int i = 1; i < eml_rec.Count - 1; i++)
+            {
+                List<object> value = (List<object>)eml_rec[i];
+                while (value.Count < 15)
+                    value.Add("");
+
+                try
+                {
+                    mailBoxType = value[nemlrw.id0].ToString();
+                    company = value[nemlrw.id1].ToString();
+                    samAccountName = value[nemlrw.id2].ToString();
+                    tenant = value[nemlrw.id3].ToString();
+                    department = value[nemlrw.id4].ToString();
+                    occupation = value[nemlrw.id5].ToString();
+                    tenantMail = value[nemlrw.id6].ToString();
+                    utilizeTenant = value[nemlrw.id7].ToString();
+                    utilizeBackup = value[nemlrw.id8].ToString();
+                    utilizeBackupTape = value[nemlrw.id9].ToString();
+                    quota = value[nemlrw.id10].ToString();
+                    lastConnection = value[nemlrw.id11].ToString();
+                    price = value[nemlrw.id12].ToString();
+                    security = value[nemlrw.id13].ToString();
+
+                    var eml_rec_item = new EMLRecord(mailBoxType, company, samAccountName, tenant, department, occupation, tenantMail, utilizeTenant, utilizeBackup, utilizeBackupTape, quota, lastConnection, price, security);
+
+                    _stor.AddEMLRecord(eml_rec_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Невозможно создать элемент EML Архив: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+            if (_stor.EMLRecord.Count != 0)
+                MessageBox.Show("Данные EML Архив записаны.", "Внимание");
+            else
+                MessageBox.Show("Данных EML Архив не найдено.", "Внимание");
         }
         public void CreateVDS(List<object> vds)
         {
