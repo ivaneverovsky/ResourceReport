@@ -1,8 +1,13 @@
-﻿using System;
+﻿using ResourceReport.Models;
+using ResourceReport.UI;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ResourceReport.Data
 {
@@ -10,6 +15,288 @@ namespace ResourceReport.Data
     {
         Storage _stor = new Storage();
 
+        public void CreateIaaS(List<object> iaas)
+        {
+            string virtualizationPlatform = "";
+            string project = "";
+            string vmName = "";
+            string fqdn = "";
+            string ip = "";
+            string disk = "";
+            string cpu = "";
+            string ram = "";
+            string os = "";
+            string backup = "";
+            string backupTape = "";
+            string vmCreation = "";
+            string isName = "";
+            string tenant = "";
+            string owner = "";
+            string price = "";
+            string reqCreate = "";
+            string reqDelete = "";
+            string reqChange = "";
+            string avz = "";
+            string siem = "";
+            string skazi = "";
 
+            List<object> columns = (List<object>)iaas[0];
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (columns[i].ToString() == "")
+                {
+                    columns.RemoveAt(i);
+                    i--;
+                }
+            }
+            columns.Add("(нет)");
+
+            NewIaaSWindow nisw = new NewIaaSWindow
+            {
+                DataContext = columns,
+                Title = "IaaS"
+            };
+            nisw.ShowDialog();
+
+            if (!nisw.Bull)
+            {
+                MessageBox.Show("Данные на листе IaaS не были обработаны.", "Внимание");
+                return;
+            }
+
+            for (int i = 1; i < iaas.Count; i++)
+            {
+                List<object> value = (List<object>)iaas[i];
+
+                while (value.Count < 23)
+                    value.Add("");
+
+                try
+                {
+                    virtualizationPlatform = value[nisw.id0].ToString();
+                    project = value[nisw.id1].ToString();
+                    vmName = value[nisw.id2].ToString();
+                    fqdn = value[nisw.id3].ToString();
+                    ip = value[nisw.id4].ToString();
+                    disk = value[nisw.id5].ToString();
+                    cpu = value[nisw.id6].ToString();
+                    ram = value[nisw.id7].ToString();
+                    os = value[nisw.id8].ToString();
+                    backup = value[nisw.id9].ToString();
+                    backupTape = value[nisw.id10].ToString();
+                    vmCreation = value[nisw.id11].ToString();
+                    isName = value[nisw.id12].ToString();
+                    tenant = value[nisw.id13].ToString();
+                    owner = value[nisw.id14].ToString();
+                    price = value[nisw.id15].ToString();
+                    reqCreate = value[nisw.id16].ToString();
+                    reqDelete = value[nisw.id17].ToString();
+                    reqChange = value[nisw.id18].ToString();
+                    avz = value[nisw.id19].ToString();
+                    siem = value[nisw.id20].ToString();
+                    skazi = value[nisw.id21].ToString();
+
+                    var iaasItem = new IaaS(virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi);
+
+                    _stor.AddIaaS(iaasItem);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Невозможно создать элемент IaaS: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+            if (_stor.IaaS.Count != 0)
+                MessageBox.Show("Данные IaaS записаны.", "Внимание");
+            else
+                MessageBox.Show("Данных IaaS не найдено.", "Внимание");
+        }
+
+        public void CreateEML(List<object> eml) 
+        {
+            string mailBoxType = "";
+            string company = "";
+            string samAccountName = "";
+            string tenant = "";
+            string department = "";
+            string occupation = "";
+            string owner = "";
+            string ownerMail = "";
+            string tenantMail = "";
+            string utilizeTenant = "";
+            string utilizeBackup = "";
+            string utilizeBackupTape = "";
+            string quota = "";
+            string creationDate = "";
+            string lastConnection = "";
+            string vmValidity = "";
+            string description = "";
+            string reason = "";
+            string price = "";
+            string accountStatus = "";
+            string extensionAttribute = "";
+            string security = "";
+
+            List<object> columns = (List<object>)eml[0];
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (columns[i].ToString() == "")
+                {
+                    columns.RemoveAt(i);
+                    i--;
+                }
+            }
+            columns.Add("(нет)");
+
+            NewEMLWindow nemlw = new NewEMLWindow
+            {
+                DataContext = columns,
+                Title = "EML"
+            };
+            nemlw.ShowDialog();
+
+            if (!nemlw.Bull)
+            {
+                MessageBox.Show("Данные на листе EML не были обработаны.", "Внимание");
+                return;
+            }
+
+            for (int i = 0; i < eml.Count; i++)
+            {
+                List<object> value = (List<object>)eml[i];
+                while (value.Count < 22)
+                    value.Add("");
+
+                try
+                {
+                    mailBoxType = value[nemlw.id0].ToString();
+                    company = value[nemlw.id1].ToString();
+                    samAccountName = value[nemlw.id2].ToString();
+                    tenant = value[nemlw.id3].ToString();
+                    department = value[nemlw.id4].ToString();
+                    occupation = value[nemlw.id5].ToString();
+                    owner = value[nemlw.id6].ToString();
+                    ownerMail = value[nemlw.id7].ToString();
+                    tenantMail = value[nemlw.id8].ToString();
+                    utilizeTenant = value[nemlw.id9].ToString();
+                    utilizeBackup = value[nemlw.id10].ToString();
+                    utilizeBackupTape = value[nemlw.id11].ToString();
+                    quota = value[nemlw.id12].ToString();
+                    creationDate = value[nemlw.id13].ToString();
+                    lastConnection = value[nemlw.id14].ToString();
+                    vmValidity = value[nemlw.id15].ToString();
+                    description = value[nemlw.id16].ToString();
+                    reason = value[nemlw.id17].ToString();
+                    price = value[nemlw.id18].ToString();
+                    accountStatus = value[nemlw.id19].ToString();
+                    extensionAttribute = value[nemlw.id20].ToString();
+                    security = value[nemlw.id21].ToString();
+
+                    var eml_item = new EML(mailBoxType, company, samAccountName, tenant, department, occupation, owner, ownerMail, tenantMail, utilizeTenant, utilizeBackup, utilizeBackupTape, quota, creationDate, lastConnection, vmValidity, description, reason, price, accountStatus, extensionAttribute, security);
+
+                    _stor.AddEML(eml_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Невозможно создать элемент EML: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+            if (_stor.EML.Count != 0)
+                MessageBox.Show("Данные EML записаны.", "Внимание");
+            else
+                MessageBox.Show("Данных EML не найдено.", "Внимание");
+        }
+        public void CreateEMLRec(List<object> eml_rec)
+        {
+            List<object> columns = (List<object>)eml_rec[0];
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (columns[i].ToString() == "")
+                {
+                    columns.RemoveAt(i);
+                    i--;
+                }
+            }
+            columns.Add("(нет)");
+        }
+        public void CreateVDS(List<object> vds)
+        {
+            List<object> columns = (List<object>)vds[0];
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (columns[i].ToString() == "")
+                {
+                    columns.RemoveAt(i);
+                    i--;
+                }
+            }
+            columns.Add("(нет)");
+        }
+        public void CreateVDSRec(List<object> vds_rec)
+        {
+            List<object> columns = (List<object>)vds_rec[0];
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (columns[i].ToString() == "")
+                {
+                    columns.RemoveAt(i);
+                    i--;
+                }
+            }
+            columns.Add("(нет)");
+        }
+        public void CreateFPS(List<object> fps)
+        {
+            List<object> columns = (List<object>)fps[0];
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (columns[i].ToString() == "")
+                {
+                    columns.RemoveAt(i);
+                    i--;
+                }
+            }
+            columns.Add("(нет)");
+        }
+        public void CreateTKSS(List<object> tkss)
+        {
+            List<object> columns = (List<object>)tkss[0];
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (columns[i].ToString() == "")
+                {
+                    columns.RemoveAt(i);
+                    i--;
+                }
+            }
+            columns.Add("(нет)");
+        }
+        public void CreateReport(List<object> report)
+        {
+            List<object> columns = (List<object>)report[0];
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (columns[i].ToString() == "")
+                {
+                    columns.RemoveAt(i);
+                    i--;
+                }
+            }
+            columns.Add("(нет)");
+        }
+        public void CreateReportRN(List<object> reportRN)
+        {
+            List<object> columns = (List<object>)reportRN[0];
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (columns[i].ToString() == "")
+                {
+                    columns.RemoveAt(i);
+                    i--;
+                }
+            }
+            columns.Add("(нет)");
+        }
     }
 }

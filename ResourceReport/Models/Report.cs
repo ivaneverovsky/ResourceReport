@@ -2,18 +2,18 @@
 {
     internal class Report
     {
-        public double Number { get; set; }
+        public string Number { get; set; }
         public string Service { get; set; }
         public string Unit { get; set; }
-        public double Quantity { get; set; }
-        public int ServiceDeliveryTime { get; set; }
-        public int ServiceDownTime { get; set; }
-        public double ServiceAvailability { get; set; }
-        public double PricePerUnit { get; set; }
-        public double PriceSum { get; set; }
-        public double VAT { get; set; }
-        public double VATSum { get; set; }
-        public Report(double number, string service, string unit, double quantity, int serviceDeliveryTime, int serviceDownTime, double serviceAvailability, double pricePerUnit, double priceSum, double vAT, double vATSum)
+        public string Quantity { get; set; }
+        public string ServiceDeliveryTime { get; set; }
+        public string ServiceDownTime { get; set; }
+        public string ServiceAvailability { get; set; }
+        public string PricePerUnit { get; set; }
+        public string PriceSum { get; set; }
+        public string VAT { get; set; }
+        public string VATSum { get; set; }
+        public Report(string number, string service, string unit, string quantity, string serviceDeliveryTime, string serviceDownTime, string serviceAvailability, string pricePerUnit, string priceSum, string vAT, string vATSum)
         {
             Number = number;
             Service = service;

@@ -11,14 +11,14 @@ namespace ResourceReport.Models
         public string Department { get; set; }
         public string Occupation { get; set; }
         public string TenantMail { get; set; }
-        public double UtilizeTenant { get; set; }
-        public double UtilizeBackup { get; set; }
-        public double UtilizeBackupTape { get; set; }
-        public int Quota { get; set; }
-        public DateTime LastConnection { get; set; }
-        public double Price { get; set; }
-        public bool Security { get; set; }
-        public EMLRecord(string mailBoxType, string company, string sAMAccountName, string tenant, string department, string occupation, string tenantMail, double utilizeTenant, double utilizeBackup, double utilizeBackupTape, int quota, DateTime lastConnection, double price, bool security)
+        public string UtilizeTenant { get; set; }
+        public string UtilizeBackup { get; set; }
+        public string UtilizeBackupTape { get; set; }
+        public string Quota { get; set; }
+        public string LastConnection { get; set; }
+        public string Price { get; set; }
+        public string Security { get; set; }
+        public EMLRecord(string mailBoxType, string company, string sAMAccountName, string tenant, string department, string occupation, string tenantMail, string utilizeTenant, string utilizeBackup, string utilizeBackupTape, string quota, string lastConnection, string price, string security)
         {
             MailBoxType = mailBoxType;
             Company = company;

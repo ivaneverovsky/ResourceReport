@@ -13,19 +13,20 @@ namespace ResourceReport.Models
         public string Owner { get; set; }
         public string OwnerMail { get; set; }
         public string TenantMail { get; set; }
-        public double UtilizeTenant { get; set; }
-        public double UtilizeBackup { get; set; }
-        public double UtilizeBackupTape { get; set; }
-        public int Quota { get; set; }
-        public DateTime CreationDate { get; set; }
-        public DateTime LastConnection { get; set; }
-        public DateTime VMValidity { get; set; }
+        public string UtilizeTenant { get; set; }
+        public string UtilizeBackup { get; set; }
+        public string UtilizeBackupTape { get; set; }
+        public string Quota { get; set; }
+        public string CreationDate { get; set; }
+        public string LastConnection { get; set; }
+        public string VMValidity { get; set; }
         public string Description { get; set; }
         public string Reason { get; set; }
-        public double Price { get; set; }
-        public bool AccountStatus { get; set; }
-        public bool Security { get; set; }
-        public EML(string mailBoxType, string company, string sAMAccountName, string tenant, string department, string occupation, string owner, string ownerMail, string tenantMail, double utilizeTenant, double utilizeBackup, double utilizeBackupTape, int quota, DateTime creationDate, DateTime lastConnection, DateTime vMValidity, string description, string reason, double price, bool accountStatus, bool security)
+        public string Price { get; set; }
+        public string AccountStatus { get; set; }
+        public string ExtensionAttribute { get; set; }
+        public string Security { get; set; }
+        public EML(string mailBoxType, string company, string sAMAccountName, string tenant, string department, string occupation, string owner, string ownerMail, string tenantMail, string utilizeTenant, string utilizeBackup, string utilizeBackupTape, string quota, string creationDate, string lastConnection, string vMValidity, string description, string reason, string price, string accountStatus, string extensionAttribute, string security)
         {
             MailBoxType = mailBoxType;
             Company = company;
@@ -47,6 +48,7 @@ namespace ResourceReport.Models
             Reason = reason;
             Price = price;
             AccountStatus = accountStatus;
+            ExtensionAttribute = extensionAttribute;
             Security = security;
         }
     }

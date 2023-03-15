@@ -9,11 +9,11 @@ namespace ResourceReport.Models
         public string Tenant { get; set; }
         public string Department { get; set; }
         public string Occupation { get; set; }
-        public double ProfileCapacity { get; set; }
-        public double UtilizeBackup { get; set; }
-        public DateTime LastConnection { get; set; }
-        public double Price { get; set; }
-        public VDSRecord(string sAMAccountName, string company, string tenant, string department, string occupation, double profileCapacity, double utilizeBackup, DateTime lastConnection, double price)
+        public string ProfileCapacity { get; set; }
+        public string UtilizeBackup { get; set; }
+        public string LastConnection { get; set; }
+        public string Price { get; set; }
+        public VDSRecord(string sAMAccountName, string company, string tenant, string department, string occupation, string profileCapacity, string utilizeBackup, string lastConnection, string price)
         {
             SAMAccountName = sAMAccountName;
             Company = company;

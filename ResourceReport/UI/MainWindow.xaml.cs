@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using ResourceReport.Data;
+using ResourceReport.UI;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -9,20 +10,16 @@ namespace ResourceReport
     {
         FileLoader _fl = new FileLoader();
 
-        List<object> fileRows = new List<object>(); //store data from file
-
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void LoadFile(object sender, RoutedEventArgs e) //load file
+        private void LoadFile(object sender, RoutedEventArgs e)
         {
-            fileRows.Clear(); //clear file dictionary first
-
             OpenFileDialog ofd = new OpenFileDialog
             {
-                Filter = "Excel files (*.xlsx)|*.xlsx"
+                Filter = "Excel files|*.xlsx;*.xlsb;*.xls|All files (*.*)|*.*"
             };
             ofd.ShowDialog();
 
@@ -32,7 +29,7 @@ namespace ResourceReport
                 return;
             }
 
-            fileRows = _fl.LoadFile(ofd);
+            _fl.LoadFile(ofd);
         }
     }
 }

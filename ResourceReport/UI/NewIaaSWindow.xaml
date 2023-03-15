@@ -1,0 +1,120 @@
+﻿<Window x:Class="ResourceReport.UI.NewIaaSWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ResourceReport.UI"
+        mc:Ignorable="d"
+        Title="NewIaaSWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="5,5,5,10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="CornflowerBlue"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="ListView">
+            <Setter Property="Background" Value="#eaeaea"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Width" Value="Auto"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#959595" ShowGridLines="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="200*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <ComboBox Name="combo1" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,15,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Платформа виртуализации:" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,45,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Проект:" HorizontalAlignment="Left" Margin="10,40,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy1" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,75,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Имя ВМ:" HorizontalAlignment="Left" Margin="10,70,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy2" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,105,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="FQDN:" HorizontalAlignment="Left" Margin="10,100,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy3" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,135,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="IP:" HorizontalAlignment="Left" Margin="10,130,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy4" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,165,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Disk, ГБ:" HorizontalAlignment="Left" Margin="10,160,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy5" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,195,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="vCPU, шт. :" HorizontalAlignment="Left" Margin="10,190,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy6" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,225,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Memory, ГБ:" HorizontalAlignment="Left" Margin="10,220,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy7" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,255,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="ОС:" HorizontalAlignment="Left" Margin="10,250,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy8" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,285,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Backup, ГБ:" HorizontalAlignment="Left" Margin="10,280,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy9" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,315,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Backup Tape, ГБ:" HorizontalAlignment="Left" Margin="10,310,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy10" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="219,345,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Дата создания ВМ:" HorizontalAlignment="Left" Margin="10,340,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy11" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="632,15,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Наименование ИС:" HorizontalAlignment="Left" Margin="381,10,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy12" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="632,45,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Владелец, ФИО:" HorizontalAlignment="Left" Margin="381,40,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy13" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="632,75,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Ответственный за ресурс, ФИО:" HorizontalAlignment="Left" Margin="381,70,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy14" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="632,105,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Стоимость, без НДС:" HorizontalAlignment="Left" Margin="381,100,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy15" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="632,135,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Обращение/создание:" HorizontalAlignment="Left" Margin="381,130,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy16" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="632,165,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Обращение/удаление:" HorizontalAlignment="Left" Margin="381,160,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy17" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="632,195,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="Обращение/изменение:" HorizontalAlignment="Left" Margin="381,190,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy18" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="632,225,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="АВЗ:" HorizontalAlignment="Left" Margin="381,220,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy19" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="632,255,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="SIEM:" HorizontalAlignment="Left" Margin="381,250,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ComboBox x:Name="combo1_Copy20" Grid.Column="1" ItemsSource="{Binding}" HorizontalAlignment="Left" Margin="632,285,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+        <Label Grid.Column="1" Content="SKAZI:" HorizontalAlignment="Left" Margin="381,280,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Button Grid.Column="1" Content="Готово" Click="ChooseColumns" HorizontalAlignment="Left" Margin="672,346,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

@@ -9,25 +9,25 @@ namespace ResourceReport.Models
         public string VMName { get; set; }
         public string FQDN { get; set; }
         public string IP { get; set; }
-        public double Disk { get; set; }
-        public int CPU { get; set; }
-        public int RAM { get; set; }
+        public string Disk { get; set; }
+        public string CPU { get; set; }
+        public string RAM { get; set; }
         public string OS { get; set; }
-        public double Backup { get; set; }
-        public double BackupTape { get; set; }
-        public DateTime VMCreation { get; set; }
+        public string Backup { get; set; }
+        public string BackupTape { get; set; }
+        public string VMCreation { get; set; }
         public string ISName { get; set; }
         public string Tenant { get; set; }
         public string Owner { get; set; }
-        public double Price { get; set; }
+        public string Price { get; set; }
         public string ReqCreate { get; set; }
         public string ReqDelete { get; set; }
         public string ReqChange { get; set; }
-        public bool AVZ { get; set; }
-        public bool SIEM { get; set; }
-        public bool SKAZI { get; set; }
+        public string AVZ { get; set; }
+        public string SIEM { get; set; }
+        public string SKAZI { get; set; }
 
-        public IaaS(string virtualizationPlatform, string project, string vMName, string fQDN, string iP, double disk, int cPU, int rAM, string oS, double backup, double backupTape, DateTime vMCreation, string iSName, string tenant, string owner, double price, string reqCreate, string reqDelete, string reqChange, bool aVZ, bool sIEM, bool sKAZI)
+        public IaaS(string virtualizationPlatform, string project, string vMName, string fQDN, string iP, string disk, string cPU, string rAM, string oS, string backup, string backupTape, string vMCreation, string iSName, string tenant, string owner, string price, string reqCreate, string reqDelete, string reqChange, string aVZ, string sIEM, string sKAZI)
         {
             VirtualizationPlatform = virtualizationPlatform;
             Project = project;
