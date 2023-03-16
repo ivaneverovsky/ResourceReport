@@ -113,7 +113,6 @@ namespace ResourceReport.Data
             else
                 MessageBox.Show("Данных IaaS не найдено.", "Внимание");
         }
-
         public void CreateEML(List<object> eml) 
         {
             string mailBoxType = "";
@@ -454,6 +453,12 @@ namespace ResourceReport.Data
             };
             nfpsw.ShowDialog();
 
+            if (!nfpsw.Bull)
+            {
+                MessageBox.Show("Данные на листе FPS не были обработаны.", "Внимание");
+                return;
+            }
+
             for (int i = 1; i < fps.Count - 1; i++)
             {
                 List<object> value = (List<object>)fps[i];
@@ -483,31 +488,13 @@ namespace ResourceReport.Data
             else
                 MessageBox.Show("Данных FPS не найдено.", "Внимание");
         }
-        public void CreateReport(List<object> report)
+        public void CreateReport()
         {
-            List<object> columns = (List<object>)report[0];
-            for (int i = 0; i < columns.Count; i++)
-            {
-                if (columns[i].ToString() == "")
-                {
-                    columns.RemoveAt(i);
-                    i--;
-                }
-            }
-            columns.Add("(нет)");
+            
         }
-        public void CreateReportRN(List<object> reportRN)
+        public void CreateReportRN()
         {
-            List<object> columns = (List<object>)reportRN[0];
-            for (int i = 0; i < columns.Count; i++)
-            {
-                if (columns[i].ToString() == "")
-                {
-                    columns.RemoveAt(i);
-                    i--;
-                }
-            }
-            columns.Add("(нет)");
+           
         }
     }
 }

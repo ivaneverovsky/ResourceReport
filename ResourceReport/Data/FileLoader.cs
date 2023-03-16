@@ -30,104 +30,71 @@ namespace ResourceReport.Data
 
                             switch (tablename)
                             {
-                                //case "iaas":
-                                //    List<object> iaas = new List<object>();
-                                //    for (int j = 0; j < table.Rows.Count; j++)
-                                //    {
-                                //        List<object> rows = new List<object>();
-                                //        for (int k = 0; k < table.Columns.Count; k++)
-                                //            rows.Add(table.Rows[j][k]);
-                                //        iaas.Add(rows);
-                                //    }
-                                //    _calc.CreateIaaS(iaas);
-                                //    break;
-                                //case "eml":
-                                //    List<object> eml = new List<object>();
-                                //    for (int j = 0; j < table.Rows.Count; j++)
-                                //    {
-                                //        List<object> rows = new List<object>();
-                                //        for (int k = 0; k < table.Columns.Count; k++)
-                                //            rows.Add(table.Rows[j][k]);
-                                //        eml.Add(rows);
-                                //    }
-                                //    _calc.CreateEML(eml);
-                                //    break;
-                                //case "eml архив":
-                                //    List<object> eml_rec = new List<object>();
-                                //    for (int j = 0; j < table.Rows.Count; j++)
-                                //    {
-                                //        List<object> rows = new List<object>();
-                                //        for (int k = 0; k < table.Columns.Count; k++)
-                                //            rows.Add(table.Rows[j][k]);
-                                //        eml_rec.Add(rows);
-                                //    }
-                                //    _calc.CreateEMLRec(eml_rec);
-                                //    break;
-                                //case "vds":
-                                //    List<object> vds = new List<object>();
-                                //    for (int j = 0; j < table.Rows.Count; j++)
-                                //    {
-                                //        List<object> rows = new List<object>();
-                                //        for (int k = 0; k < table.Columns.Count; k++)
-                                //            rows.Add(table.Rows[j][k]);
-                                //        vds.Add(rows);
-                                //    }
-                                //    _calc.CreateVDS(vds);
-                                //    break;
-                                //case "vds архив":
-                                //    List<object> vds_rec = new List<object>();
-                                //    for (int j = 0; j < table.Rows.Count; j++)
-                                //    {
-                                //        List<object> rows = new List<object>();
-                                //        for (int k = 0; k < table.Columns.Count; k++)
-                                //            rows.Add(table.Rows[j][k]);
-                                //        vds_rec.Add(rows);
-                                //    }
-                                //    _calc.CreateVDSRec(vds_rec);
-                                //    break;
-                                //case "fps":
-                                //    List<object> fps = new List<object>();
-                                //    for (int j = 0; j < table.Rows.Count; j++)
-                                //    {
-                                //        List<object> rows = new List<object>();
-                                //        for (int k = 0; k < table.Columns.Count; k++)
-                                //            rows.Add(table.Rows[j][k]);
-                                //        fps.Add(rows);
-                                //    }
-                                //    _calc.CreateFPS(fps);
-                                //    break;
-                                case "отчет":
-                                    List<object> report = new List<object>();
+                                case "iaas":
+                                    List<object> iaas = new List<object>();
                                     for (int j = 0; j < table.Rows.Count; j++)
                                     {
                                         List<object> rows = new List<object>();
                                         for (int k = 0; k < table.Columns.Count; k++)
                                             rows.Add(table.Rows[j][k]);
-                                        report.Add(rows);
+                                        iaas.Add(rows);
                                     }
-                                    _calc.CreateReport(report);
+                                    _calc.CreateIaaS(iaas);
                                     break;
-                                case "для рну":
-                                    List<object> reportRN = new List<object>();
+                                case "eml":
+                                    List<object> eml = new List<object>();
                                     for (int j = 0; j < table.Rows.Count; j++)
                                     {
                                         List<object> rows = new List<object>();
                                         for (int k = 0; k < table.Columns.Count; k++)
                                             rows.Add(table.Rows[j][k]);
-                                        reportRN.Add(rows);
+                                        eml.Add(rows);
                                     }
-                                    _calc.CreateReportRN(reportRN);
+                                    _calc.CreateEML(eml);
                                     break;
-                                case "рн учет":
-                                    List<object> reportRN1 = new List<object>();
+                                case "eml архив":
+                                    List<object> eml_rec = new List<object>();
                                     for (int j = 0; j < table.Rows.Count; j++)
                                     {
                                         List<object> rows = new List<object>();
                                         for (int k = 0; k < table.Columns.Count; k++)
                                             rows.Add(table.Rows[j][k]);
-                                        reportRN1.Add(rows);
+                                        eml_rec.Add(rows);
                                     }
-                                    _calc.CreateReportRN(reportRN1);
+                                    _calc.CreateEMLRec(eml_rec);
+                                    break;
+                                case "vds":
+                                    List<object> vds = new List<object>();
+                                    for (int j = 0; j < table.Rows.Count; j++)
+                                    {
+                                        List<object> rows = new List<object>();
+                                        for (int k = 0; k < table.Columns.Count; k++)
+                                            rows.Add(table.Rows[j][k]);
+                                        vds.Add(rows);
+                                    }
+                                    _calc.CreateVDS(vds);
+                                    break;
+                                case "vds архив":
+                                    List<object> vds_rec = new List<object>();
+                                    for (int j = 0; j < table.Rows.Count; j++)
+                                    {
+                                        List<object> rows = new List<object>();
+                                        for (int k = 0; k < table.Columns.Count; k++)
+                                            rows.Add(table.Rows[j][k]);
+                                        vds_rec.Add(rows);
+                                    }
+                                    _calc.CreateVDSRec(vds_rec);
+                                    break;
+                                case "fps":
+                                    List<object> fps = new List<object>();
+                                    for (int j = 0; j < table.Rows.Count; j++)
+                                    {
+                                        List<object> rows = new List<object>();
+                                        for (int k = 0; k < table.Columns.Count; k++)
+                                            rows.Add(table.Rows[j][k]);
+                                        fps.Add(rows);
+                                    }
+                                    _calc.CreateFPS(fps);
                                     break;
                                 default:
                                     break;
