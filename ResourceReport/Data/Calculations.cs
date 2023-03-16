@@ -430,6 +430,12 @@ namespace ResourceReport.Data
         }
         public void CreateFPS(List<object> fps)
         {
+            string volume = "";
+            string volumeCapacity = "";
+            string freeSapce = "";
+            string backup = "";
+            string sharingFolder = "";
+
             List<object> columns = (List<object>)fps[0];
             for (int i = 0; i < columns.Count; i++)
             {
@@ -440,19 +446,42 @@ namespace ResourceReport.Data
                 }
             }
             columns.Add("(нет)");
-        }
-        public void CreateTKSS(List<object> tkss)
-        {
-            List<object> columns = (List<object>)tkss[0];
-            for (int i = 0; i < columns.Count; i++)
+
+            NewFPSWindow nfpsw = new NewFPSWindow
             {
-                if (columns[i].ToString() == "")
+                DataContext = columns,
+                Title = "FPS"
+            };
+            nfpsw.ShowDialog();
+
+            for (int i = 1; i < fps.Count - 1; i++)
+            {
+                List<object> value = (List<object>)fps[i];
+                while (value.Count < 5)
+                    value.Add("");
+
+                try
                 {
-                    columns.RemoveAt(i);
-                    i--;
+                    volume = value[nfpsw.id0].ToString();
+                    volumeCapacity = value[nfpsw.id1].ToString();
+                    freeSapce = value[nfpsw.id2].ToString();
+                    backup = value[nfpsw.id3].ToString();
+                    sharingFolder = value[nfpsw.id4].ToString();
+
+                    var fps_item = new FPS(volume, volumeCapacity, freeSapce, backup, sharingFolder);
+
+                    _stor.AddFPS(fps_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Невозможно создать элемент FPS: " + ex.Message, "Ошибка");
+                    return;
                 }
             }
-            columns.Add("(нет)");
+            if (_stor.FPS.Count != 0)
+                MessageBox.Show("Данные FPS записаны.", "Внимание");
+            else
+                MessageBox.Show("Данных FPS не найдено.", "Внимание");
         }
         public void CreateReport(List<object> report)
         {

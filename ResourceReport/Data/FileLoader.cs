@@ -85,28 +85,17 @@ namespace ResourceReport.Data
                                 //    }
                                 //    _calc.CreateVDSRec(vds_rec);
                                 //    break;
-                                case "fps":
-                                    List<object> fps = new List<object>();
-                                    for (int j = 0; j < table.Rows.Count; j++)
-                                    {
-                                        List<object> rows = new List<object>();
-                                        for (int k = 0; k < table.Columns.Count; k++)
-                                            rows.Add(table.Rows[j][k]);
-                                        fps.Add(rows);
-                                    }
-                                    _calc.CreateFPS(fps);
-                                    break;
-                                case "работы по тксс":
-                                    List<object> tkss = new List<object>();
-                                    for (int j = 0; j < table.Rows.Count; j++)
-                                    {
-                                        List<object> rows = new List<object>();
-                                        for (int k = 0; k < table.Columns.Count; k++)
-                                            rows.Add(table.Rows[j][k]);
-                                        tkss.Add(rows);
-                                    }
-                                    _calc.CreateTKSS(tkss);
-                                    break;
+                                //case "fps":
+                                //    List<object> fps = new List<object>();
+                                //    for (int j = 0; j < table.Rows.Count; j++)
+                                //    {
+                                //        List<object> rows = new List<object>();
+                                //        for (int k = 0; k < table.Columns.Count; k++)
+                                //            rows.Add(table.Rows[j][k]);
+                                //        fps.Add(rows);
+                                //    }
+                                //    _calc.CreateFPS(fps);
+                                //    break;
                                 case "отчет":
                                     List<object> report = new List<object>();
                                     for (int j = 0; j < table.Rows.Count; j++)
