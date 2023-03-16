@@ -3,6 +3,7 @@ using ResourceReport.UI;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -289,6 +290,17 @@ namespace ResourceReport.Data
         }
         public void CreateVDS(List<object> vds)
         {
+            string samAccountName = "";
+            string company = "";
+            string tenant = "";
+            string department = "";
+            string occupation = "";
+            string profileCapacity = "";
+            string utilizeBackup = "";
+            string lastConnection = "";
+            string price = "";
+            string extensionAttribute = "";
+
             List<object> columns = (List<object>)vds[0];
             for (int i = 0; i < columns.Count; i++)
             {
@@ -299,9 +311,66 @@ namespace ResourceReport.Data
                 }
             }
             columns.Add("(нет)");
+
+            NewVDSWindow nvdsw = new NewVDSWindow
+            {
+                DataContext = columns,
+                Title = "VDS"
+            };
+            nvdsw.ShowDialog();
+
+            if (!nvdsw.Bull)
+            {
+                MessageBox.Show("Данные на листе VDS не были обработаны.", "Внимание");
+                return;
+            }
+
+            for (int i = 1; i < vds.Count - 1; i++)
+            {
+                List<object> value = (List<object>)vds[i];
+                while (value.Count < 10)
+                    value.Add("");
+
+                try
+                {
+                    samAccountName = value[nvdsw.id0].ToString();
+                    company = value[nvdsw.id1].ToString();
+                    tenant = value[nvdsw.id2].ToString();
+                    department = value[nvdsw.id3].ToString();
+                    occupation = value[nvdsw.id4].ToString();
+                    profileCapacity = value[nvdsw.id5].ToString();
+                    utilizeBackup = value[nvdsw.id6].ToString();
+                    lastConnection = value[nvdsw.id7].ToString();
+                    price = value[nvdsw.id8].ToString();
+                    extensionAttribute = value[nvdsw.id9].ToString();
+
+                    var vds_item = new VDS(samAccountName, company, tenant, department, occupation, profileCapacity, utilizeBackup, lastConnection, price, extensionAttribute);
+
+                    _stor.AddVDS(vds_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Невозможно создать элемент VDS: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+            if (_stor.VDS.Count != 0)
+                MessageBox.Show("Данные VDS записаны.", "Внимание");
+            else
+                MessageBox.Show("Данных VDS не найдено.", "Внимание");
         }
         public void CreateVDSRec(List<object> vds_rec)
         {
+            string samAccountName = "";
+            string company = "";
+            string tenant = "";
+            string department = "";
+            string occupation = "";
+            string profileCapacity = "";
+            string utilizeBackup = "";
+            string lastConnection = "";
+            string price = "";
+
             List<object> columns = (List<object>)vds_rec[0];
             for (int i = 0; i < columns.Count; i++)
             {
@@ -312,6 +381,52 @@ namespace ResourceReport.Data
                 }
             }
             columns.Add("(нет)");
+
+            NewVDSRecordWindow nvdsrw = new NewVDSRecordWindow
+            {
+                DataContext = columns,
+                Title = "VDS Record"
+            };
+            nvdsrw.ShowDialog();
+
+            if (!nvdsrw.Bull)
+            {
+                MessageBox.Show("Данные на листе VDS Архив не были обработаны.", "Внимание");
+                return;
+            }
+
+            for (int i = 1; i < vds_rec.Count - 1; i++)
+            {
+                List<object> value = (List<object>)vds_rec[i];
+                while (value.Count < 9)
+                    value.Add("");
+
+                try
+                {
+                    samAccountName = value[nvdsrw.id0].ToString();
+                    company = value[nvdsrw.id1].ToString();
+                    tenant = value[nvdsrw.id2].ToString();
+                    department = value[nvdsrw.id3].ToString();
+                    occupation = value[nvdsrw.id4].ToString();
+                    profileCapacity = value[nvdsrw.id5].ToString();
+                    utilizeBackup = value[nvdsrw.id6].ToString();
+                    lastConnection = value[nvdsrw.id7].ToString();
+                    price = value[nvdsrw.id8].ToString();
+
+                    var vds_rec_item = new VDSRecord(samAccountName, company, tenant, department, occupation, profileCapacity, utilizeBackup, lastConnection, price);
+
+                    _stor.AddVDSRecord(vds_rec_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Невозможно создать элемент VDS Архив: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+            if (_stor.VDSRecord.Count != 0)
+                MessageBox.Show("Данные VDS Архив записаны.", "Внимание");
+            else
+                MessageBox.Show("Данных VDS Архив не найдено.", "Внимание");
         }
         public void CreateFPS(List<object> fps)
         {

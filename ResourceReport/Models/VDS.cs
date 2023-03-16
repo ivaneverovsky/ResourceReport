@@ -13,7 +13,8 @@ namespace ResourceReport.Models
         public string UtilizeBackup { get; set; }
         public string LastConnection { get; set; }
         public string Price { get; set; }
-        public VDS(string sAMAccountName, string company, string tenant, string department, string occupation, string profileCapacity, string utilizeBackup, string lastConnection, string price)
+        public string ExtensionAttribute { get; set; }
+        public VDS(string sAMAccountName, string company, string tenant, string department, string occupation, string profileCapacity, string utilizeBackup, string lastConnection, string price, string extensionAttribute)
         {
             SAMAccountName = sAMAccountName;
             Company = company;
@@ -24,6 +25,7 @@ namespace ResourceReport.Models
             UtilizeBackup = utilizeBackup;
             LastConnection = lastConnection;
             Price = price;
+            ExtensionAttribute = extensionAttribute;
         }
     }
 }
