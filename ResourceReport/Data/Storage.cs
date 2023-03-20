@@ -1,10 +1,12 @@
 ﻿using ResourceReport.Models;
+using ResourceReport.ModelsUpload;
 using System.Collections.Generic;
 
 namespace ResourceReport.Data
 {
     internal class Storage
     {
+        //Reports
         private List<IaaS> _iaas = new List<IaaS>();
         public List<IaaS> IaaS { get { return _iaas; } }
         public void AddIaaS(IaaS iaas)
@@ -59,6 +61,14 @@ namespace ResourceReport.Data
         public void AddReportRN(ReportRN reportRN)
         {
             _reportrn.Add(reportRN);
+        }
+
+        //upload's reports
+        private List<Murs> _murs = new List<Murs>();
+        public List<Murs> Murs { get { return _murs; } }
+        public void AddMURS(Murs murs)
+        {
+            _murs.Add(murs);
         }
     }
 }

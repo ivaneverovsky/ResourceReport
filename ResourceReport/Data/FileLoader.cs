@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Messaging;
 using System.Windows;
 
 namespace ResourceReport.Data
@@ -116,7 +117,31 @@ namespace ResourceReport.Data
             {
                 if (Path.GetExtension(item) == ".csv")
                 {
-                    MessageBox.Show(".csv");
+                    using (var stream = File.Open(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    {
+                        try
+                        {
+                            using (var readerCSV = ExcelReaderFactory.CreateCsvReader(stream))
+                            {
+                                var result = readerCSV.AsDataSet();
+                                var table = result.Tables[0];
+                                List<object> murs = new List<object>();
+                                for (int i = 0; i < table.Rows.Count; i++)
+                                {
+                                    List<object> rows = new List<object>();
+                                    for (int j = 0; j < table.Columns.Count; j++)
+                                        rows.Add(table.Rows[i][j]);
+                                    murs.Add(rows);
+                                }
+                                _calc.CreateMURS(murs);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Невозможно загрузить файл. Измените формат файла на *xlsx: " + ex.Message, "Ошибка");
+                            return;
+                        }
+                    }
                 }
                 else if (Path.GetExtension(item) == ".xlsx")
                 {

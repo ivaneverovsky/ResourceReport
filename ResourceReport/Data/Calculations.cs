@@ -1,4 +1,5 @@
 ﻿using ResourceReport.Models;
+using ResourceReport.ModelsUpload;
 using ResourceReport.UI;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace ResourceReport.Data
     {
         Storage _stor = new Storage();
 
+        //reports
         public void CreateIaaS(List<object> iaas)
         {
             string virtualizationPlatform = "";
@@ -495,6 +497,27 @@ namespace ResourceReport.Data
         public void CreateReportRN()
         {
            
+        }
+
+        //upload's reports
+        public void CreateMURS(List<object> murs)
+        {
+            for (int i = 1; i < murs.Count; i++)
+            {
+                List<object> value = (List<object>)murs[i];
+
+                try
+                {
+                    var murs_item = new Murs(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString(), value[5].ToString(), value[6].ToString(), value[7].ToString(), value[8].ToString(), value[9].ToString(), value[10].ToString(), value[11].ToString(), value[12].ToString(), value[13].ToString(), value[14].ToString(), value[15].ToString(), value[16].ToString(), value[17].ToString(), value[18].ToString());
+
+                    _stor.AddMURS(murs_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("MURS: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
         }
 
         //collect results  
