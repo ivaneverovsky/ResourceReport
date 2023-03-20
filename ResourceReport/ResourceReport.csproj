@@ -62,6 +62,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ModelsUpload\Murs.cs" />
     <Compile Include="UI\NewEMLRecordWindow.xaml.cs">
       <DependentUpon>NewEMLRecordWindow.xaml</DependentUpon>
     </Compile>

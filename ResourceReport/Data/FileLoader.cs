@@ -109,5 +109,36 @@ namespace ResourceReport.Data
                 }
             }
         }
+        public void Upload(OpenFileDialog ofd)
+        {
+            string[] files = ofd.FileNames;
+            foreach (var item in files)
+            {
+                if (Path.GetExtension(item) == ".csv")
+                {
+                    MessageBox.Show(".csv");
+                }
+                else if (Path.GetExtension(item) == ".xlsx")
+                {
+                    MessageBox.Show(".xlsx");
+                }
+                else
+                {
+                    MessageBox.Show(Path.GetExtension(item));
+                }
+            }
+            //using (var stream = File.Open(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            //{
+            //    try
+            //    {
+
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show("Невозможно загрузить файл: " + ex.Message, "Ошибка");
+            //        return;
+            //    }
+            //}
+        }
     }
 }

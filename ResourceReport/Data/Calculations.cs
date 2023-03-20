@@ -496,5 +496,31 @@ namespace ResourceReport.Data
         {
            
         }
+
+        //collect results  
+        public List<IaaS> CollectIaaS()
+        {
+            return _stor.IaaS;
+        }
+        public List<EML> CollectEML()
+        {
+            return _stor.EML;
+        }
+        public List<EMLRecord> CollectEMLRecord()
+        {
+            return _stor.EMLRecord;
+        }
+        public List<VDS> CollectVDS()
+        {
+            return _stor.VDS;
+        }
+        public List<VDSRecord> CollectVDSRecord()
+        {
+            return _stor.VDSRecord;
+        }
+        public List<FPS> CollectFPS()
+        {
+            return _stor.FPS;
+        }
     }
 }

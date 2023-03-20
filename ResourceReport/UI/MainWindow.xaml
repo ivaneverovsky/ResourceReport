@@ -97,7 +97,8 @@
             <ColumnDefinition Width="400*"/>
             <ColumnDefinition Width="200*"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="1" Content="Button" Click="LoadFile" HorizontalAlignment="Left" Margin="109,223,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <Button Content="Загрузить отчет" Click="LoadFile" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="104"/>
+        <Button Content="Загрузить данные" Click="Upload" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="104" Grid.Column="1"/>
 
     </Grid>
 
