@@ -110,9 +110,7 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.IaaS.Count != 0)
-                MessageBox.Show("Данные IaaS записаны.", "Внимание");
-            else
+            if (_stor.IaaS.Count == 0)
                 MessageBox.Show("Данных IaaS не найдено.", "Внимание");
         }
         public void CreateEML(List<object> eml) 
@@ -204,9 +202,7 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.EML.Count != 0)
-                MessageBox.Show("Данные EML записаны.", "Внимание");
-            else
+            if (_stor.EML.Count == 0)
                 MessageBox.Show("Данных EML не найдено.", "Внимание");
         }
         public void CreateEMLRec(List<object> eml_rec)
@@ -282,9 +278,7 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.EMLRecord.Count != 0)
-                MessageBox.Show("Данные EML Архив записаны.", "Внимание");
-            else
+            if (_stor.EMLRecord.Count == 0)
                 MessageBox.Show("Данных EML Архив не найдено.", "Внимание");
         }
         public void CreateVDS(List<object> vds)
@@ -352,9 +346,7 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.VDS.Count != 0)
-                MessageBox.Show("Данные VDS записаны.", "Внимание");
-            else
+            if (_stor.VDS.Count == 0)
                 MessageBox.Show("Данных VDS не найдено.", "Внимание");
         }
         public void CreateVDSRec(List<object> vds_rec)
@@ -420,9 +412,7 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.VDSRecord.Count != 0)
-                MessageBox.Show("Данные VDS Архив записаны.", "Внимание");
-            else
+            if (_stor.VDSRecord.Count == 0)
                 MessageBox.Show("Данных VDS Архив не найдено.", "Внимание");
         }
         public void CreateFPS(List<object> fps)
@@ -480,9 +470,7 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.FPS.Count != 0)
-                MessageBox.Show("Данные FPS записаны.", "Внимание");
-            else
+            if (_stor.FPS.Count == 0)
                 MessageBox.Show("Данных FPS не найдено.", "Внимание");
         }
         public void CreateReport()
@@ -587,13 +575,14 @@ namespace ResourceReport.Data
         }
         public void CreateCDCTapeBackup(List<object> cdcTapeBackup)
         {
-            for (int i = 1; i < cdcTapeBackup.Count; i++)
+            for (int i = 0; i < cdcTapeBackup.Count; i++)
             {
                 List<object> value = (List<object>)cdcTapeBackup[i];
 
                 try
                 {
-
+                    var cdcTapeBackup_item = new CDCTapeBackup(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString());
+                    _stor.AddCDCTapeBackup(cdcTapeBackup_item);
                 }
                 catch (Exception ex)
                 {
@@ -610,11 +599,48 @@ namespace ResourceReport.Data
 
                 try
                 {
-
+                    var sibCDCTapeBackup_item = new SIBCDCTapeBackup(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString());
+                    _stor.AddSIBCDCTapeBackup(sibCDCTapeBackup_item);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("SIBCDCTapeBackup: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+        }
+        public void CreateVMSIBIaaS(List<object> vmSIBIaaS)
+        {
+            for (int i = 1; i < vmSIBIaaS.Count - 1; i++)
+            {
+                List<object> value = (List<object>)vmSIBIaaS[i];
+
+                try
+                {
+                    var vmSIBIaaS_item = new SIBIaaS(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString(), value[5].ToString(), value[6].ToString(), value[7].ToString(), value[8].ToString(), value[9].ToString(), value[10].ToString(), value[11].ToString());
+                    _stor.AddSIBIaaS(vmSIBIaaS_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("VMSIBIaaS: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+        }
+        public void CreateAllSibintek(List<object> allSibintek)
+        {
+            for (int i = 1; i < allSibintek.Count - 1; i++)
+            {
+                List<object> value = (List<object>)allSibintek[i];
+
+                try
+                {
+                    var allSibintek_item = new AllSibintek(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString(), value[5].ToString(), value[6].ToString(), value[7].ToString(), value[8].ToString(), value[9].ToString(), value[10].ToString(), value[11].ToString());
+                    _stor.AddAllSibintek(allSibintek_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("AllSibintek: " + ex.Message, "Ошибка");
                     return;
                 }
             }
@@ -643,6 +669,10 @@ namespace ResourceReport.Data
         public List<FPS> CollectFPS()
         {
             return _stor.FPS;
+        }
+        public int CollectCounter()
+        {
+            return _stor.EML.Count + _stor.EMLRecord.Count + _stor.FPS.Count + _stor.IaaS.Count + _stor.VDS.Count + _stor.VDSRecord.Count;
         }
     }
 }

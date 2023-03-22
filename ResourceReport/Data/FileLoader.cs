@@ -104,7 +104,10 @@ namespace ResourceReport.Data
                         }
                     }
                 }
-                MessageBox.Show("Отчет загружен.", "Готово");
+                if (_calc.CollectCounter() > 0)
+                    MessageBox.Show("Файл загружен.", "Готово");
+                else
+                    MessageBox.Show("Данных не найдено, загрузите другой файл.", "Внимание");
             }
             catch (Exception ex)
             {
@@ -143,16 +146,14 @@ namespace ResourceReport.Data
                                     _calc.CreateMURS(data);
                                 else if (item.ToLower().Contains("rds"))
                                     _calc.CreateRDS(data);
-
-                                else if (item.ToLower().Contains("cdc-tape-backups"))
-                                    MessageBox.Show("cdc-tape-backups");
                                 else if (item.ToLower().Contains("sib-cdc-tape-backups"))
-                                    MessageBox.Show("sib-cdc-tape-backups");
+                                    _calc.CreateSIBCDCTapeBackup(data);
+                                else if (item.ToLower().Contains("cdc-tape-backups"))
+                                    _calc.CreateCDCTapeBackup(data);
                                 else if (item.ToLower().Contains("vm_summary_sib_iaas"))
-                                    MessageBox.Show("vm_summary_sib_iaas");
+                                    _calc.CreateVMSIBIaaS(data);
                                 else if (item.ToLower().Contains("all sibintek"))
-                                    MessageBox.Show("all sibintek");
-
+                                    _calc.CreateAllSibintek(data);
                                 else
                                     MessageBox.Show("Не удалось определить имя файла. \nФайл будет пропущен: " + item, "Внимание");
                             }

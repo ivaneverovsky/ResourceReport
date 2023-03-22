@@ -94,5 +94,29 @@ namespace ResourceReport.Data
         {
             _backupsRepo.Add(backupsRepo);
         }
+        private List<CDCTapeBackup> _cdcTapeBackup = new List<CDCTapeBackup>();
+        public List<CDCTapeBackup> CDCTapeBackup { get { return _cdcTapeBackup; } }
+        public void AddCDCTapeBackup(CDCTapeBackup backup)
+        {
+            _cdcTapeBackup.Add(backup);
+        }
+        private List<SIBCDCTapeBackup> _sibCDCTapeBackup = new List<SIBCDCTapeBackup>();
+        public List<SIBCDCTapeBackup> SIBCDCTapeBackup { get { return _sibCDCTapeBackup; } }
+        public void AddSIBCDCTapeBackup(SIBCDCTapeBackup backup)
+        {
+            _sibCDCTapeBackup.Add(backup);
+        }
+        private List<SIBIaaS> _sibIaaS = new List<SIBIaaS>();
+        public List<SIBIaaS> SIBIaaS { get { return _sibIaaS; } }
+        public void AddSIBIaaS(SIBIaaS sibIaaS)
+        {
+            _sibIaaS.Add(sibIaaS);
+        }
+        private List<AllSibintek> _allSibintek = new List<AllSibintek>();
+        public List<AllSibintek> AllSibintek { get { return _allSibintek; } }
+        public void AddAllSibintek(AllSibintek allSibintek)
+        {
+            _allSibintek.Add(allSibintek);
+        }
     }
 }

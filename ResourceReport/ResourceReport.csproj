@@ -62,10 +62,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ModelsUpload\AllSibintek.cs" />
     <Compile Include="ModelsUpload\Backup.cs" />
     <Compile Include="ModelsUpload\BackupsRepo.cs" />
+    <Compile Include="ModelsUpload\CDCTapeBackup.cs" />
     <Compile Include="ModelsUpload\Murs.cs" />
     <Compile Include="ModelsUpload\Rds.cs" />
+    <Compile Include="ModelsUpload\SIBCDCTapeBackup.cs" />
+    <Compile Include="ModelsUpload\SIBIaaS.cs" />
     <Compile Include="ModelsUpload\Volume.cs" />
     <Compile Include="UI\NewEMLRecordWindow.xaml.cs">
       <DependentUpon>NewEMLRecordWindow.xaml</DependentUpon>
