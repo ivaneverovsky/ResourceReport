@@ -70,5 +70,29 @@ namespace ResourceReport.Data
         {
             _murs.Add(murs);
         }
+        private List<Rds> _rds = new List<Rds>();
+        public List<Rds> Rds { get { return _rds; } }
+        public void AddRDS(Rds rds)
+        {
+            _rds.Add(rds);
+        }
+        private List<Backup> _backup = new List<Backup>();
+        public List<Backup> Backup { get { return _backup;} }
+        public void AddBackup(Backup backup)
+        {
+            _backup.Add(backup);
+        }
+        private List<Volume> _volume = new List<Volume>();
+        public List<Volume> Volume { get { return _volume; } }
+        public void AddVolume(Volume volume)
+        {
+            _volume.Add(volume);
+        }
+        private List<BackupsRepo> _backupsRepo = new List<BackupsRepo>();
+        public List<BackupsRepo> BackupsRepo { get { return _backupsRepo; } }
+        public void AddBackupsRepo(BackupsRepo backupsRepo)
+        {
+            _backupsRepo.Add(backupsRepo);
+        }
     }
 }

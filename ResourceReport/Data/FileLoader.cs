@@ -3,7 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Remoting.Messaging;
+using System.Linq;
 using System.Windows;
 
 namespace ResourceReport.Data
@@ -13,9 +13,9 @@ namespace ResourceReport.Data
         Calculations _calc = new Calculations();
         public void LoadFile(OpenFileDialog ofd)
         {
-            using (var stream = File.Open(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            try
             {
-                try
+                using (var stream = File.Open(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
@@ -25,6 +25,7 @@ namespace ResourceReport.Data
                         {
                             var table = result.Tables[i];
                             string tablename = table.TableName.ToLower().Replace("ё", "е");
+
                             for (int j = 0; j < tablename.Length; j++)
                                 if (char.IsPunctuation(tablename[j]))
                                     tablename = tablename.Replace(tablename[j].ToString(), "");
@@ -103,13 +104,15 @@ namespace ResourceReport.Data
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Невозможно загрузить файл. Измените формат файла на *xlsx: " + ex.Message, "Ошибка");
-                    return;
-                }
+                MessageBox.Show("Отчет загружен.", "Готово");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Невозможно загрузить файл: " + ex.Message, "Ошибка");
+                return;
             }
         }
+
         public void Upload(OpenFileDialog ofd)
         {
             string[] files = ofd.FileNames;
@@ -117,53 +120,126 @@ namespace ResourceReport.Data
             {
                 if (Path.GetExtension(item) == ".csv")
                 {
-                    using (var stream = File.Open(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    try
                     {
-                        try
+                        using (var stream = File.Open(item, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                         {
                             using (var readerCSV = ExcelReaderFactory.CreateCsvReader(stream))
                             {
                                 var result = readerCSV.AsDataSet();
                                 var table = result.Tables[0];
-                                List<object> murs = new List<object>();
+
+                                List<object> data = new List<object>();
+
                                 for (int i = 0; i < table.Rows.Count; i++)
                                 {
                                     List<object> rows = new List<object>();
                                     for (int j = 0; j < table.Columns.Count; j++)
                                         rows.Add(table.Rows[i][j]);
-                                    murs.Add(rows);
+                                    data.Add(rows);
                                 }
-                                _calc.CreateMURS(murs);
+
+                                if (item.ToLower().Contains("murs"))
+                                    _calc.CreateMURS(data);
+                                else if (item.ToLower().Contains("rds"))
+                                    _calc.CreateRDS(data);
+
+                                else if (item.ToLower().Contains("cdc-tape-backups"))
+                                    MessageBox.Show("cdc-tape-backups");
+                                else if (item.ToLower().Contains("sib-cdc-tape-backups"))
+                                    MessageBox.Show("sib-cdc-tape-backups");
+                                else if (item.ToLower().Contains("vm_summary_sib_iaas"))
+                                    MessageBox.Show("vm_summary_sib_iaas");
+                                else if (item.ToLower().Contains("all sibintek"))
+                                    MessageBox.Show("all sibintek");
+
+                                else
+                                    MessageBox.Show("Не удалось определить имя файла. \nФайл будет пропущен: " + item, "Внимание");
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Невозможно загрузить файл. Измените формат файла на *xlsx: " + ex.Message, "Ошибка");
-                            return;
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Невозможно загрузить файл: " + item + "\nОшибка: " + ex.Message, "Ошибка");
+                        continue;
                     }
                 }
                 else if (Path.GetExtension(item) == ".xlsx")
                 {
-                    MessageBox.Show(".xlsx");
+                    try
+                    {
+                        using (var stream = File.Open(item, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                        {
+                            using (var reader = ExcelReaderFactory.CreateReader(stream))
+                            {
+                                var result = reader.AsDataSet();
+                                if (item.ToLower().Contains("(volume)"))
+                                {
+                                    var table = result.Tables[1];
+                                    List<object> data = new List<object>();
+
+                                    for (int i = 0; i < table.Rows.Count; i++)
+                                    {
+                                        List<object> rows = new List<object>();
+                                        for (int j = 0; j < table.Columns.Count; j++)
+                                            rows.Add(table.Rows[i][j]);
+                                        data.Add(rows);
+                                    }
+                                    _calc.CreateVolume(data);
+                                }
+                                else if (item.ToLower().Contains("(backup)"))
+                                {
+                                    var table = result.Tables[1];
+                                    List<object> data = new List<object>();
+
+                                    for (int i = 0; i < table.Rows.Count; i++)
+                                    {
+                                        List<object> rows = new List<object>();
+                                        for (int j = 0; j < table.Columns.Count; j++)
+                                            rows.Add(table.Rows[i][j]);
+                                        data.Add(rows);
+                                    }
+                                    _calc.CreateBackup(data);
+                                }
+                                else if (item.ToLower().Contains("backups on repository"))
+                                {
+                                    var table = result.Tables[1];
+                                    List<object> data = new List<object>();
+
+                                    for (int i = 0; i < table.Rows.Count; i++)
+                                    {
+                                        List<object> rows = new List<object>();
+                                        for (int j = 0; j < table.Columns.Count; j++)
+                                            rows.Add(table.Rows[i][j]);
+                                        data.Add(rows);
+                                    }
+                                    _calc.CreateBackupsOnRepo(data);
+                                }
+                                else
+                                    MessageBox.Show("Не удалось определить имя файла. \nФайл будет пропущен: " + item, "Внимание");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Невозможно загрузить файл: " + item + "\nОшибка: " + ex.Message, "Ошибка");
+                        continue;
+                    }
                 }
                 else
                 {
-                    MessageBox.Show(Path.GetExtension(item));
+                    try
+                    {
+                        throw new Exception();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Невозможно загрузить файл: " + item + "\nОшибка: " + ex.Message + "\nФайл не поддерживается.", "Ошибка");
+                        continue;
+                    }
                 }
             }
-            //using (var stream = File.Open(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            //{
-            //    try
-            //    {
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Невозможно загрузить файл: " + ex.Message, "Ошибка");
-            //        return;
-            //    }
-            //}
+            MessageBox.Show("Загрузка завершена.", "Готово");
         }
     }
 }

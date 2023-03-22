@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 
 namespace ResourceReport.Data
 {
@@ -101,7 +102,6 @@ namespace ResourceReport.Data
                     skazi = value[nisw.id21].ToString();
 
                     var iaasItem = new IaaS(virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi);
-
                     _stor.AddIaaS(iaasItem);
                 }
                 catch (Exception ex)
@@ -196,7 +196,6 @@ namespace ResourceReport.Data
                     security = value[nemlw.id21].ToString();
 
                     var eml_item = new EML(mailBoxType, company, samAccountName, tenant, department, occupation, owner, ownerMail, tenantMail, utilizeTenant, utilizeBackup, utilizeBackupTape, quota, creationDate, lastConnection, vmValidity, description, reason, price, accountStatus, extensionAttribute, security);
-
                     _stor.AddEML(eml_item);
                 }
                 catch (Exception ex)
@@ -275,7 +274,6 @@ namespace ResourceReport.Data
                     security = value[nemlrw.id13].ToString();
 
                     var eml_rec_item = new EMLRecord(mailBoxType, company, samAccountName, tenant, department, occupation, tenantMail, utilizeTenant, utilizeBackup, utilizeBackupTape, quota, lastConnection, price, security);
-
                     _stor.AddEMLRecord(eml_rec_item);
                 }
                 catch (Exception ex)
@@ -346,7 +344,6 @@ namespace ResourceReport.Data
                     extensionAttribute = value[nvdsw.id9].ToString();
 
                     var vds_item = new VDS(samAccountName, company, tenant, department, occupation, profileCapacity, utilizeBackup, lastConnection, price, extensionAttribute);
-
                     _stor.AddVDS(vds_item);
                 }
                 catch (Exception ex)
@@ -415,7 +412,6 @@ namespace ResourceReport.Data
                     price = value[nvdsrw.id8].ToString();
 
                     var vds_rec_item = new VDSRecord(samAccountName, company, tenant, department, occupation, profileCapacity, utilizeBackup, lastConnection, price);
-
                     _stor.AddVDSRecord(vds_rec_item);
                 }
                 catch (Exception ex)
@@ -476,7 +472,6 @@ namespace ResourceReport.Data
                     sharingFolder = value[nfpsw.id4].ToString();
 
                     var fps_item = new FPS(volume, volumeCapacity, freeSapce, backup, sharingFolder);
-
                     _stor.AddFPS(fps_item);
                 }
                 catch (Exception ex)
@@ -509,7 +504,6 @@ namespace ResourceReport.Data
                 try
                 {
                     var murs_item = new Murs(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString(), value[5].ToString(), value[6].ToString(), value[7].ToString(), value[8].ToString(), value[9].ToString(), value[10].ToString(), value[11].ToString(), value[12].ToString(), value[13].ToString(), value[14].ToString(), value[15].ToString(), value[16].ToString(), value[17].ToString(), value[18].ToString());
-
                     _stor.AddMURS(murs_item);
                 }
                 catch (Exception ex)
@@ -519,7 +513,112 @@ namespace ResourceReport.Data
                 }
             }
         }
+        public void CreateRDS(List<object> rds)
+        {
+            for (int i = 1; i < rds.Count; i++)
+            {
+                List<object> value = (List<object>)rds[i];
 
+                try
+                {
+                    var rds_item = new Rds(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString(), value[5].ToString(), value[6].ToString(), value[7].ToString(), value[8].ToString(), value[9].ToString());
+                    _stor.AddRDS(rds_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("RDS: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+        }
+        public void CreateBackup(List<object> backup)
+        {
+            for (int i = 1; i < backup.Count; i++)
+            {
+                List<object> value = (List<object>)backup[i];
+
+                try
+                {
+                    var backup_item = new Backup(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString());
+                    _stor.AddBackup(backup_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Backup: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+        }
+        public void CreateVolume(List<object> volume)
+        {
+            for (int i = 1; i < volume.Count; i++)
+            {
+                List<object> value = (List<object>)volume[i];
+
+                try
+                {
+                    var volume_item = new Volume(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString());
+                    _stor.AddVolume(volume_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Volume: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+        }
+        public void CreateBackupsOnRepo(List<object> backupsrepo)
+        {
+            for (int i = 1; i < backupsrepo.Count; i++)
+            {
+                List<object> value = (List<object>)backupsrepo[i];
+
+                try
+                {
+                    var backupsrepo_item = new BackupsRepo(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString(), value[5].ToString(), value[6].ToString(), value[7].ToString(), value[8].ToString(), value[9].ToString(), value[10].ToString(), value[11].ToString(), value[12].ToString());
+                    _stor.AddBackupsRepo(backupsrepo_item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("BackupsOnRepo: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+        }
+        public void CreateCDCTapeBackup(List<object> cdcTapeBackup)
+        {
+            for (int i = 1; i < cdcTapeBackup.Count; i++)
+            {
+                List<object> value = (List<object>)cdcTapeBackup[i];
+
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("CDCTapeBackup: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+        }
+        public void CreateSIBCDCTapeBackup(List<object> sibCDCTapeBackup)
+        {
+            for (int i = 0; i < sibCDCTapeBackup.Count; i++)
+            {
+                List<object> value = (List<object>)sibCDCTapeBackup[i];
+
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("SIBCDCTapeBackup: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+        }
         //collect results  
         public List<IaaS> CollectIaaS()
         {

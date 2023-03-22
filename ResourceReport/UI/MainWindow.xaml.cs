@@ -31,8 +31,6 @@ namespace ResourceReport
             }
 
             _fl.LoadFile(ofd);
-
-            MessageBox.Show("ya vse"); //show UI
         }
         private void Upload(object sender, RoutedEventArgs e)
         {
@@ -50,8 +48,6 @@ namespace ResourceReport
             }
 
             _fl.Upload(ofd);
-
-            MessageBox.Show("zagruzil");
         }
     }
 }
