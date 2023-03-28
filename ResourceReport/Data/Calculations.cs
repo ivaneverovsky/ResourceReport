@@ -20,6 +20,11 @@ namespace ResourceReport.Data
         Storage _stor = new Storage();
 
         //reports
+        public void AddContract(string contract)
+        {
+            var contract_item = new Contract(contract);
+            _stor.AddContract(contract_item);
+        }
         public void CreateIaaS(List<object> iaas)
         {
             string virtualizationPlatform = "";
@@ -481,6 +486,10 @@ namespace ResourceReport.Data
         {
            
         }
+        public void ClearStore()
+        {
+            _stor.ClearStore();
+        }
 
         //upload's reports
         public void CreateMURS(List<object> murs)
@@ -645,6 +654,7 @@ namespace ResourceReport.Data
                 }
             }
         }
+
         //collect results  
         public List<IaaS> CollectIaaS()
         {
@@ -674,5 +684,8 @@ namespace ResourceReport.Data
         {
             return _stor.EML.Count + _stor.EMLRecord.Count + _stor.FPS.Count + _stor.IaaS.Count + _stor.VDS.Count + _stor.VDSRecord.Count;
         }
+
+        //result builder
+
     }
 }

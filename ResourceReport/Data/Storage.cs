@@ -7,6 +7,12 @@ namespace ResourceReport.Data
     internal class Storage
     {
         //Reports
+        private List<Contract> _contract = new List<Contract>();
+        public List<Contract> Contract { get { return _contract; } }
+        public void AddContract(Contract contract)
+        {
+            _contract.Add(contract);
+        }
         private List<IaaS> _iaas = new List<IaaS>();
         public List<IaaS> IaaS { get { return _iaas; } }
         public void AddIaaS(IaaS iaas)
@@ -117,6 +123,20 @@ namespace ResourceReport.Data
         public void AddAllSibintek(AllSibintek allSibintek)
         {
             _allSibintek.Add(allSibintek);
+        }
+
+        //clear report store
+        public void ClearStore()
+        {
+            _contract.Clear();
+            _iaas.Clear();
+            _eml.Clear();
+            _emlrecord.Clear();
+            _vds.Clear();
+            _vdsrecord.Clear();
+            _fps.Clear();
+            _report.Clear();
+            _reportrn.Clear();
         }
     }
 }

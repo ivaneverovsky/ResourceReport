@@ -12,8 +12,11 @@ namespace ResourceReport.Data
     internal class FileLoader
     {
         Calculations _calc = new Calculations();
+        string contractName = "";
         public void LoadFile(OpenFileDialog ofd)
         {
+            _calc.ClearStore();
+
             try
             {
                 using (var stream = File.Open(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
@@ -21,6 +24,40 @@ namespace ResourceReport.Data
                     using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
                         var result = reader.AsDataSet(); //get data from file
+                        string contract = ofd.FileName.ToLower();
+                        for (int i = 0; i < contract.Length; i++)
+                            if (char.IsPunctuation(contract[i]))
+                                contract = contract.Replace(contract[i].ToString(), "");
+
+                        if (contract.Contains("экспертек"))
+                        {
+                            contractName = "Экспертек";
+                            _calc.AddContract(contract);
+                            MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                        }
+                        else if (contract.Contains("дитиавп"))
+                        {
+                            contractName = "ДИТиАВП";
+                            _calc.AddContract(contract);
+                            MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                        }
+                        else if (contract.Contains("усиито"))
+                        {
+                            contractName = "УСИиТО";
+                            _calc.AddContract(contract);
+                            MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                        }
+                        else if (contract.Contains("сибинтексофт") || contract.Contains("сибинтек софт"))
+                        {
+                            contractName = "Сибинтек софт";
+                            _calc.AddContract(contract);
+                            MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Не удалось определить контракт.", "Ошибка"); 
+                            return;
+                        }
 
                         for (int i = 0; i < result.Tables.Count; i++)
                         {
@@ -119,6 +156,7 @@ namespace ResourceReport.Data
         public void Upload(OpenFileDialog ofd)
         {
             string[] files = ofd.FileNames;
+
             foreach (var item in files)
             {
                 if (Path.GetExtension(item) == ".csv")
@@ -247,10 +285,6 @@ namespace ResourceReport.Data
         public int Check()
         {
             return _calc.CollectCounter();
-        }
-        public List<IaaS> CollectIaaS()
-        {
-            return _calc.CollectIaaS();
         }
     }
 }

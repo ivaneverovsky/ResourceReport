@@ -57,8 +57,7 @@ namespace ResourceReport
                 MessageBox.Show("Данных для отчета не обнаружено. Попробуйте загрузить новые.", "Внимание");
                 return;
             }
-
-            BuildUI();
+            MessageBox.Show("Скоро научусь считать");
         }
         private void Export(object sender, RoutedEventArgs e)
         {
@@ -66,13 +65,13 @@ namespace ResourceReport
         }
 
 
-        private void BuildUI()
-        {
-            List<IaaS> iaasList = _fl.CollectIaaS();
-            for (int i = 0; i < iaasList.Count; i++)
-            {
-                IaaSListView.Items.Add(iaasList[i]);
-            }
-        }
+        //private void BuildUI()
+        //{
+        //    List<IaaS> iaasList = _fl.CollectIaaS();
+        //    for (int i = 0; i < iaasList.Count; i++)
+        //    {
+        //        IaaSListView.Items.Add(iaasList[i]);
+        //    }
+        //}
     }
 }
