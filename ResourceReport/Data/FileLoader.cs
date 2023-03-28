@@ -1,5 +1,6 @@
 ﻿using ExcelDataReader;
 using Microsoft.Win32;
+using ResourceReport.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -115,7 +116,6 @@ namespace ResourceReport.Data
                 return;
             }
         }
-
         public void Upload(OpenFileDialog ofd)
         {
             string[] files = ofd.FileNames;
@@ -241,6 +241,16 @@ namespace ResourceReport.Data
                 }
             }
             MessageBox.Show("Загрузка завершена.", "Готово");
+        }
+
+        //connection with reality mthfcka
+        public int Check()
+        {
+            return _calc.CollectCounter();
+        }
+        public List<IaaS> CollectIaaS()
+        {
+            return _calc.CollectIaaS();
         }
     }
 }

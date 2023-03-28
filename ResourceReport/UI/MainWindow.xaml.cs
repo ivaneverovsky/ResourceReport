@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using ResourceReport.Data;
+using ResourceReport.Models;
 using ResourceReport.UI;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +11,7 @@ namespace ResourceReport
     public partial class MainWindow : Window
     {
         FileLoader _fl = new FileLoader();
-
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -48,6 +49,30 @@ namespace ResourceReport
             }
 
             _fl.Upload(ofd);
+        }
+        private void Count(object sender, RoutedEventArgs e)
+        {
+            if (_fl.Check() == 0)
+            {
+                MessageBox.Show("Данных для отчета не обнаружено. Попробуйте загрузить новые.", "Внимание");
+                return;
+            }
+
+            BuildUI();
+        }
+        private void Export(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Здесь будет выгружаться файл");
+        }
+
+
+        private void BuildUI()
+        {
+            List<IaaS> iaasList = _fl.CollectIaaS();
+            for (int i = 0; i < iaasList.Count; i++)
+            {
+                IaaSListView.Items.Add(iaasList[i]);
+            }
         }
     }
 }
