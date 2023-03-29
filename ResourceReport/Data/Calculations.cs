@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 
 namespace ResourceReport.Data
 {
@@ -27,30 +28,8 @@ namespace ResourceReport.Data
         }
         public void CreateIaaS(List<object> iaas)
         {
-            string virtualizationPlatform = "";
-            string project = "";
-            string vmName = "";
-            string fqdn = "";
-            string ip = "";
-            string disk = "";
-            string cpu = "";
-            string ram = "";
-            string os = "";
-            string backup = "";
-            string backupTape = "";
-            string vmCreation = "";
-            string isName = "";
-            string tenant = "";
-            string owner = "";
-            string price = "";
-            string reqCreate = "";
-            string reqDelete = "";
-            string reqChange = "";
-            string avz = "";
-            string siem = "";
-            string skazi = "";
-
             List<object> columns = (List<object>)iaas[0];
+
             for (int i = 0; i < columns.Count; i++)
             {
                 if (columns[i].ToString() == "")
@@ -83,28 +62,28 @@ namespace ResourceReport.Data
 
                 try
                 {
-                    virtualizationPlatform = value[nisw.id0].ToString();
-                    project = value[nisw.id1].ToString();
-                    vmName = value[nisw.id2].ToString();
-                    fqdn = value[nisw.id3].ToString();
-                    ip = value[nisw.id4].ToString();
-                    disk = value[nisw.id5].ToString();
-                    cpu = value[nisw.id6].ToString();
-                    ram = value[nisw.id7].ToString();
-                    os = value[nisw.id8].ToString();
-                    backup = value[nisw.id9].ToString();
-                    backupTape = value[nisw.id10].ToString();
-                    vmCreation = value[nisw.id11].ToString();
-                    isName = value[nisw.id12].ToString();
-                    tenant = value[nisw.id13].ToString();
-                    owner = value[nisw.id14].ToString();
-                    price = value[nisw.id15].ToString();
-                    reqCreate = value[nisw.id16].ToString();
-                    reqDelete = value[nisw.id17].ToString();
-                    reqChange = value[nisw.id18].ToString();
-                    avz = value[nisw.id19].ToString();
-                    siem = value[nisw.id20].ToString();
-                    skazi = value[nisw.id21].ToString();
+                    string virtualizationPlatform = value[nisw.id0].ToString();
+                    string project = value[nisw.id1].ToString();
+                    string vmName = value[nisw.id2].ToString();
+                    string fqdn = value[nisw.id3].ToString();
+                    string ip = value[nisw.id4].ToString();
+                    string disk = value[nisw.id5].ToString();
+                    string cpu = value[nisw.id6].ToString();
+                    string ram = value[nisw.id7].ToString();
+                    string os = value[nisw.id8].ToString();
+                    string backup = value[nisw.id9].ToString();
+                    string backupTape = value[nisw.id10].ToString();
+                    string vmCreation = value[nisw.id11].ToString();
+                    string isName = value[nisw.id12].ToString();
+                    string tenant = value[nisw.id13].ToString();
+                    string owner = value[nisw.id14].ToString();
+                    string price = value[nisw.id15].ToString();
+                    string reqCreate = value[nisw.id16].ToString();
+                    string reqDelete = value[nisw.id17].ToString();
+                    string reqChange = value[nisw.id18].ToString();
+                    string avz = value[nisw.id19].ToString();
+                    string siem = value[nisw.id20].ToString();
+                    string skazi = value[nisw.id21].ToString();
 
                     var iaasItem = new IaaS(virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi);
                     _stor.AddIaaS(iaasItem);
@@ -120,30 +99,8 @@ namespace ResourceReport.Data
         }
         public void CreateEML(List<object> eml) 
         {
-            string mailBoxType = "";
-            string company = "";
-            string samAccountName = "";
-            string tenant = "";
-            string department = "";
-            string occupation = "";
-            string owner = "";
-            string ownerMail = "";
-            string tenantMail = "";
-            string utilizeTenant = "";
-            string utilizeBackup = "";
-            string utilizeBackupTape = "";
-            string quota = "";
-            string creationDate = "";
-            string lastConnection = "";
-            string vmValidity = "";
-            string description = "";
-            string reason = "";
-            string price = "";
-            string accountStatus = "";
-            string extensionAttribute = "";
-            string security = "";
-
             List<object> columns = (List<object>)eml[0];
+
             for (int i = 0; i < columns.Count; i++)
             {
                 if (columns[i].ToString() == "")
@@ -175,28 +132,28 @@ namespace ResourceReport.Data
 
                 try
                 {
-                    mailBoxType = value[nemlw.id0].ToString();
-                    company = value[nemlw.id1].ToString();
-                    samAccountName = value[nemlw.id2].ToString();
-                    tenant = value[nemlw.id3].ToString();
-                    department = value[nemlw.id4].ToString();
-                    occupation = value[nemlw.id5].ToString();
-                    owner = value[nemlw.id6].ToString();
-                    ownerMail = value[nemlw.id7].ToString();
-                    tenantMail = value[nemlw.id8].ToString();
-                    utilizeTenant = value[nemlw.id9].ToString();
-                    utilizeBackup = value[nemlw.id10].ToString();
-                    utilizeBackupTape = value[nemlw.id11].ToString();
-                    quota = value[nemlw.id12].ToString();
-                    creationDate = value[nemlw.id13].ToString();
-                    lastConnection = value[nemlw.id14].ToString();
-                    vmValidity = value[nemlw.id15].ToString();
-                    description = value[nemlw.id16].ToString();
-                    reason = value[nemlw.id17].ToString();
-                    price = value[nemlw.id18].ToString();
-                    accountStatus = value[nemlw.id19].ToString();
-                    extensionAttribute = value[nemlw.id20].ToString();
-                    security = value[nemlw.id21].ToString();
+                    string mailBoxType = value[nemlw.id0].ToString();
+                    string company = value[nemlw.id1].ToString();
+                    string samAccountName = value[nemlw.id2].ToString();
+                    string tenant = value[nemlw.id3].ToString();
+                    string department = value[nemlw.id4].ToString();
+                    string occupation = value[nemlw.id5].ToString();
+                    string owner = value[nemlw.id6].ToString();
+                    string ownerMail = value[nemlw.id7].ToString();
+                    string tenantMail = value[nemlw.id8].ToString();
+                    string utilizeTenant = value[nemlw.id9].ToString();
+                    string utilizeBackup = value[nemlw.id10].ToString();
+                    string utilizeBackupTape = value[nemlw.id11].ToString();
+                    string quota = value[nemlw.id12].ToString();
+                    string creationDate = value[nemlw.id13].ToString();
+                    string lastConnection = value[nemlw.id14].ToString();
+                    string vmValidity = value[nemlw.id15].ToString();
+                    string description = value[nemlw.id16].ToString();
+                    string reason = value[nemlw.id17].ToString();
+                    string price = value[nemlw.id18].ToString();
+                    string accountStatus = value[nemlw.id19].ToString();
+                    string extensionAttribute = value[nemlw.id20].ToString();
+                    string security = value[nemlw.id21].ToString();
 
                     var eml_item = new EML(mailBoxType, company, samAccountName, tenant, department, occupation, owner, ownerMail, tenantMail, utilizeTenant, utilizeBackup, utilizeBackupTape, quota, creationDate, lastConnection, vmValidity, description, reason, price, accountStatus, extensionAttribute, security);
                     _stor.AddEML(eml_item);
@@ -212,22 +169,8 @@ namespace ResourceReport.Data
         }
         public void CreateEMLRec(List<object> eml_rec)
         {
-            string mailBoxType = "";
-            string company = "";
-            string samAccountName = "";
-            string tenant = "";
-            string department = "";
-            string occupation = "";
-            string tenantMail = "";
-            string utilizeTenant = "";
-            string utilizeBackup = "";
-            string utilizeBackupTape = "";
-            string quota = "";
-            string lastConnection = "";
-            string price = "";
-            string security = "";
-
             List<object> columns = (List<object>)eml_rec[0];
+
             for (int i = 0; i < columns.Count; i++)
             {
                 if (columns[i].ToString() == "")
@@ -259,20 +202,20 @@ namespace ResourceReport.Data
 
                 try
                 {
-                    mailBoxType = value[nemlrw.id0].ToString();
-                    company = value[nemlrw.id1].ToString();
-                    samAccountName = value[nemlrw.id2].ToString();
-                    tenant = value[nemlrw.id3].ToString();
-                    department = value[nemlrw.id4].ToString();
-                    occupation = value[nemlrw.id5].ToString();
-                    tenantMail = value[nemlrw.id6].ToString();
-                    utilizeTenant = value[nemlrw.id7].ToString();
-                    utilizeBackup = value[nemlrw.id8].ToString();
-                    utilizeBackupTape = value[nemlrw.id9].ToString();
-                    quota = value[nemlrw.id10].ToString();
-                    lastConnection = value[nemlrw.id11].ToString();
-                    price = value[nemlrw.id12].ToString();
-                    security = value[nemlrw.id13].ToString();
+                    string mailBoxType = value[nemlrw.id0].ToString();
+                    string company = value[nemlrw.id1].ToString();
+                    string samAccountName = value[nemlrw.id2].ToString();
+                    string tenant = value[nemlrw.id3].ToString();
+                    string department = value[nemlrw.id4].ToString();
+                    string occupation = value[nemlrw.id5].ToString();
+                    string tenantMail = value[nemlrw.id6].ToString();
+                    string utilizeTenant = value[nemlrw.id7].ToString();
+                    string utilizeBackup = value[nemlrw.id8].ToString();
+                    string utilizeBackupTape = value[nemlrw.id9].ToString();
+                    string quota = value[nemlrw.id10].ToString();
+                    string lastConnection = value[nemlrw.id11].ToString();
+                    string price = value[nemlrw.id12].ToString();
+                    string security = value[nemlrw.id13].ToString();
 
                     var eml_rec_item = new EMLRecord(mailBoxType, company, samAccountName, tenant, department, occupation, tenantMail, utilizeTenant, utilizeBackup, utilizeBackupTape, quota, lastConnection, price, security);
                     _stor.AddEMLRecord(eml_rec_item);
@@ -288,18 +231,8 @@ namespace ResourceReport.Data
         }
         public void CreateVDS(List<object> vds)
         {
-            string samAccountName = "";
-            string company = "";
-            string tenant = "";
-            string department = "";
-            string occupation = "";
-            string profileCapacity = "";
-            string utilizeBackup = "";
-            string lastConnection = "";
-            string price = "";
-            string extensionAttribute = "";
-
             List<object> columns = (List<object>)vds[0];
+
             for (int i = 0; i < columns.Count; i++)
             {
                 if (columns[i].ToString() == "")
@@ -331,16 +264,16 @@ namespace ResourceReport.Data
 
                 try
                 {
-                    samAccountName = value[nvdsw.id0].ToString();
-                    company = value[nvdsw.id1].ToString();
-                    tenant = value[nvdsw.id2].ToString();
-                    department = value[nvdsw.id3].ToString();
-                    occupation = value[nvdsw.id4].ToString();
-                    profileCapacity = value[nvdsw.id5].ToString();
-                    utilizeBackup = value[nvdsw.id6].ToString();
-                    lastConnection = value[nvdsw.id7].ToString();
-                    price = value[nvdsw.id8].ToString();
-                    extensionAttribute = value[nvdsw.id9].ToString();
+                    string samAccountName = value[nvdsw.id0].ToString();
+                    string company = value[nvdsw.id1].ToString();
+                    string tenant = value[nvdsw.id2].ToString();
+                    string department = value[nvdsw.id3].ToString();
+                    string occupation = value[nvdsw.id4].ToString();
+                    string profileCapacity = value[nvdsw.id5].ToString();
+                    string utilizeBackup = value[nvdsw.id6].ToString();
+                    string lastConnection = value[nvdsw.id7].ToString();
+                    string price = value[nvdsw.id8].ToString();
+                    string extensionAttribute = value[nvdsw.id9].ToString();
 
                     var vds_item = new VDS(samAccountName, company, tenant, department, occupation, profileCapacity, utilizeBackup, lastConnection, price, extensionAttribute);
                     _stor.AddVDS(vds_item);
@@ -356,17 +289,8 @@ namespace ResourceReport.Data
         }
         public void CreateVDSRec(List<object> vds_rec)
         {
-            string samAccountName = "";
-            string company = "";
-            string tenant = "";
-            string department = "";
-            string occupation = "";
-            string profileCapacity = "";
-            string utilizeBackup = "";
-            string lastConnection = "";
-            string price = "";
-
             List<object> columns = (List<object>)vds_rec[0];
+
             for (int i = 0; i < columns.Count; i++)
             {
                 if (columns[i].ToString() == "")
@@ -398,15 +322,15 @@ namespace ResourceReport.Data
 
                 try
                 {
-                    samAccountName = value[nvdsrw.id0].ToString();
-                    company = value[nvdsrw.id1].ToString();
-                    tenant = value[nvdsrw.id2].ToString();
-                    department = value[nvdsrw.id3].ToString();
-                    occupation = value[nvdsrw.id4].ToString();
-                    profileCapacity = value[nvdsrw.id5].ToString();
-                    utilizeBackup = value[nvdsrw.id6].ToString();
-                    lastConnection = value[nvdsrw.id7].ToString();
-                    price = value[nvdsrw.id8].ToString();
+                    string samAccountName = value[nvdsrw.id0].ToString();
+                    string company = value[nvdsrw.id1].ToString();
+                    string tenant = value[nvdsrw.id2].ToString();
+                    string department = value[nvdsrw.id3].ToString();
+                    string occupation = value[nvdsrw.id4].ToString();
+                    string profileCapacity = value[nvdsrw.id5].ToString();
+                    string utilizeBackup = value[nvdsrw.id6].ToString();
+                    string lastConnection = value[nvdsrw.id7].ToString();
+                    string price = value[nvdsrw.id8].ToString();
 
                     var vds_rec_item = new VDSRecord(samAccountName, company, tenant, department, occupation, profileCapacity, utilizeBackup, lastConnection, price);
                     _stor.AddVDSRecord(vds_rec_item);
@@ -422,13 +346,8 @@ namespace ResourceReport.Data
         }
         public void CreateFPS(List<object> fps)
         {
-            string volume = "";
-            string volumeCapacity = "";
-            string freeSapce = "";
-            string backup = "";
-            string sharingFolder = "";
-
             List<object> columns = (List<object>)fps[0];
+
             for (int i = 0; i < columns.Count; i++)
             {
                 if (columns[i].ToString() == "")
@@ -460,11 +379,11 @@ namespace ResourceReport.Data
 
                 try
                 {
-                    volume = value[nfpsw.id0].ToString();
-                    volumeCapacity = value[nfpsw.id1].ToString();
-                    freeSapce = value[nfpsw.id2].ToString();
-                    backup = value[nfpsw.id3].ToString();
-                    sharingFolder = value[nfpsw.id4].ToString();
+                    string volume = value[nfpsw.id0].ToString();
+                    string volumeCapacity = value[nfpsw.id1].ToString();
+                    string freeSapce = value[nfpsw.id2].ToString();
+                    string backup = value[nfpsw.id3].ToString();
+                    string sharingFolder = value[nfpsw.id4].ToString();
 
                     var fps_item = new FPS(volume, volumeCapacity, freeSapce, backup, sharingFolder);
                     _stor.AddFPS(fps_item);
@@ -656,36 +575,57 @@ namespace ResourceReport.Data
         }
 
         //collect results  
-        public List<IaaS> CollectIaaS()
-        {
-            return _stor.IaaS;
-        }
-        public List<EML> CollectEML()
-        {
-            return _stor.EML;
-        }
-        public List<EMLRecord> CollectEMLRecord()
-        {
-            return _stor.EMLRecord;
-        }
-        public List<VDS> CollectVDS()
-        {
-            return _stor.VDS;
-        }
-        public List<VDSRecord> CollectVDSRecord()
-        {
-            return _stor.VDSRecord;
-        }
-        public List<FPS> CollectFPS()
-        {
-            return _stor.FPS;
-        }
-        public int CollectCounter()
-        {
-            return _stor.EML.Count + _stor.EMLRecord.Count + _stor.FPS.Count + _stor.IaaS.Count + _stor.VDS.Count + _stor.VDSRecord.Count;
-        }
+        public int CollectCounter() { return _stor.EML.Count + _stor.EMLRecord.Count + _stor.FPS.Count + _stor.IaaS.Count + _stor.VDS.Count + _stor.VDSRecord.Count; }
 
         //result builder
+        public void MursCount()
+        {
+            List<Murs> mursList = new List<Murs>();
+            List<EML> emlList = new List<EML>();
+            List<EMLRecord> emlRecordList = new List<EMLRecord>();
 
+            foreach (var item in _stor.Murs)
+                if (item.Company.ToLower().Contains("айэмти") || item.Company.ToLower().Contains("экспертек") || item.Company.ToLower().Contains("сибинтек-софт") || item.ExtensionAttribute7.ToLower().Contains("усиито") || item.ExtensionAttribute7.ToLower().Contains("дитиавп"))
+                    mursList.Add(item);
+
+            for (int i = 0; i < _stor.EML.Count; i++)
+                for (int j = 0; j < mursList.Count; j++)
+                    if (_stor.EML[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].Enabled == "True")
+                    {
+                        _stor.RemoveEML(_stor.EML[i]);
+
+                        var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] {'(', ')'}), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
+                        _stor.AddEML(eml_item);
+                        emlList.Add(eml_item);
+
+                        mursList.RemoveAt(j);
+                        j--;
+                    }
+                    else if (_stor.EML[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].ExtensionAttribute7.ToLower() == "дитиавп")
+                    {
+                        _stor.RemoveEML(_stor.EML[i]);
+
+                        var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] { '(', ')' }), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
+                        _stor.AddEML(eml_item);
+                        emlList.Add(eml_item);
+
+                        mursList.RemoveAt(j);
+                        j--;
+                    }
+
+            for (int i = 0; i < _stor.EMLRecord.Count; i++)
+                for (int j = 0; j < mursList.Count; j++)
+                    if (_stor.EMLRecord[i].SAMAccountName == mursList[j].SAMAccountName)
+                    {
+                        _stor.RemoveEMLRecord(_stor.EMLRecord[i]);
+
+                        var emlRecord_item = new EMLRecord(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] { '(', ')' }), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].LastLogonTimeDate, "стоимость", "защита");
+                        _stor.AddEMLRecord(emlRecord_item);
+                        emlRecordList.Add(emlRecord_item);
+
+                        mursList.RemoveAt(j);
+                        j--;
+                    }
+        }
     }
 }

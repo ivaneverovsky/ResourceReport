@@ -57,7 +57,7 @@ namespace ResourceReport
                 MessageBox.Show("Данных для отчета не обнаружено. Попробуйте загрузить новые.", "Внимание");
                 return;
             }
-            MessageBox.Show("Скоро научусь считать");
+            _fl.Work();
         }
         private void Export(object sender, RoutedEventArgs e)
         {

@@ -32,25 +32,25 @@ namespace ResourceReport.Data
                         if (contract.Contains("экспертек"))
                         {
                             contractName = "Экспертек";
-                            _calc.AddContract(contract);
+                            _calc.AddContract(contractName);
                             MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
                         }
                         else if (contract.Contains("дитиавп"))
                         {
                             contractName = "ДИТиАВП";
-                            _calc.AddContract(contract);
+                            _calc.AddContract(contractName);
                             MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
                         }
                         else if (contract.Contains("усиито"))
                         {
                             contractName = "УСИиТО";
-                            _calc.AddContract(contract);
+                            _calc.AddContract(contractName);
                             MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
                         }
                         else if (contract.Contains("сибинтексофт") || contract.Contains("сибинтек софт"))
                         {
                             contractName = "Сибинтек софт";
-                            _calc.AddContract(contract);
+                            _calc.AddContract(contractName);
                             MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
                         }
                         else
@@ -282,9 +282,10 @@ namespace ResourceReport.Data
         }
 
         //connection with reality mthfcka
-        public int Check()
+        public int Check() { return _calc.CollectCounter(); }
+        public void Work()
         {
-            return _calc.CollectCounter();
+            _calc.MursCount();
         }
     }
 }

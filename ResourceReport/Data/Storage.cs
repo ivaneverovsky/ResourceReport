@@ -26,12 +26,20 @@ namespace ResourceReport.Data
         {
             _eml.Add(eml);
         }
+        public void RemoveEML(EML eml)
+        {
+            _eml.Remove(eml);
+        }
 
         private List<EMLRecord> _emlrecord = new List<EMLRecord>();
         public List<EMLRecord> EMLRecord { get { return _emlrecord; } }
         public void AddEMLRecord(EMLRecord record)
         {
             _emlrecord.Add(record);
+        }
+        public void RemoveEMLRecord(EMLRecord record)
+        {
+            _emlrecord.Remove(record);
         }
 
         private List<VDS> _vds = new List<VDS>();
