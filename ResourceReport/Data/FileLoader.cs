@@ -293,8 +293,7 @@ namespace ResourceReport.Data
             Task[] tasks = new Task[2]
             {
                 new Task(() => _calc.MursCount()),
-                new Task(() => _calc.VDSCount()),
-                //new Task(() => _calc.MursCount())
+                new Task(() => _calc.VDSCount())
             };
 
             foreach (var task in tasks)
@@ -303,10 +302,6 @@ namespace ResourceReport.Data
             try
             {
                 Task.WaitAll(tasks);
-                _calc.BackupCount();
-                sw.Stop();
-                MessageBox.Show("Обновил данные за: " + sw.Elapsed.ToString(), "Посчитал");
-                sw.Reset();
             }
             catch (Exception ex)
             {
@@ -314,9 +309,12 @@ namespace ResourceReport.Data
                 return;
             }
 
-            //_calc.MursCount();
-            //_calc.VDSCount();
-            //_calc.BackupCount();
+            _calc.BackupVDSCount();
+            _calc.BackupEMLCount();
+
+            sw.Stop();
+            MessageBox.Show("Обновил данные за: " + sw.Elapsed.ToString(), "Посчитал");
+            sw.Reset();
         }
     }
 }

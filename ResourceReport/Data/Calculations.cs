@@ -156,6 +156,9 @@ namespace ResourceReport.Data
                     string extensionAttribute = value[nemlw.id20].ToString();
                     string security = value[nemlw.id21].ToString();
 
+                    if (samAccountName == "")
+                        return;
+
                     var eml_item = new EML(mailBoxType, company, samAccountName, tenant, department, occupation, owner, ownerMail, tenantMail, utilizeTenant, utilizeBackup, utilizeBackupTape, quota, creationDate, lastConnection, vmValidity, description, reason, price, accountStatus, extensionAttribute, security);
                     _stor.AddEML(eml_item);
                 }
@@ -531,8 +534,11 @@ namespace ResourceReport.Data
 
                 try
                 {
-                    var sibCDCTapeBackup_item = new SIBCDCTapeBackup(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString());
-                    _stor.AddSIBCDCTapeBackup(sibCDCTapeBackup_item);
+                    if (value[0].ToString() != "NULL")
+                    {
+                        var sibCDCTapeBackup_item = new SIBCDCTapeBackup(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString());
+                        _stor.AddSIBCDCTapeBackup(sibCDCTapeBackup_item);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -709,7 +715,7 @@ namespace ResourceReport.Data
                         }
                     }
         }
-        public void BackupCount()
+        public void BackupVDSCount()
         {
             double counter = 0.0;
             double counterDit = 0.0;
@@ -730,7 +736,6 @@ namespace ResourceReport.Data
                     }
 
             for (int i = 0; i < _stor.VDS.Count; i++)
-            {
                 try
                 {
                     if (_stor.VDS[i].ExtensionAttribute.ToLower().Contains("дитиавп"))
@@ -741,13 +746,71 @@ namespace ResourceReport.Data
                         counterExpertek += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
                     else
                         counterUsiito += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
+
+                    //OPTIONAL: add info from RDS-users for Snegir and Sphera
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Ошибка VDSBackup");
                     continue;
                 }
+            double k_b = counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito);
+        }
+        public void BackupEMLCount()
+        {
+            double counter = 0.0;
+            double counterTape = 0.0;
+
+            double counterDit = 0.0;
+            double counterSibSoft = 0.0;
+            double counterExpertek = 0.0;
+            double counterUsiito = 0.0;
+
+            for (int i = 0; i < _stor.BackupsRepo.Count; i++)
+                try
+                {
+                    if (_stor.BackupsRepo[i].IncrementsSize != "" && _stor.BackupsRepo[i].IncrementsSize != "-" && _stor.BackupsRepo[i].IncrementsSize != "Increments Size, GB")
+                        counter += Convert.ToDouble(_stor.BackupsRepo[i].TotalBackupsSize);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка BackupRepo");
+                    continue;
+                }
+
+            for (int i = 0; i < _stor.EML.Count; i++)
+                try
+                {
+                    if (_stor.EML[i].ExtensionAttribute.ToLower().Contains("дитиавп"))
+                        counterDit += Convert.ToDouble(_stor.EML[i].UtilizeTenant);
+                    else if (_stor.EML[i].Company.ToLower().Contains("сибинтек-софт") || _stor.EML[i].Company.ToLower().Contains("сфера"))
+                        counterSibSoft += Convert.ToDouble(_stor.EML[i].UtilizeTenant);
+                    else if (_stor.EML[i].Company.ToLower().Contains("экспертек"))
+                        counterExpertek += Convert.ToDouble(_stor.EML[i].UtilizeTenant);
+                    else
+                        counterUsiito += Convert.ToDouble(_stor.EML[i].UtilizeTenant);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка EMLBackup");
+                    continue;
+                }
+            double k_bEML = counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito);
+        
+            for (int i = 0; i < _stor.SIBCDCTapeBackup.Count; i++)
+            {
+                try
+                {
+                    counterTape += Convert.ToDouble(_stor.SIBCDCTapeBackup[i].Size) / Math.Pow(1024, 3);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка SIBCDCTapeBackup");
+                    continue;
+                }
             }
+            double k_bEMLTape = counterTape / (counterDit + counterSibSoft + counterExpertek + counterUsiito);
         }
     }
 }
