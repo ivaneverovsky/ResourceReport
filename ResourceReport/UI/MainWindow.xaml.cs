@@ -63,15 +63,5 @@ namespace ResourceReport
         {
             MessageBox.Show("Здесь будет выгружаться файл");
         }
-
-
-        //private void BuildUI()
-        //{
-        //    List<IaaS> iaasList = _fl.CollectIaaS();
-        //    for (int i = 0; i < iaasList.Count; i++)
-        //    {
-        //        IaaSListView.Items.Add(iaasList[i]);
-        //    }
-        //}
     }
 }

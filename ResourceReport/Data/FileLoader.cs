@@ -17,7 +17,7 @@ namespace ResourceReport.Data
         string contractName = "";
         public void LoadFile(OpenFileDialog ofd)
         {
-            _calc.ClearStore();
+            //_calc.ClearStore();
 
             try
             {
@@ -287,34 +287,36 @@ namespace ResourceReport.Data
         public int Check() { return _calc.CollectCounter(); }
         public void Work()
         {
-            //Stopwatch sw = new Stopwatch();
-            //sw.Start();
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
 
-            //Task[] tasks = new Task[4]
-            //{
-            //    new Task(() => _calc.MursCount()),
-            //    new Task(() => _calc.VDSCount()),
-            //    new Task(() => _calc.MursCount()),
-            //    new Task(() => _calc.MursCount())
-            //};
+            Task[] tasks = new Task[2]
+            {
+                new Task(() => _calc.MursCount()),
+                new Task(() => _calc.VDSCount()),
+                //new Task(() => _calc.MursCount())
+            };
 
-            //foreach (var task in tasks)
-            //    task.Start();
+            foreach (var task in tasks)
+                task.Start();
 
-            //try
-            //{
-            //    Task.WaitAll(tasks);
-            //    sw.Stop();
-            //    MessageBox.Show("Обновил данные за: " + sw.Elapsed.ToString(), "Посчитал");
-            //    sw.Reset();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Ошибка");
-            //}
+            try
+            {
+                Task.WaitAll(tasks);
+                _calc.BackupCount();
+                sw.Stop();
+                MessageBox.Show("Обновил данные за: " + sw.Elapsed.ToString(), "Посчитал");
+                sw.Reset();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка");
+                return;
+            }
 
             //_calc.MursCount();
-            _calc.VDSCount();
+            //_calc.VDSCount();
+            //_calc.BackupCount();
         }
     }
 }

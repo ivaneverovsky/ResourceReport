@@ -276,6 +276,9 @@ namespace ResourceReport.Data
                     string price = value[nvdsw.id8].ToString();
                     string extensionAttribute = value[nvdsw.id9].ToString();
 
+                    if (tenant == "")
+                        return;
+
                     var vds_item = new VDS(samAccountName, company, tenant, department, occupation, profileCapacity, utilizeBackup, lastConnection, price, extensionAttribute);
                     _stor.AddVDS(vds_item);
                 }
@@ -581,75 +584,170 @@ namespace ResourceReport.Data
         //result builder TODO: collect changes
         public void MursCount()
         {
-            List<Murs> mursList = new List<Murs>();
-            List<EML> emlList = new List<EML>();
-            List<EMLRecord> emlRecordList = new List<EMLRecord>();
-
-            foreach (var item in _stor.Murs)
-                if (item.Company.ToLower().Contains("айэмти") || item.Company.ToLower().Contains("экспертек") || item.Company.ToLower().Contains("сибинтек-софт") || item.ExtensionAttribute7.ToLower().Contains("усиито") || item.ExtensionAttribute7.ToLower().Contains("дитиавп"))
-                    mursList.Add(item);
+            List<Murs> mursList = _stor.Murs;
+            //List<EML> emlList = new List<EML>();
+            //List<EMLRecord> emlRecordList = new List<EMLRecord>();
 
             for (int i = 0; i < _stor.EML.Count; i++)
                 for (int j = 0; j < mursList.Count; j++)
-                    if (_stor.EML[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].Enabled == "True")
+                    try
                     {
-                        _stor.RemoveEML(_stor.EML[i]);
+                        if (_stor.EML[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].Enabled == "True")
+                        {
+                            _stor.RemoveEML(_stor.EML[i]);
 
-                        var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] {'(', ')'}), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
-                        _stor.AddEML(eml_item);
-                        emlList.Add(eml_item);
+                            var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] { '(', ')' }), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
+                            _stor.AddEML(eml_item);
+                            //emlList.Add(eml_item);
 
-                        mursList.RemoveAt(j);
-                        j--;
+                            mursList.RemoveAt(j);
+                            j--;
+                        }
+                        else if (_stor.EML[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].ExtensionAttribute7.ToLower() == "дитиавп")
+                        {
+                            _stor.RemoveEML(_stor.EML[i]);
+
+                            var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] { '(', ')' }), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
+                            _stor.AddEML(eml_item);
+                            //emlList.Add(eml_item);
+
+                            mursList.RemoveAt(j);
+                            j--;
+                        }
                     }
-                    else if (_stor.EML[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].ExtensionAttribute7.ToLower() == "дитиавп")
+                    catch (Exception ex)
                     {
-                        _stor.RemoveEML(_stor.EML[i]);
-
-                        var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] { '(', ')' }), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
-                        _stor.AddEML(eml_item);
-                        emlList.Add(eml_item);
-
-                        mursList.RemoveAt(j);
-                        j--;
+                        MessageBox.Show(ex.Message, "Ошибка EML");
+                        continue;
                     }
 
             for (int i = 0; i < _stor.EMLRecord.Count; i++)
                 for (int j = 0; j < mursList.Count; j++)
-                    if (_stor.EMLRecord[i].SAMAccountName == mursList[j].SAMAccountName)
+                    try
                     {
-                        _stor.RemoveEMLRecord(_stor.EMLRecord[i]);
+                        if (_stor.EMLRecord[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].Enabled == "False")
+                        {
+                            _stor.RemoveEMLRecord(_stor.EMLRecord[i]);
 
-                        var emlRecord_item = new EMLRecord(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] { '(', ')' }), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].LastLogonTimeDate, "стоимость", "защита");
-                        _stor.AddEMLRecord(emlRecord_item);
-                        emlRecordList.Add(emlRecord_item);
+                            var emlRecord_item = new EMLRecord(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] { '(', ')' }), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].LastLogonTimeDate, "стоимость", "защита");
+                            _stor.AddEMLRecord(emlRecord_item);
+                            //emlRecordList.Add(emlRecord_item);
 
-                        mursList.RemoveAt(j);
-                        j--;
+                            mursList.RemoveAt(j);
+                            j--;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Ошибка EMLRecord");
+                        continue;
                     }
         }
         public void VDSCount()
         {
-            List<Rds> rdsList = new List<Rds>();
+            List<Rds> rdsList = _stor.Rds;
+            //List<VDS> vdsList = new List<VDS>();
+            //List<VDSRecord> vdsRecordList = new List<VDSRecord>();
 
-            DateTime last30 = DateTime.Today.AddDays(-30);
+            DateTime last30 = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(-1).Month, 21);
+            DateTime currentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+
             CultureInfo.CurrentCulture = new CultureInfo("ru-RU");
-
-            foreach (var item in _stor.Rds)
-                if (item.Company.ToLower().Contains("айэмти") || item.Company.ToLower().Contains("экспертек") || item.Company.ToLower().Contains("сибинтек-софт") || item.ExtensionAttribute.ToLower().Contains("усиито") || item.ExtensionAttribute.ToLower().Contains("дитиавп"))
-                    rdsList.Add(item);
-            int k = 0;
-            for (int i = 0; i < _stor.Rds.Count; i++)
-            {
+            
+            for (int i = 0; i < _stor.VDS.Count; i++)
                 for (int j = 0; j < rdsList.Count; j++)
-                {
-                    if (_stor.Rds[i].SAMAccountName == rdsList[j].SAMAccountName && DateTime.Parse(rdsList[j].LastConnection) >= last30)
+                    try
                     {
-                        k++;
+                        if (_stor.VDS[i].SAMAccountName == rdsList[j].SAMAccountName && DateTime.Parse(rdsList[j].LastConnection) >= last30 && rdsList[j].ExtensionAttribute.ToLower() == "дитиавп")
+                        {
+                            _stor.RemoveVDS(_stor.VDS[i]);
+
+                            var vds_item = new VDS(rdsList[j].SAMAccountName, rdsList[j].Company, rdsList[j].Tenant, rdsList[j].Department, rdsList[j].Occupation, rdsList[j].ActualProfileSize, (Convert.ToDouble(rdsList[j].ActualProfileSize) * 1.65).ToString().Trim(new char[] { '(', ')' }), rdsList[j].LastConnection, "стоимость", rdsList[j].ExtensionAttribute);
+                            _stor.AddVDS(vds_item);
+                            //vdsList.Add(vds_item);
+
+                            rdsList.RemoveAt(j);
+                            j--;
+                        }
+                        else if (_stor.VDS[i].SAMAccountName == rdsList[j].SAMAccountName && DateTime.Parse(rdsList[j].LastConnection) >= currentMonth)
+                        {
+                            _stor.RemoveVDS(_stor.VDS[i]);
+
+                            var vds_item = new VDS(rdsList[j].SAMAccountName, rdsList[j].Company, rdsList[j].Tenant, rdsList[j].Department, rdsList[j].Occupation, rdsList[j].ActualProfileSize, (Convert.ToDouble(rdsList[j].ActualProfileSize) * 1.65).ToString().Trim(new char[] { '(', ')' }), rdsList[j].LastConnection, "стоимость", rdsList[j].ExtensionAttribute);
+                            _stor.AddVDS(vds_item);
+                            //vdsList.Add(vds_item);
+
+                            rdsList.RemoveAt(j);
+                            j--;
+                        }
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Ошибка VDS");
+                        continue;
+                    }
+
+            for (int i = 0; i < _stor.VDSRecord.Count; i++)
+                for (int j = 0; j < rdsList.Count; j++)
+                    if (_stor.VDSRecord[i].SAMAccountName == rdsList[j].SAMAccountName)
+                    {
+                        try
+                        {
+                            _stor.RemoveVDSRecord(_stor.VDSRecord[i]);
+
+                            var vdsRecord_item = new VDSRecord(rdsList[j].SAMAccountName, rdsList[j].Company, rdsList[j].Tenant, rdsList[j].Department, rdsList[j].Occupation, rdsList[j].ActualProfileSize, (Convert.ToDouble(rdsList[j].ActualProfileSize) * 1.65).ToString().Trim(new char[] { '(', ')' }), rdsList[j].LastConnection, "стоимость");
+                            _stor.AddVDSRecord(vdsRecord_item);
+                            //vdsRecordList.Add(vdsRecord_item);
+
+                            rdsList.RemoveAt(j);
+                            j--;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Ошибка VDSRecord");
+                            continue;
+                        }
+                    }
+        }
+        public void BackupCount()
+        {
+            double counter = 0.0;
+            double counterDit = 0.0;
+            double counterSibSoft = 0.0;
+            double counterExpertek = 0.0;
+            double counterUsiito = 0.0;
+
+            for (int i = 0; i < _stor.Backup.Count; i++)
+                if (_stor.Backup[i].Volume.Contains("RD"))
+                    try
+                    {
+                        counter += Convert.ToDouble(_stor.Backup[i].TotalCapacity);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Ошибка Backup");
+                        continue;
+                    }
+
+            for (int i = 0; i < _stor.VDS.Count; i++)
+            {
+                try
+                {
+                    if (_stor.VDS[i].ExtensionAttribute.ToLower().Contains("дитиавп"))
+                        counterDit += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
+                    else if (_stor.VDS[i].Company.ToLower().Contains("сибинтек-софт"))
+                        counterSibSoft += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
+                    else if (_stor.VDS[i].Company.ToLower().Contains("экспертек"))
+                        counterExpertek += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
+                    else
+                        counterUsiito += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка VDSBackup");
+                    continue;
                 }
             }
-            MessageBox.Show(k.ToString());
         }
     }
 }

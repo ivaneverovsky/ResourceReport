@@ -48,12 +48,20 @@ namespace ResourceReport.Data
         {
             _vds.Add(vds);
         }
+        public void RemoveVDS(VDS vds)
+        {
+            _vds.Remove(vds);
+        }
 
         private List<VDSRecord> _vdsrecord = new List<VDSRecord>();
         public List<VDSRecord> VDSRecord { get { return _vdsrecord; } }
         public void AddVDSRecord(VDSRecord record)
         {
             _vdsrecord.Add(record);
+        }
+        public void RemoveVDSRecord(VDSRecord record)
+        {
+            _vdsrecord.Remove(record);
         }
 
         private List<FPS> _fps = new List<FPS>();
@@ -82,13 +90,15 @@ namespace ResourceReport.Data
         public List<Murs> Murs { get { return _murs; } }
         public void AddMURS(Murs murs)
         {
-            _murs.Add(murs);
+            if (murs.Company.ToLower().Contains("айэмти") || murs.Company.ToLower().Contains("экспертек") || murs.Company.ToLower().Contains("сибинтек-софт") || murs.ExtensionAttribute7.ToLower().Contains("усиито") || murs.ExtensionAttribute7.ToLower().Contains("дитиавп"))
+                _murs.Add(murs);
         }
         private List<Rds> _rds = new List<Rds>();
         public List<Rds> Rds { get { return _rds; } }
         public void AddRDS(Rds rds)
         {
-            _rds.Add(rds);
+            if (rds.Company.ToLower().Contains("айэмти") || rds.Company.ToLower().Contains("экспертек") || rds.Company.ToLower().Contains("сибинтек-софт") || rds.ExtensionAttribute.ToLower().Contains("усиито") || rds.ExtensionAttribute.ToLower().Contains("дитиавп"))
+                _rds.Add(rds);
         }
         private List<Backup> _backup = new List<Backup>();
         public List<Backup> Backup { get { return _backup;} }
