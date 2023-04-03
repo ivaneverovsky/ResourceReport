@@ -534,11 +534,11 @@ namespace ResourceReport.Data
 
                 try
                 {
-                    if (value[0].ToString() != "NULL")
-                    {
-                        var sibCDCTapeBackup_item = new SIBCDCTapeBackup(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString());
-                        _stor.AddSIBCDCTapeBackup(sibCDCTapeBackup_item);
-                    }
+                    if (value[0].ToString() == "NULL")
+                        continue;
+                        
+                    var sibCDCTapeBackup_item = new SIBCDCTapeBackup(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString());
+                    _stor.AddSIBCDCTapeBackup(sibCDCTapeBackup_item);
                 }
                 catch (Exception ex)
                 {
