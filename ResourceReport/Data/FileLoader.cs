@@ -17,142 +17,145 @@ namespace ResourceReport.Data
         string contractName = "";
         public void LoadFile(OpenFileDialog ofd)
         {
-            //_calc.ClearStore();
+            string[] files = ofd.FileNames;
 
-            try
+            foreach (var item in files)
             {
-                using (var stream = File.Open(ofd.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                try
                 {
-                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    using (var stream = File.Open(item, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
-                        var result = reader.AsDataSet(); //get data from file
-                        string contract = ofd.FileName.ToLower();
-                        for (int i = 0; i < contract.Length; i++)
-                            if (char.IsPunctuation(contract[i]))
-                                contract = contract.Replace(contract[i].ToString(), "");
+                        using (var reader = ExcelReaderFactory.CreateReader(stream))
+                        {
+                            var result = reader.AsDataSet(); //get data from file
+                            string contract = item.ToLower();
+                            for (int i = 0; i < contract.Length; i++)
+                                if (char.IsPunctuation(contract[i]))
+                                    contract = contract.Replace(contract[i].ToString(), "");
 
-                        if (contract.Contains("экспертек"))
-                        {
-                            contractName = "Экспертек";
-                            _calc.AddContract(contractName);
-                            MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
-                        }
-                        else if (contract.Contains("дитиавп"))
-                        {
-                            contractName = "ДИТиАВП";
-                            _calc.AddContract(contractName);
-                            MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
-                        }
-                        else if (contract.Contains("усиито"))
-                        {
-                            contractName = "УСИиТО";
-                            _calc.AddContract(contractName);
-                            MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
-                        }
-                        else if (contract.Contains("сибинтексофт") || contract.Contains("сибинтек софт"))
-                        {
-                            contractName = "Сибинтек софт";
-                            _calc.AddContract(contractName);
-                            MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Не удалось определить контракт.", "Ошибка"); 
-                            return;
-                        }
-
-                        for (int i = 0; i < result.Tables.Count; i++)
-                        {
-                            var table = result.Tables[i];
-                            string tablename = table.TableName.ToLower().Replace("ё", "е");
-
-                            for (int j = 0; j < tablename.Length; j++)
-                                if (char.IsPunctuation(tablename[j]))
-                                    tablename = tablename.Replace(tablename[j].ToString(), "");
-
-                            switch (tablename)
+                            if (contract.Contains("экспертек"))
                             {
-                                case "iaas":
-                                    List<object> iaas = new List<object>();
-                                    for (int j = 0; j < table.Rows.Count; j++)
-                                    {
-                                        List<object> rows = new List<object>();
-                                        for (int k = 0; k < table.Columns.Count; k++)
-                                            rows.Add(table.Rows[j][k]);
-                                        iaas.Add(rows);
-                                    }
-                                    _calc.CreateIaaS(iaas);
-                                    break;
-                                case "eml":
-                                    List<object> eml = new List<object>();
-                                    for (int j = 0; j < table.Rows.Count; j++)
-                                    {
-                                        List<object> rows = new List<object>();
-                                        for (int k = 0; k < table.Columns.Count; k++)
-                                            rows.Add(table.Rows[j][k]);
-                                        eml.Add(rows);
-                                    }
-                                    _calc.CreateEML(eml);
-                                    break;
-                                case "eml архив":
-                                    List<object> eml_rec = new List<object>();
-                                    for (int j = 0; j < table.Rows.Count; j++)
-                                    {
-                                        List<object> rows = new List<object>();
-                                        for (int k = 0; k < table.Columns.Count; k++)
-                                            rows.Add(table.Rows[j][k]);
-                                        eml_rec.Add(rows);
-                                    }
-                                    _calc.CreateEMLRec(eml_rec);
-                                    break;
-                                case "vds":
-                                    List<object> vds = new List<object>();
-                                    for (int j = 0; j < table.Rows.Count; j++)
-                                    {
-                                        List<object> rows = new List<object>();
-                                        for (int k = 0; k < table.Columns.Count; k++)
-                                            rows.Add(table.Rows[j][k]);
-                                        vds.Add(rows);
-                                    }
-                                    _calc.CreateVDS(vds);
-                                    break;
-                                case "vds архив":
-                                    List<object> vds_rec = new List<object>();
-                                    for (int j = 0; j < table.Rows.Count; j++)
-                                    {
-                                        List<object> rows = new List<object>();
-                                        for (int k = 0; k < table.Columns.Count; k++)
-                                            rows.Add(table.Rows[j][k]);
-                                        vds_rec.Add(rows);
-                                    }
-                                    _calc.CreateVDSRec(vds_rec);
-                                    break;
-                                case "fps":
-                                    List<object> fps = new List<object>();
-                                    for (int j = 0; j < table.Rows.Count; j++)
-                                    {
-                                        List<object> rows = new List<object>();
-                                        for (int k = 0; k < table.Columns.Count; k++)
-                                            rows.Add(table.Rows[j][k]);
-                                        fps.Add(rows);
-                                    }
-                                    _calc.CreateFPS(fps);
-                                    break;
-                                default:
-                                    break;
+                                contractName = "Экспертек";
+                                _calc.AddContract(contractName);
+                                MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                            }
+                            else if (contract.Contains("дитиавп"))
+                            {
+                                contractName = "ДИТиАВП";
+                                _calc.AddContract(contractName);
+                                MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                            }
+                            else if (contract.Contains("усиито"))
+                            {
+                                contractName = "УСИиТО";
+                                _calc.AddContract(contractName);
+                                MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                            }
+                            else if (contract.Contains("сибинтексофт") || contract.Contains("сибинтек софт"))
+                            {
+                                contractName = "Сибинтек софт";
+                                _calc.AddContract(contractName);
+                                MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Не удалось определить контракт.", "Ошибка");
+                                return;
+                            }
+
+                            for (int i = 0; i < result.Tables.Count; i++)
+                            {
+                                var table = result.Tables[i];
+                                string tablename = table.TableName.ToLower().Replace("ё", "е");
+
+                                for (int j = 0; j < tablename.Length; j++)
+                                    if (char.IsPunctuation(tablename[j]))
+                                        tablename = tablename.Replace(tablename[j].ToString(), "");
+
+                                switch (tablename)
+                                {
+                                    case "iaas":
+                                        List<object> iaas = new List<object>();
+                                        for (int j = 0; j < table.Rows.Count; j++)
+                                        {
+                                            List<object> rows = new List<object>();
+                                            for (int k = 0; k < table.Columns.Count; k++)
+                                                rows.Add(table.Rows[j][k]);
+                                            iaas.Add(rows);
+                                        }
+                                        _calc.CreateIaaS(iaas);
+                                        break;
+                                    case "eml":
+                                        List<object> eml = new List<object>();
+                                        for (int j = 0; j < table.Rows.Count; j++)
+                                        {
+                                            List<object> rows = new List<object>();
+                                            for (int k = 0; k < table.Columns.Count; k++)
+                                                rows.Add(table.Rows[j][k]);
+                                            eml.Add(rows);
+                                        }
+                                        _calc.CreateEML(eml);
+                                        break;
+                                    case "eml архив":
+                                        List<object> eml_rec = new List<object>();
+                                        for (int j = 0; j < table.Rows.Count; j++)
+                                        {
+                                            List<object> rows = new List<object>();
+                                            for (int k = 0; k < table.Columns.Count; k++)
+                                                rows.Add(table.Rows[j][k]);
+                                            eml_rec.Add(rows);
+                                        }
+                                        _calc.CreateEMLRec(eml_rec);
+                                        break;
+                                    case "vds":
+                                        List<object> vds = new List<object>();
+                                        for (int j = 0; j < table.Rows.Count; j++)
+                                        {
+                                            List<object> rows = new List<object>();
+                                            for (int k = 0; k < table.Columns.Count; k++)
+                                                rows.Add(table.Rows[j][k]);
+                                            vds.Add(rows);
+                                        }
+                                        _calc.CreateVDS(vds);
+                                        break;
+                                    case "vds архив":
+                                        List<object> vds_rec = new List<object>();
+                                        for (int j = 0; j < table.Rows.Count; j++)
+                                        {
+                                            List<object> rows = new List<object>();
+                                            for (int k = 0; k < table.Columns.Count; k++)
+                                                rows.Add(table.Rows[j][k]);
+                                            vds_rec.Add(rows);
+                                        }
+                                        _calc.CreateVDSRec(vds_rec);
+                                        break;
+                                    case "fps":
+                                        List<object> fps = new List<object>();
+                                        for (int j = 0; j < table.Rows.Count; j++)
+                                        {
+                                            List<object> rows = new List<object>();
+                                            for (int k = 0; k < table.Columns.Count; k++)
+                                                rows.Add(table.Rows[j][k]);
+                                            fps.Add(rows);
+                                        }
+                                        _calc.CreateFPS(fps);
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
                     }
+                    if (_calc.CollectCounter() > 0)
+                        MessageBox.Show("Файл загружен.", "Готово");
+                    else
+                        MessageBox.Show("Данных не найдено, загрузите другой файл.", "Внимание");
                 }
-                if (_calc.CollectCounter() > 0)
-                    MessageBox.Show("Файл загружен.", "Готово");
-                else
-                    MessageBox.Show("Данных не найдено, загрузите другой файл.", "Внимание");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Невозможно загрузить файл: " + ex.Message, "Ошибка");
-                return;
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Невозможно загрузить файл: " + ex.Message, "Ошибка");
+                    return;
+                }
             }
         }
         public void Upload(OpenFileDialog ofd)
@@ -289,32 +292,27 @@ namespace ResourceReport.Data
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-
-            Task[] tasks = new Task[2]
+            Task[] tasks = new Task[5]
             {
                 new Task(() => _calc.MursCount()),
-                new Task(() => _calc.VDSCount())
+                new Task(() => _calc.VDSCount()),
+                new Task(() => _calc.BackupVDSCount()),
+                new Task(() => _calc.BackupEMLCount()),
+                new Task(() => _calc.FPSCount())
             };
 
             foreach (var task in tasks)
                 task.Start();
 
-            try
+            while (sw.Elapsed.TotalSeconds < 30)
             {
-                Task.WaitAll(tasks);
+                if (Task.CompletedTask.IsCompleted && _calc.Koef().Count != 0)
+                {
+                    List<KoefBackup> list = _calc.Koef();
+                    MessageBox.Show("RDS: " + list[0].BackupRDS + "\nEML: " + list[0].BackupEML + "\nTAPE: " + list[0].BackupEMLTape, "Koef");
+                    return;
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка");
-                return;
-            }
-
-            _calc.BackupVDSCount();
-            _calc.BackupEMLCount();
-
-            sw.Stop();
-            MessageBox.Show("Обновил данные за: " + sw.Elapsed.ToString(), "Посчитал");
-            sw.Reset();
         }
     }
 }

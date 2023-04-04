@@ -72,6 +72,7 @@
     <Compile Include="ModelsUpload\SIBIaaS.cs" />
     <Compile Include="ModelsUpload\Volume.cs" />
     <Compile Include="Models\Contract.cs" />
+    <Compile Include="Models\KoefBackup.cs" />
     <Compile Include="UI\NewEMLRecordWindow.xaml.cs">
       <DependentUpon>NewEMLRecordWindow.xaml</DependentUpon>
     </Compile>

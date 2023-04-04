@@ -97,7 +97,7 @@
             <ColumnDefinition Width="400*"/>
             <ColumnDefinition Width="200*"/>
         </Grid.ColumnDefinitions>
-        <Button Content="Загрузить отчет" Click="LoadFile" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="104" Grid.Row="2"/>
+        <Button Content="Загрузить отчеты" Click="LoadFile" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="104" Grid.Row="2"/>
         <Button Content="Загрузить данные" Click="Upload" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="104" Grid.Column="1" Grid.Row="2"/>
         <Button Grid.Column="2" Click="Count" Content="Вычислить" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Row="2"/>
         <Button Grid.Column="3" Click="Export" Content="Выгрузить" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>

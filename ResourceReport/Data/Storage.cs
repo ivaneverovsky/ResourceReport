@@ -84,6 +84,12 @@ namespace ResourceReport.Data
         {
             _reportrn.Add(reportRN);
         }
+        private List<KoefBackup> _koefBackup = new List<KoefBackup>();
+        public List<KoefBackup> KoefBackup { get { return _koefBackup; } }
+        public void AddKoefBackup(KoefBackup koefBackup)
+        {
+            _koefBackup.Add(koefBackup);
+        }
 
         //upload's reports
         private List<Murs> _murs = new List<Murs>();

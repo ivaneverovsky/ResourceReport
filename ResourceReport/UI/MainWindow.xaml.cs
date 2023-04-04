@@ -22,7 +22,8 @@ namespace ResourceReport
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
-                Filter = "Excel files|*.xlsx;*.xlsb;*.xls|All files (*.*)|*.*"
+                Filter = "Excel files|*.xlsx;*.xlsb;*.xls|All files (*.*)|*.*",
+                Multiselect = true
             };
             ofd.ShowDialog();
 

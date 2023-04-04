@@ -755,6 +755,15 @@ namespace ResourceReport.Data
                     continue;
                 }
             double k_b = counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito);
+
+            if (_stor.KoefBackup.Count == 0)
+            {
+                var koefBackup = new KoefBackup(k_b, 0.0, 0.0);
+                _stor.AddKoefBackup(koefBackup);
+            }
+            else
+                _stor.KoefBackup[0].BackupRDS = k_b;
+
         }
         public void BackupEMLCount()
         {
@@ -769,9 +778,8 @@ namespace ResourceReport.Data
             for (int i = 0; i < _stor.BackupsRepo.Count; i++)
                 try
                 {
-                    if (_stor.BackupsRepo[i].IncrementsSize != "" && _stor.BackupsRepo[i].IncrementsSize != "-" && _stor.BackupsRepo[i].IncrementsSize != "Increments Size, GB")
+                    if (_stor.BackupsRepo[i].VirtualMachine.ToLower().Contains("cdc-exch-") || _stor.BackupsRepo[i].VirtualMachine.ToLower().Contains("cdc-knot-"))
                         counter += Convert.ToDouble(_stor.BackupsRepo[i].TotalBackupsSize);
-
                 }
                 catch (Exception ex)
                 {
@@ -811,6 +819,25 @@ namespace ResourceReport.Data
                 }
             }
             double k_bEMLTape = counterTape / (counterDit + counterSibSoft + counterExpertek + counterUsiito);
+
+            if (_stor.KoefBackup.Count == 0)
+            {
+                var koefBackup = new KoefBackup(0.0, k_bEML, k_bEMLTape);
+                _stor.AddKoefBackup(koefBackup);
+            }
+            else
+            {
+                _stor.KoefBackup[0].BackupEML = k_bEML;
+                _stor.KoefBackup[0].BackupEMLTape = k_bEMLTape;
+            }
+        }
+        public void FPSCount()
+        {
+            //Task.Delay(2000);
+        }
+        public List<KoefBackup> Koef()
+        {
+            return _stor.KoefBackup;
         }
     }
 }
