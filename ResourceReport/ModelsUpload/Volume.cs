@@ -13,13 +13,15 @@ namespace ResourceReport.ModelsUpload
         public string AvailableCapacity { get; set; }
         public string TotalCapacity { get; set; }
         public string MountPath { get; set; }
-        public Volume(string volumeMain, string usedCapacity, string availableCapacity, string totalCapacity, string mountPath)
+        public string Backup { get; set; }
+        public Volume(string volumeMain, string usedCapacity, string availableCapacity, string totalCapacity, string mountPath, string backup)
         {
             VolumeMain = volumeMain;
             UsedCapacity = usedCapacity;
             AvailableCapacity = availableCapacity;
             TotalCapacity = totalCapacity;
             MountPath = mountPath;
+            Backup = backup;
         }
     }
 }

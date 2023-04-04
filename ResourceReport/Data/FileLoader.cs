@@ -14,7 +14,6 @@ namespace ResourceReport.Data
     internal class FileLoader
     {
         Calculations _calc = new Calculations();
-        string contractName = "";
         public void LoadFile(OpenFileDialog ofd)
         {
             string[] files = ofd.FileNames;
@@ -35,27 +34,27 @@ namespace ResourceReport.Data
 
                             if (contract.Contains("экспертек"))
                             {
-                                contractName = "Экспертек";
-                                _calc.AddContract(contractName);
-                                MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                                contract = "Экспертек";
+                                _calc.AddContract(contract);
+                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
                             }
                             else if (contract.Contains("дитиавп"))
                             {
-                                contractName = "ДИТиАВП";
-                                _calc.AddContract(contractName);
-                                MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                                contract = "ДИТиАВП";
+                                _calc.AddContract(contract);
+                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
                             }
                             else if (contract.Contains("усиито"))
                             {
-                                contractName = "УСИиТО";
-                                _calc.AddContract(contractName);
-                                MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                                contract = "УСИиТО";
+                                _calc.AddContract(contract);
+                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
                             }
                             else if (contract.Contains("сибинтексофт") || contract.Contains("сибинтек софт"))
                             {
-                                contractName = "Сибинтек софт";
-                                _calc.AddContract(contractName);
-                                MessageBox.Show("Загружаемый контракт: " + contractName, "Внимание");
+                                contract = "Сибинтек софт";
+                                _calc.AddContract(contract);
+                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
                             }
                             else
                             {
@@ -83,7 +82,7 @@ namespace ResourceReport.Data
                                                 rows.Add(table.Rows[j][k]);
                                             iaas.Add(rows);
                                         }
-                                        _calc.CreateIaaS(iaas);
+                                        _calc.CreateIaaS(iaas, contract);
                                         break;
                                     case "eml":
                                         List<object> eml = new List<object>();
@@ -290,28 +289,24 @@ namespace ResourceReport.Data
         public int Check() { return _calc.CollectCounter(); }
         public void Work()
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            Task[] tasks = new Task[5]
+            Task[] tasks = new Task[6]
             {
                 new Task(() => _calc.MursCount()),
                 new Task(() => _calc.VDSCount()),
                 new Task(() => _calc.BackupVDSCount()),
                 new Task(() => _calc.BackupEMLCount()),
-                new Task(() => _calc.FPSCount())
+                new Task(() => _calc.FPSCount()),
+                new Task(() => _calc.IaaSCount())
             };
 
             foreach (var task in tasks)
                 task.Start();
 
-            while (sw.Elapsed.TotalSeconds < 30)
+            if (Task.CompletedTask.IsCompleted && _calc.Koef().Count != 0)
             {
-                if (Task.CompletedTask.IsCompleted && _calc.Koef().Count != 0)
-                {
-                    List<KoefBackup> list = _calc.Koef();
-                    MessageBox.Show("RDS: " + list[0].BackupRDS + "\nEML: " + list[0].BackupEML + "\nTAPE: " + list[0].BackupEMLTape, "Koef");
-                    return;
-                }
+                List<KoefBackup> list = _calc.Koef();
+                MessageBox.Show("RDS: " + list[0].BackupRDS + "\nEML: " + list[0].BackupEML + "\nTAPE: " + list[0].BackupEMLTape, "Koef");
+                return;
             }
         }
     }

@@ -27,7 +27,7 @@ namespace ResourceReport.Data
             var contract_item = new Contract(contract);
             _stor.AddContract(contract_item);
         }
-        public void CreateIaaS(List<object> iaas)
+        public void CreateIaaS(List<object> iaas, string contractName)
         {
             List<object> columns = (List<object>)iaas[0];
 
@@ -86,7 +86,7 @@ namespace ResourceReport.Data
                     string siem = value[nisw.id20].ToString();
                     string skazi = value[nisw.id21].ToString();
 
-                    var iaasItem = new IaaS(virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi);
+                    var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, "color");
                     _stor.AddIaaS(iaasItem);
                 }
                 catch (Exception ex)
@@ -480,7 +480,7 @@ namespace ResourceReport.Data
 
                 try
                 {
-                    var volume_item = new Volume(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString());
+                    var volume_item = new Volume(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString(), "0");
                     _stor.AddVolume(volume_item);
                 }
                 catch (Exception ex)
@@ -586,6 +586,7 @@ namespace ResourceReport.Data
 
         //collect results  
         public int CollectCounter() { return _stor.EML.Count + _stor.EMLRecord.Count + _stor.FPS.Count + _stor.IaaS.Count + _stor.VDS.Count + _stor.VDSRecord.Count; }
+        public List<KoefBackup> Koef() { return _stor.KoefBackup; }
 
         //result builder TODO: collect changes
         public void MursCount()
@@ -833,11 +834,23 @@ namespace ResourceReport.Data
         }
         public void FPSCount()
         {
-            //Task.Delay(2000);
+            for (int i = 0; i < _stor.Backup.Count; i++)
+                for (int j = 0; j < _stor.Volume.Count; j++)
+                    if (_stor.Backup[i].Volume.Contains(_stor.Volume[j].VolumeMain))
+                        _stor.Volume[j].Backup = _stor.Backup[i].UsedCapacity;
+
+            for (int i = 0; i < _stor.FPS.Count; i++)
+                for (int j = 0; j < _stor.Volume.Count; j++)
+                    if (_stor.FPS[i].Volume.Contains(_stor.Volume[j].VolumeMain))
+                    {
+                        _stor.FPS[i].VolumeCapacity = _stor.Volume[j].UsedCapacity;
+                        _stor.FPS[i].FreeSpace = _stor.Volume[j].AvailableCapacity;
+                        _stor.FPS[i].Backup = _stor.Volume[j].Backup;
+                    }
         }
-        public List<KoefBackup> Koef()
+        public void IaaSCount()
         {
-            return _stor.KoefBackup;
+
         }
     }
 }

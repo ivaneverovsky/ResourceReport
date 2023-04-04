@@ -4,6 +4,7 @@ namespace ResourceReport.Models
 {
     internal class IaaS
     {
+        public string ContractName { get; set; }
         public string VirtualizationPlatform { get; set; }
         public string Project { get; set; }
         public string VMName { get; set; }
@@ -26,9 +27,11 @@ namespace ResourceReport.Models
         public string AVZ { get; set; }
         public string SIEM { get; set; }
         public string SKAZI { get; set; }
+        public string Color { get; set; }
 
-        public IaaS(string virtualizationPlatform, string project, string vMName, string fQDN, string iP, string disk, string cPU, string rAM, string oS, string backup, string backupTape, string vMCreation, string iSName, string tenant, string owner, string price, string reqCreate, string reqDelete, string reqChange, string aVZ, string sIEM, string sKAZI)
+        public IaaS(string contractName, string virtualizationPlatform, string project, string vMName, string fQDN, string iP, string disk, string cPU, string rAM, string oS, string backup, string backupTape, string vMCreation, string iSName, string tenant, string owner, string price, string reqCreate, string reqDelete, string reqChange, string aVZ, string sIEM, string sKAZI, string color)
         {
+            ContractName = contractName;
             VirtualizationPlatform = virtualizationPlatform;
             Project = project;
             VMName = vMName;
@@ -51,6 +54,7 @@ namespace ResourceReport.Models
             AVZ = aVZ;
             SIEM = sIEM;
             SKAZI = sKAZI;
+            Color = color;
         }
     }
 }
