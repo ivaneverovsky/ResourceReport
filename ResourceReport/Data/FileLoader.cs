@@ -1,11 +1,9 @@
 ﻿using ExcelDataReader;
 using Microsoft.Win32;
-using ResourceReport.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -289,25 +287,31 @@ namespace ResourceReport.Data
         public int Check() { return _calc.CollectCounter(); }
         public void Work()
         {
-            Task[] tasks = new Task[6]
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            Task[] tasks = new Task[7]
             {
                 new Task(() => _calc.MursCount()),
                 new Task(() => _calc.VDSCount()),
                 new Task(() => _calc.BackupVDSCount()),
                 new Task(() => _calc.BackupEMLCount()),
                 new Task(() => _calc.FPSCount()),
-                new Task(() => _calc.IaaSCount())
+                new Task(() => _calc.IaaSCount_v1()),
+                new Task(() => _calc.IaaSCount_v2())
             };
 
             foreach (var task in tasks)
                 task.Start();
-
-            if (Task.CompletedTask.IsCompleted && _calc.Koef().Count != 0)
-            {
-                List<KoefBackup> list = _calc.Koef();
-                MessageBox.Show("RDS: " + list[0].BackupRDS + "\nEML: " + list[0].BackupEML + "\nTAPE: " + list[0].BackupEMLTape, "Koef");
-                return;
-            }
+            //if (Task.CompletedTask.IsCompleted && _calc.Koef().Count != 0)
+            //{
+            //    List<KoefBackup> list = _calc.Koef();
+            //    MessageBox.Show("RDS: " + list[0].BackupRDS + "\nEML: " + list[0].BackupEML + "\nTAPE: " + list[0].BackupEMLTape, "Koef");
+            //    return;
+            //}
+            Task.WaitAll(tasks);
+            sw.Stop();
+            MessageBox.Show("Расчет выполнен: " + sw.Elapsed.ToString(), "Готово");
+            sw.Reset();
         }
     }
 }

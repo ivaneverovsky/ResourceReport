@@ -56,7 +56,6 @@ namespace ResourceReport.UI
             combo1_Copy19.SelectedIndex = 20;
             combo1_Copy20.SelectedIndex = 21;
         }
-
         private void ChooseColumns(object sender, RoutedEventArgs e)
         {
             id0 = combo1.SelectedIndex;

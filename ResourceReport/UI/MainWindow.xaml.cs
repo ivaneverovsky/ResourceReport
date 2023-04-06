@@ -16,6 +16,7 @@ namespace ResourceReport
         public MainWindow()
         {
             InitializeComponent();
+            //btnCount.IsEnabled = false;
         }
 
         private void LoadFile(object sender, RoutedEventArgs e)
@@ -34,6 +35,8 @@ namespace ResourceReport
             }
 
             _fl.LoadFile(ofd);
+
+            //btnCount.IsEnabled = true;
         }
         private void Upload(object sender, RoutedEventArgs e)
         {
@@ -60,6 +63,8 @@ namespace ResourceReport
                 return;
             }
             _fl.Work();
+
+            //btnCount.IsEnabled = false;
         }
         private void Export(object sender, RoutedEventArgs e)
         {

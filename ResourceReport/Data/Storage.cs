@@ -91,7 +91,7 @@ namespace ResourceReport.Data
             _koefBackup.Add(koefBackup);
         }
 
-        //upload's reports
+        //reports new info (uploads)
         private List<Murs> _murs = new List<Murs>();
         public List<Murs> Murs { get { return _murs; } }
         public void AddMURS(Murs murs)
@@ -142,11 +142,19 @@ namespace ResourceReport.Data
         {
             _sibIaaS.Add(sibIaaS);
         }
+        public void RemoveSIBIaaS(SIBIaaS sibIaaS)
+        {
+            _sibIaaS.Remove(sibIaaS);
+        }
         private List<AllSibintek> _allSibintek = new List<AllSibintek>();
         public List<AllSibintek> AllSibintek { get { return _allSibintek; } }
         public void AddAllSibintek(AllSibintek allSibintek)
         {
             _allSibintek.Add(allSibintek);
+        }
+        public void RemoveAllSibintek(AllSibintek allSibintek)
+        {
+            _allSibintek.Remove(allSibintek);
         }
 
         //clear report store

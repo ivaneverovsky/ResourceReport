@@ -3,17 +3,8 @@ using ResourceReport.ModelsUpload;
 using ResourceReport.UI;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.Primitives;
-using System.Windows.Documents;
 
 namespace ResourceReport.Data
 {
@@ -30,6 +21,7 @@ namespace ResourceReport.Data
         public void CreateIaaS(List<object> iaas, string contractName)
         {
             List<object> columns = (List<object>)iaas[0];
+            bool bull = false;
 
             for (int i = 0; i < columns.Count; i++)
             {
@@ -88,6 +80,8 @@ namespace ResourceReport.Data
 
                     var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, "color");
                     _stor.AddIaaS(iaasItem);
+
+                    bull = true;
                 }
                 catch (Exception ex)
                 {
@@ -95,12 +89,13 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.IaaS.Count == 0)
+            if (!bull)
                 MessageBox.Show("Данных IaaS не найдено.", "Внимание");
         }
         public void CreateEML(List<object> eml) 
         {
             List<object> columns = (List<object>)eml[0];
+            bool bull = false;
 
             for (int i = 0; i < columns.Count; i++)
             {
@@ -161,6 +156,8 @@ namespace ResourceReport.Data
 
                     var eml_item = new EML(mailBoxType, company, samAccountName, tenant, department, occupation, owner, ownerMail, tenantMail, utilizeTenant, utilizeBackup, utilizeBackupTape, quota, creationDate, lastConnection, vmValidity, description, reason, price, accountStatus, extensionAttribute, security);
                     _stor.AddEML(eml_item);
+
+                    bull = true;
                 }
                 catch (Exception ex)
                 {
@@ -168,12 +165,13 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.EML.Count == 0)
+            if (!bull)
                 MessageBox.Show("Данных EML не найдено.", "Внимание");
         }
         public void CreateEMLRec(List<object> eml_rec)
         {
             List<object> columns = (List<object>)eml_rec[0];
+            bool bull = false;
 
             for (int i = 0; i < columns.Count; i++)
             {
@@ -223,6 +221,8 @@ namespace ResourceReport.Data
 
                     var eml_rec_item = new EMLRecord(mailBoxType, company, samAccountName, tenant, department, occupation, tenantMail, utilizeTenant, utilizeBackup, utilizeBackupTape, quota, lastConnection, price, security);
                     _stor.AddEMLRecord(eml_rec_item);
+
+                    bull = true;
                 }
                 catch (Exception ex)
                 {
@@ -230,12 +230,13 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.EMLRecord.Count == 0)
+            if (!bull)
                 MessageBox.Show("Данных EML Архив не найдено.", "Внимание");
         }
         public void CreateVDS(List<object> vds)
         {
             List<object> columns = (List<object>)vds[0];
+            bool bull = false;
 
             for (int i = 0; i < columns.Count; i++)
             {
@@ -284,6 +285,8 @@ namespace ResourceReport.Data
 
                     var vds_item = new VDS(samAccountName, company, tenant, department, occupation, profileCapacity, utilizeBackup, lastConnection, price, extensionAttribute);
                     _stor.AddVDS(vds_item);
+
+                    bull = true;
                 }
                 catch (Exception ex)
                 {
@@ -291,12 +294,13 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.VDS.Count == 0)
+            if (!bull)
                 MessageBox.Show("Данных VDS не найдено.", "Внимание");
         }
         public void CreateVDSRec(List<object> vds_rec)
         {
             List<object> columns = (List<object>)vds_rec[0];
+            bool bull = false;
 
             for (int i = 0; i < columns.Count; i++)
             {
@@ -341,6 +345,8 @@ namespace ResourceReport.Data
 
                     var vds_rec_item = new VDSRecord(samAccountName, company, tenant, department, occupation, profileCapacity, utilizeBackup, lastConnection, price);
                     _stor.AddVDSRecord(vds_rec_item);
+
+                    bull = true;
                 }
                 catch (Exception ex)
                 {
@@ -348,12 +354,13 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.VDSRecord.Count == 0)
+            if (!bull)
                 MessageBox.Show("Данных VDS Архив не найдено.", "Внимание");
         }
         public void CreateFPS(List<object> fps)
         {
             List<object> columns = (List<object>)fps[0];
+            bool bull = false;
 
             for (int i = 0; i < columns.Count; i++)
             {
@@ -394,6 +401,8 @@ namespace ResourceReport.Data
 
                     var fps_item = new FPS(volume, volumeCapacity, freeSapce, backup, sharingFolder);
                     _stor.AddFPS(fps_item);
+
+                    bull = true;
                 }
                 catch (Exception ex)
                 {
@@ -401,12 +410,12 @@ namespace ResourceReport.Data
                     return;
                 }
             }
-            if (_stor.FPS.Count == 0)
+            if (!bull)
                 MessageBox.Show("Данных FPS не найдено.", "Внимание");
         }
         public void CreateReport()
         {
-            
+
         }
         public void CreateReportRN()
         {
@@ -588,7 +597,7 @@ namespace ResourceReport.Data
         public int CollectCounter() { return _stor.EML.Count + _stor.EMLRecord.Count + _stor.FPS.Count + _stor.IaaS.Count + _stor.VDS.Count + _stor.VDSRecord.Count; }
         public List<KoefBackup> Koef() { return _stor.KoefBackup; }
 
-        //result builder TODO: collect changes
+        //result builder
         public void MursCount()
         {
             List<Murs> mursList = _stor.Murs;
@@ -848,9 +857,178 @@ namespace ResourceReport.Data
                         _stor.FPS[i].Backup = _stor.Volume[j].Backup;
                     }
         }
-        public void IaaSCount()
+        public void IaaSCount_v1()
         {
+            for (int i = 0; i < _stor.IaaS.Count; i++)
+            {
+                if (_stor.IaaS[i].Color != "color")
+                    continue;
 
+                bool bull = false;
+                for (int j = 0; j < _stor.AllSibintek.Count; j++)
+                {
+                    if (_stor.IaaS[i].FQDN.Contains(_stor.AllSibintek[j].Name) || _stor.IaaS[i].FQDN == _stor.AllSibintek[j].FQDN)
+                    {
+                        bull = true;
+                        if (_stor.IaaS[i].Disk != _stor.AllSibintek[j].Size || _stor.IaaS[i].CPU != _stor.AllSibintek[j].Processor || _stor.IaaS[i].RAM != _stor.AllSibintek[j].Memory)
+                        {
+                            _stor.IaaS[i].Disk = _stor.AllSibintek[j].Size;
+                            _stor.IaaS[i].CPU = _stor.AllSibintek[j].Processor;
+                            _stor.IaaS[i].RAM = _stor.AllSibintek[j].Memory;
+                            _stor.IaaS[i].Color = "Blue";
+                            _stor.IaaS[i].ReqChange = _stor.IaaS[i].ReqChange + " NewReqNum";
+
+                            _stor.RemoveAllSibintek(_stor.AllSibintek[j]);
+                            if (j != 0)
+                                j--;
+                        }
+                        _stor.RemoveAllSibintek(_stor.AllSibintek[j]);
+                        if (j != 0)
+                            j--;
+                    }
+                }
+                if (!bull)
+                {
+                    _stor.IaaS[i].Color = "Red";
+                    _stor.IaaS[i].ReqDelete = "NewReqNum";
+                }
+            }
+            if (_stor.AllSibintek.Count != 0)
+            {
+                for (int j = 0; j < _stor.AllSibintek.Count; j++)
+                {
+                    string contractName = "unknown_contract";
+                    string virtualizationPlatform = "HyperV";
+                    string project = _stor.AllSibintek[j].Cloud;
+                    string vmName = _stor.AllSibintek[j].Name;
+                    string fqdn = _stor.AllSibintek[j].FQDN;
+                    string ip = _stor.AllSibintek[j].IP;
+                    string disk = _stor.AllSibintek[j].Size;
+                    string cpu = _stor.AllSibintek[j].Processor;
+                    string ram = _stor.AllSibintek[j].Memory;
+                    string os = _stor.AllSibintek[j].OS;
+                    string backup = "";
+                    string backupTape = "";
+                    string vmCreation = _stor.AllSibintek[j].AddedTime;
+                    string isName = "name";
+                    string tenant = "tenant";
+                    string owner = "owner";
+                    string price = "price";
+                    string reqCreate = "NewReqNum";
+                    string reqDelete = "";
+                    string reqChange = "";
+                    string avz = "";
+                    string siem = "";
+                    string skazi = "";
+                    string color = "Yellow";
+
+                    try
+                    {
+                        var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, color);
+                        _stor.AddIaaS(iaasItem);
+
+                        _stor.RemoveAllSibintek(_stor.AllSibintek[j]);
+                        if (j != 0)
+                            j--;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "AllSibintek j: " + j, "Ошибка IaaS v1 (Create)");
+                        continue;
+                    }
+                }
+            }
+        }
+        public void IaaSCount_v2()
+        {
+            for (int i = 0; i < _stor.IaaS.Count; i++)
+            {
+                if (_stor.IaaS[i].Color != "color")
+                    continue;
+                
+                bool bull = false;
+                for (int j = 0; j < _stor.SIBIaaS.Count; j++)
+                {
+                    if (_stor.IaaS[i].FQDN.Contains(_stor.SIBIaaS[j].Name) || _stor.IaaS[i].FQDN == _stor.SIBIaaS[j].Hostname)
+                    {
+                        bull = true;
+                        if (_stor.IaaS[i].Disk != _stor.SIBIaaS[j].DiskSpace || _stor.IaaS[i].CPU != _stor.SIBIaaS[j].CPU || _stor.IaaS[i].RAM != _stor.SIBIaaS[j].Memory)
+                        {
+                            _stor.IaaS[i].Disk = _stor.SIBIaaS[j].DiskSpace;
+                            _stor.IaaS[i].CPU = _stor.SIBIaaS[j].CPU;
+                            _stor.IaaS[i].RAM = _stor.SIBIaaS[j].Memory;
+                            _stor.IaaS[i].Color = "Blue";
+                            _stor.IaaS[i].ReqChange = _stor.IaaS[i].ReqChange + " NewReqNum";
+
+                            _stor.RemoveSIBIaaS(_stor.SIBIaaS[j]);
+                            if (j != 0)
+                                j--;
+                        }
+                        _stor.RemoveSIBIaaS(_stor.SIBIaaS[j]);
+                        if (j != 0)
+                            j--;
+                    }
+                }
+                if (!bull)
+                {
+                    _stor.IaaS[i].Color = "Red";
+                    _stor.IaaS[i].ReqDelete = "NewReqNum";
+                }
+            }
+            if (_stor.SIBIaaS.Count != 0)
+            {
+                for (int j = 0; j < _stor.SIBIaaS.Count; j++)
+                {
+                    string contractName = "";
+                    if (_stor.SIBIaaS[j].Tag.ToLower().Contains("усиито"))
+                        contractName = "УСИиТО";
+                    else if (_stor.SIBIaaS[j].Tag.ToLower().Contains("дитиавп"))
+                        contractName = "ДИТиАВП";
+                    else if (_stor.SIBIaaS[j].Tag.ToLower().Contains("сибинтек софт"))
+                        contractName = "Сибинтек софт";
+                    else
+                        contractName = "unknown_contract";
+
+                    string virtualizationPlatform = "Vmware";
+                    string project = _stor.SIBIaaS[j].Folder;
+                    string vmName = _stor.SIBIaaS[j].Name;
+                    string fqdn = _stor.SIBIaaS[j].Hostname;
+                    string ip = _stor.SIBIaaS[j].IPAddress;
+                    string disk = _stor.SIBIaaS[j].DiskSpace;
+                    string cpu = _stor.SIBIaaS[j].CPU;
+                    string ram = _stor.SIBIaaS[j].Memory;
+                    string os = _stor.SIBIaaS[j].OS;
+                    string backup = "";
+                    string backupTape = "";
+                    string vmCreation = "";
+                    string isName = "name";
+                    string tenant = "tenant";
+                    string owner = "owner";
+                    string price = "price";
+                    string reqCreate = "NewReqNum";
+                    string reqDelete = "";
+                    string reqChange = "";
+                    string avz = "";
+                    string siem = "";
+                    string skazi = "";
+                    string color = "Yellow";
+
+                    try
+                    {
+                        var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, color);
+                        _stor.AddIaaS(iaasItem);
+
+                        _stor.RemoveSIBIaaS(_stor.SIBIaaS[j]);
+                        if (j != 0)
+                            j--;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "SIBIaaS j: " + j, "Ошибка IaaS v2 (Create)");
+                        continue;
+                    }
+                }
+            }
         }
     }
 }
