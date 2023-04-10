@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace ResourceReport.Data
 {
@@ -254,6 +255,20 @@ namespace ResourceReport.Data
                                     }
                                     _calc.CreateBackupsOnRepo(data);
                                 }
+                                else if (item.ToLower().Contains("pricelist"))
+                                {
+                                    var table = result.Tables[0];
+                                    List<object> data = new List<object>();
+
+                                    for (int i = 0; i < table.Rows.Count; i++)
+                                    {
+                                        List<object> rows = new List<object>();
+                                        for (int j = 0; j < table.Columns.Count; j++)
+                                            rows.Add(table.Rows[i][j]);
+                                        data.Add(rows);
+                                    }
+                                    _calc.CreatePriceList(data);
+                                }
                                 else
                                     MessageBox.Show("Не удалось определить имя файла. \nФайл будет пропущен: " + item, "Внимание");
                             }
@@ -285,33 +300,26 @@ namespace ResourceReport.Data
         public int Check() { return _calc.CollectCounter(); }
         public void Work()
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            //Task[] tasks = new Task[6]
+            Task[] tasks = new Task[6]
+            {
+                new Task(() => _calc.MursCount()),
+                new Task(() => _calc.VDSCount()),
+                new Task(() => _calc.BackupVDSCount()),
+                new Task(() => _calc.BackupEMLCount()),
+                new Task(() => _calc.FPSCount()),
+                new Task(() => _calc.IaaSCount()),
+            };
+
+            foreach (var task in tasks)
+                task.Start();
+            //if (Task.CompletedTask.IsCompleted && _calc.Koef().Count != 0)
             //{
-            //    new Task(() => _calc.MursCount()),
-            //    new Task(() => _calc.VDSCount()),
-            //    new Task(() => _calc.BackupVDSCount()),
-            //    new Task(() => _calc.BackupEMLCount()),
-            //    new Task(() => _calc.FPSCount()),
-            //    new Task(() => _calc.IaaSCount()),
-            //};
+            //    List<KoefBackup> list = _calc.Koef();
+            //    MessageBox.Show("RDS: " + list[0].BackupRDS + "\nEML: " + list[0].BackupEML + "\nTAPE: " + list[0].BackupEMLTape, "Koef");
+            //    return;
+            //}
 
-            //foreach (var task in tasks)
-            //    task.Start();
-            ////if (Task.CompletedTask.IsCompleted && _calc.Koef().Count != 0)
-            ////{
-            ////    List<KoefBackup> list = _calc.Koef();
-            ////    MessageBox.Show("RDS: " + list[0].BackupRDS + "\nEML: " + list[0].BackupEML + "\nTAPE: " + list[0].BackupEMLTape, "Koef");
-            ////    return;
-            ////}
             //Task.WaitAll(tasks);
-
-            _calc.IaaSCount();
-
-            sw.Stop();
-            MessageBox.Show("Расчет выполнен: " + sw.Elapsed.ToString(), "Готово");
-            sw.Reset();
         }
     }
 }

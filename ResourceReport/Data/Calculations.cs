@@ -427,6 +427,24 @@ namespace ResourceReport.Data
         }
 
         //upload's reports
+        public void CreatePriceList(List<object> priceList)
+        {
+            for (int i = 1; i < priceList.Count; i++)
+            {
+                List<object> value = (List<object>)priceList[i];
+
+                try
+                {
+                    var item = new PriceList(value[0].ToString(), Convert.ToDouble(value[1]));
+                    _stor.AddItem(item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Price list: " + ex.Message, "Ошибка");
+                    continue;
+                }
+            }
+        }
         public void CreateMURS(List<object> murs)
         {
             for (int i = 1; i < murs.Count; i++)
@@ -577,7 +595,6 @@ namespace ResourceReport.Data
 
         //collect results  
         public int CollectCounter() { return _stor.EML.Count + _stor.EMLRecord.Count + _stor.FPS.Count + _stor.IaaS.Count + _stor.VDS.Count + _stor.VDSRecord.Count; }
-        public List<KoefBackup> Koef() { return _stor.KoefBackup; }
 
         //result builder
         public void MursCount()
@@ -857,21 +874,24 @@ namespace ResourceReport.Data
                             _stor.IaaS[i].Backup = _stor.ReportIaaS[j].Backup;
                             _stor.IaaS[i].BackupTape = _stor.ReportIaaS[j].BackupTape;
                             _stor.IaaS[i].Color = "Blue";
-                            _stor.IaaS[i].ReqChange = _stor.IaaS[i].ReqChange + " NewReqNum";
+                            _stor.IaaS[i].ReqChange = _stor.IaaS[i].ReqChange + " + NEW REQUEST NUMBER";
 
                             _stor.RemoveReportIaaS(_stor.ReportIaaS[j]);
                             if (j != 0)
                                 j--;
                         }
-                        _stor.RemoveReportIaaS(_stor.ReportIaaS[j]);
-                        if (j != 0)
-                            j--;
+                        else
+                        {
+                            _stor.RemoveReportIaaS(_stor.ReportIaaS[j]);
+                            if (j != 0)
+                                j--;
+                        }
                     }
                 }
                 if (!bull)
                 {
                     _stor.IaaS[i].Color = "Red";
-                    _stor.IaaS[i].ReqDelete = "NewReqNum";
+                    _stor.IaaS[i].ReqDelete = " + NEW REQUEST NUMBER";
                 }
             }
             if (_stor.ReportIaaS.Count != 0)
@@ -892,8 +912,8 @@ namespace ResourceReport.Data
                     string backupTape = _stor.ReportIaaS[j].BackupTape;
                     string vmCreation = _stor.ReportIaaS[j].CreationDate;
                     string isName = _stor.ReportIaaS[j].SystemName;
-                    string tenant = "tenant";
-                    string owner = "owner";
+                    string tenant = _stor.ReportIaaS[j].ResponsibleName;
+                    string owner = _stor.ReportIaaS[j].Owner;
                     string price = _stor.ReportIaaS[j].Price;
                     string reqCreate = _stor.ReportIaaS[j].RequestCreate;
                     string reqDelete = _stor.ReportIaaS[j].RequestDelete;
@@ -907,10 +927,6 @@ namespace ResourceReport.Data
                     {
                         var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, color);
                         _stor.AddIaaS(iaasItem);
-
-                        _stor.RemoveReportIaaS(_stor.ReportIaaS[j]);
-                        if (j != 0)
-                            j--;
                     }
                     catch (Exception ex)
                     {
@@ -918,6 +934,7 @@ namespace ResourceReport.Data
                         continue;
                     }
                 }
+
             }
         }
     }

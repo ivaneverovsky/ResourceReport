@@ -92,6 +92,12 @@ namespace ResourceReport.Data
         }
 
         //reports new info (uploads)
+        private List<PriceList> _prices = new List<PriceList>();
+        public List<PriceList> Prices { get { return _prices; } }
+        public void AddItem(PriceList priceList)
+        {
+            _prices.Add(priceList);
+        }
         private List<Murs> _murs = new List<Murs>();
         public List<Murs> Murs { get { return _murs; } }
         public void AddMURS(Murs murs)
