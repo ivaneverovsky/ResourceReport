@@ -101,6 +101,8 @@
         <Button Content="Загрузить данные" Click="Upload" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="104" Grid.Column="1" Grid.Row="2"/>
         <Button x:Name="btnCount" Grid.Column="2" Click="Count" Content="Вычислить" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Row="2"/>
         <Button Grid.Column="3" Click="Export" Content="Выгрузить" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <Button Content="Очистить" Click="DeleteReports" HorizontalAlignment="Left" Margin="119,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <Button Grid.Column="1" Click="DeleteUploads" Content="Очистить" HorizontalAlignment="Left" Margin="119,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <!--<TabControl Grid.ColumnSpan="4" Margin="10,10,10,10" Grid.Row="1" FontFamily="Calibri" Background="Transparent" BorderThickness="0">
             <TabControl.Resources>
                 <Style TargetType="TabItem">

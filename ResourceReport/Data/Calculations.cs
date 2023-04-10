@@ -421,10 +421,8 @@ namespace ResourceReport.Data
         {
            
         }
-        public void ClearStore()
-        {
-            _stor.ClearStore();
-        }
+        public void ClearStore() { _stor.ClearStore(); }
+        public void ClearUploads() { _stor.ClearUploads(); }
 
         //upload's reports
         public void CreatePriceList(List<object> priceList)

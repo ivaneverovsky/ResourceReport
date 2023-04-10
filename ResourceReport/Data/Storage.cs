@@ -1,6 +1,7 @@
 ﻿using ResourceReport.Models;
 using ResourceReport.ModelsUpload;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace ResourceReport.Data
 {
@@ -165,6 +166,20 @@ namespace ResourceReport.Data
             _fps.Clear();
             _report.Clear();
             _reportrn.Clear();
+            MessageBox.Show("Данные загруженных отчетов успешно удалены.", "Готово");
+        }
+        public void ClearUploads()
+        {
+            _prices.Clear();
+            _murs.Clear();
+            _rds.Clear();
+            _backup.Clear();
+            _volume.Clear();
+            _backupsRepo.Clear();
+            _cdcTapeBackup.Clear();
+            _sibCDCTapeBackup.Clear();
+            _reportIaaS.Clear();
+            MessageBox.Show("Данные выгрузок успешно удалены.", "Готово");
         }
     }
 }

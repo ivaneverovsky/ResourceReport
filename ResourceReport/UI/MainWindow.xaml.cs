@@ -66,6 +66,8 @@ namespace ResourceReport
 
             //btnCount.IsEnabled = false;
         }
+        private void DeleteReports(object sender, RoutedEventArgs e) { _fl.ClearStore(); }
+        private void DeleteUploads(object sender, RoutedEventArgs e) { _fl.ClearUploads(); }
         private void Export(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Здесь будет выгружаться файл");

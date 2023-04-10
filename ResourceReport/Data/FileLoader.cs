@@ -298,6 +298,8 @@ namespace ResourceReport.Data
 
         //connection with reality mthfcka
         public int Check() { return _calc.CollectCounter(); }
+        public void ClearStore() { _calc.ClearStore(); }
+        public void ClearUploads() { _calc.ClearUploads(); }
         public void Work()
         {
             Task[] tasks = new Task[6]
