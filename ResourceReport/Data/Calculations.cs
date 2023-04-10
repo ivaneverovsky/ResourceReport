@@ -556,38 +556,20 @@ namespace ResourceReport.Data
                 }
             }
         }
-        public void CreateVMSIBIaaS(List<object> vmSIBIaaS)
+        public void CreateReportIaaS(List<object> reportIaaS)
         {
-            for (int i = 1; i < vmSIBIaaS.Count - 1; i++)
+            for (int i = 1; i < reportIaaS.Count; i++)
             {
-                List<object> value = (List<object>)vmSIBIaaS[i];
+                List<object> value = (List<object>)reportIaaS[i];
 
                 try
                 {
-                    var vmSIBIaaS_item = new SIBIaaS(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString(), value[5].ToString(), value[6].ToString(), value[7].ToString(), value[8].ToString(), value[9].ToString(), value[10].ToString(), value[11].ToString());
-                    _stor.AddSIBIaaS(vmSIBIaaS_item);
+                    var reportIaaS_item = new IaaSInfo(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString(), value[5].ToString(), value[6].ToString(), value[7].ToString(), value[8].ToString(), value[9].ToString(), value[10].ToString(), value[11].ToString(), value[12].ToString(), value[13].ToString(), value[14].ToString(), value[15].ToString(), value[16].ToString(), value[17].ToString(), value[18].ToString(), value[19].ToString(), value[20].ToString(), value[21].ToString(), value[22].ToString(), value[23].ToString(), value[24].ToString(), value[25].ToString());
+                    _stor.AddReportIaaS(reportIaaS_item);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("VMSIBIaaS: " + ex.Message, "Ошибка");
-                    return;
-                }
-            }
-        }
-        public void CreateAllSibintek(List<object> allSibintek)
-        {
-            for (int i = 1; i < allSibintek.Count - 1; i++)
-            {
-                List<object> value = (List<object>)allSibintek[i];
-
-                try
-                {
-                    var allSibintek_item = new AllSibintek(value[0].ToString(), value[1].ToString(), value[2].ToString(), value[3].ToString(), value[4].ToString(), value[5].ToString(), value[6].ToString(), value[7].ToString(), value[8].ToString(), value[9].ToString(), value[10].ToString(), value[11].ToString());
-                    _stor.AddAllSibintek(allSibintek_item);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("AllSibintek: " + ex.Message, "Ошибка");
+                    MessageBox.Show("ReportIaaS: " + ex.Message, "Ошибка");
                     return;
                 }
             }
@@ -857,32 +839,31 @@ namespace ResourceReport.Data
                         _stor.FPS[i].Backup = _stor.Volume[j].Backup;
                     }
         }
-        public void IaaSCount_v1()
+        public void IaaSCount()
         {
             for (int i = 0; i < _stor.IaaS.Count; i++)
             {
-                if (_stor.IaaS[i].Color != "color")
-                    continue;
-
                 bool bull = false;
-                for (int j = 0; j < _stor.AllSibintek.Count; j++)
+                for (int j = 0; j < _stor.ReportIaaS.Count; j++)
                 {
-                    if (_stor.IaaS[i].FQDN.Contains(_stor.AllSibintek[j].Name) || _stor.IaaS[i].FQDN == _stor.AllSibintek[j].FQDN)
+                    if (_stor.IaaS[i].FQDN.Contains(_stor.ReportIaaS[j].VMName) || _stor.IaaS[i].FQDN == _stor.ReportIaaS[j].FQDN)
                     {
                         bull = true;
-                        if (_stor.IaaS[i].Disk != _stor.AllSibintek[j].Size || _stor.IaaS[i].CPU != _stor.AllSibintek[j].Processor || _stor.IaaS[i].RAM != _stor.AllSibintek[j].Memory)
+                        if (_stor.IaaS[i].Disk != _stor.ReportIaaS[j].Disk || _stor.IaaS[i].CPU != _stor.ReportIaaS[j].CPU || _stor.IaaS[i].RAM != _stor.ReportIaaS[j].Ram || _stor.IaaS[i].Backup != _stor.ReportIaaS[j].Backup || _stor.IaaS[i].BackupTape != _stor.ReportIaaS[j].BackupTape)
                         {
-                            _stor.IaaS[i].Disk = _stor.AllSibintek[j].Size;
-                            _stor.IaaS[i].CPU = _stor.AllSibintek[j].Processor;
-                            _stor.IaaS[i].RAM = _stor.AllSibintek[j].Memory;
+                            _stor.IaaS[i].Disk = _stor.ReportIaaS[j].Disk;
+                            _stor.IaaS[i].CPU = _stor.ReportIaaS[j].CPU;
+                            _stor.IaaS[i].RAM = _stor.ReportIaaS[j].Ram;
+                            _stor.IaaS[i].Backup = _stor.ReportIaaS[j].Backup;
+                            _stor.IaaS[i].BackupTape = _stor.ReportIaaS[j].BackupTape;
                             _stor.IaaS[i].Color = "Blue";
                             _stor.IaaS[i].ReqChange = _stor.IaaS[i].ReqChange + " NewReqNum";
 
-                            _stor.RemoveAllSibintek(_stor.AllSibintek[j]);
+                            _stor.RemoveReportIaaS(_stor.ReportIaaS[j]);
                             if (j != 0)
                                 j--;
                         }
-                        _stor.RemoveAllSibintek(_stor.AllSibintek[j]);
+                        _stor.RemoveReportIaaS(_stor.ReportIaaS[j]);
                         if (j != 0)
                             j--;
                     }
@@ -893,32 +874,32 @@ namespace ResourceReport.Data
                     _stor.IaaS[i].ReqDelete = "NewReqNum";
                 }
             }
-            if (_stor.AllSibintek.Count != 0)
+            if (_stor.ReportIaaS.Count != 0)
             {
-                for (int j = 0; j < _stor.AllSibintek.Count; j++)
+                for (int j = 0; j < _stor.ReportIaaS.Count; j++)
                 {
-                    string contractName = "unknown_contract";
-                    string virtualizationPlatform = "HyperV";
-                    string project = _stor.AllSibintek[j].Cloud;
-                    string vmName = _stor.AllSibintek[j].Name;
-                    string fqdn = _stor.AllSibintek[j].FQDN;
-                    string ip = _stor.AllSibintek[j].IP;
-                    string disk = _stor.AllSibintek[j].Size;
-                    string cpu = _stor.AllSibintek[j].Processor;
-                    string ram = _stor.AllSibintek[j].Memory;
-                    string os = _stor.AllSibintek[j].OS;
-                    string backup = "";
-                    string backupTape = "";
-                    string vmCreation = _stor.AllSibintek[j].AddedTime;
-                    string isName = "name";
+                    string contractName = _stor.ReportIaaS[j].ContractName;
+                    string virtualizationPlatform = _stor.ReportIaaS[j].VirtualizationPlatform;
+                    string project = _stor.ReportIaaS[j].Project;
+                    string vmName = _stor.ReportIaaS[j].VMName;
+                    string fqdn = _stor.ReportIaaS[j].FQDN;
+                    string ip = _stor.ReportIaaS[j].IP;
+                    string disk = _stor.ReportIaaS[j].Disk;
+                    string cpu = _stor.ReportIaaS[j].CPU;
+                    string ram = _stor.ReportIaaS[j].Ram;
+                    string os = _stor.ReportIaaS[j].OS;
+                    string backup = _stor.ReportIaaS[j].Backup;
+                    string backupTape = _stor.ReportIaaS[j].BackupTape;
+                    string vmCreation = _stor.ReportIaaS[j].CreationDate;
+                    string isName = _stor.ReportIaaS[j].SystemName;
                     string tenant = "tenant";
                     string owner = "owner";
-                    string price = "price";
-                    string reqCreate = "NewReqNum";
-                    string reqDelete = "";
-                    string reqChange = "";
-                    string avz = "";
-                    string siem = "";
+                    string price = _stor.ReportIaaS[j].Price;
+                    string reqCreate = _stor.ReportIaaS[j].RequestCreate;
+                    string reqDelete = _stor.ReportIaaS[j].RequestDelete;
+                    string reqChange = _stor.ReportIaaS[j].RequestChange;
+                    string avz = _stor.ReportIaaS[j].AVZ;
+                    string siem = _stor.ReportIaaS[j].SIEM;
                     string skazi = "";
                     string color = "Yellow";
 
@@ -927,104 +908,13 @@ namespace ResourceReport.Data
                         var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, color);
                         _stor.AddIaaS(iaasItem);
 
-                        _stor.RemoveAllSibintek(_stor.AllSibintek[j]);
+                        _stor.RemoveReportIaaS(_stor.ReportIaaS[j]);
                         if (j != 0)
                             j--;
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message + "AllSibintek j: " + j, "Ошибка IaaS v1 (Create)");
-                        continue;
-                    }
-                }
-            }
-        }
-        public void IaaSCount_v2()
-        {
-            for (int i = 0; i < _stor.IaaS.Count; i++)
-            {
-                if (_stor.IaaS[i].Color != "color")
-                    continue;
-                
-                bool bull = false;
-                for (int j = 0; j < _stor.SIBIaaS.Count; j++)
-                {
-                    if (_stor.IaaS[i].FQDN.Contains(_stor.SIBIaaS[j].Name) || _stor.IaaS[i].FQDN == _stor.SIBIaaS[j].Hostname)
-                    {
-                        bull = true;
-                        if (_stor.IaaS[i].Disk != _stor.SIBIaaS[j].DiskSpace || _stor.IaaS[i].CPU != _stor.SIBIaaS[j].CPU || _stor.IaaS[i].RAM != _stor.SIBIaaS[j].Memory)
-                        {
-                            _stor.IaaS[i].Disk = _stor.SIBIaaS[j].DiskSpace;
-                            _stor.IaaS[i].CPU = _stor.SIBIaaS[j].CPU;
-                            _stor.IaaS[i].RAM = _stor.SIBIaaS[j].Memory;
-                            _stor.IaaS[i].Color = "Blue";
-                            _stor.IaaS[i].ReqChange = _stor.IaaS[i].ReqChange + " NewReqNum";
-
-                            _stor.RemoveSIBIaaS(_stor.SIBIaaS[j]);
-                            if (j != 0)
-                                j--;
-                        }
-                        _stor.RemoveSIBIaaS(_stor.SIBIaaS[j]);
-                        if (j != 0)
-                            j--;
-                    }
-                }
-                if (!bull)
-                {
-                    _stor.IaaS[i].Color = "Red";
-                    _stor.IaaS[i].ReqDelete = "NewReqNum";
-                }
-            }
-            if (_stor.SIBIaaS.Count != 0)
-            {
-                for (int j = 0; j < _stor.SIBIaaS.Count; j++)
-                {
-                    string contractName = "";
-                    if (_stor.SIBIaaS[j].Tag.ToLower().Contains("усиито"))
-                        contractName = "УСИиТО";
-                    else if (_stor.SIBIaaS[j].Tag.ToLower().Contains("дитиавп"))
-                        contractName = "ДИТиАВП";
-                    else if (_stor.SIBIaaS[j].Tag.ToLower().Contains("сибинтек софт"))
-                        contractName = "Сибинтек софт";
-                    else
-                        contractName = "unknown_contract";
-
-                    string virtualizationPlatform = "Vmware";
-                    string project = _stor.SIBIaaS[j].Folder;
-                    string vmName = _stor.SIBIaaS[j].Name;
-                    string fqdn = _stor.SIBIaaS[j].Hostname;
-                    string ip = _stor.SIBIaaS[j].IPAddress;
-                    string disk = _stor.SIBIaaS[j].DiskSpace;
-                    string cpu = _stor.SIBIaaS[j].CPU;
-                    string ram = _stor.SIBIaaS[j].Memory;
-                    string os = _stor.SIBIaaS[j].OS;
-                    string backup = "";
-                    string backupTape = "";
-                    string vmCreation = "";
-                    string isName = "name";
-                    string tenant = "tenant";
-                    string owner = "owner";
-                    string price = "price";
-                    string reqCreate = "NewReqNum";
-                    string reqDelete = "";
-                    string reqChange = "";
-                    string avz = "";
-                    string siem = "";
-                    string skazi = "";
-                    string color = "Yellow";
-
-                    try
-                    {
-                        var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, color);
-                        _stor.AddIaaS(iaasItem);
-
-                        _stor.RemoveSIBIaaS(_stor.SIBIaaS[j]);
-                        if (j != 0)
-                            j--;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message + "SIBIaaS j: " + j, "Ошибка IaaS v2 (Create)");
                         continue;
                     }
                 }

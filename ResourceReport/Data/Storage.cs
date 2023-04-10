@@ -136,25 +136,15 @@ namespace ResourceReport.Data
         {
             _sibCDCTapeBackup.Add(backup);
         }
-        private List<SIBIaaS> _sibIaaS = new List<SIBIaaS>();
-        public List<SIBIaaS> SIBIaaS { get { return _sibIaaS; } }
-        public void AddSIBIaaS(SIBIaaS sibIaaS)
+        private List<IaaSInfo> _reportIaaS = new List<IaaSInfo>();
+        public List<IaaSInfo> ReportIaaS { get { return _reportIaaS; } }
+        public void AddReportIaaS(IaaSInfo reportIaaS)
         {
-            _sibIaaS.Add(sibIaaS);
+            _reportIaaS.Add(reportIaaS);
         }
-        public void RemoveSIBIaaS(SIBIaaS sibIaaS)
+        public void RemoveReportIaaS(IaaSInfo reportIaaS)
         {
-            _sibIaaS.Remove(sibIaaS);
-        }
-        private List<AllSibintek> _allSibintek = new List<AllSibintek>();
-        public List<AllSibintek> AllSibintek { get { return _allSibintek; } }
-        public void AddAllSibintek(AllSibintek allSibintek)
-        {
-            _allSibintek.Add(allSibintek);
-        }
-        public void RemoveAllSibintek(AllSibintek allSibintek)
-        {
-            _allSibintek.Remove(allSibintek);
+            _reportIaaS.Remove(reportIaaS);
         }
 
         //clear report store

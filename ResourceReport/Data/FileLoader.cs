@@ -190,10 +190,8 @@ namespace ResourceReport.Data
                                     _calc.CreateSIBCDCTapeBackup(data);
                                 else if (item.ToLower().Contains("cdc-tape-backups"))
                                     _calc.CreateCDCTapeBackup(data);
-                                else if (item.ToLower().Contains("vm_summary_sib_iaas"))
-                                    _calc.CreateVMSIBIaaS(data);
-                                else if (item.ToLower().Contains("all sibintek"))
-                                    _calc.CreateAllSibintek(data);
+                                else if (item.ToLower().Contains("vmreport"))
+                                    _calc.CreateReportIaaS(data);
                                 else
                                     MessageBox.Show("Не удалось определить имя файла. \nФайл будет пропущен: " + item, "Внимание");
                             }
@@ -289,26 +287,28 @@ namespace ResourceReport.Data
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            Task[] tasks = new Task[7]
-            {
-                new Task(() => _calc.MursCount()),
-                new Task(() => _calc.VDSCount()),
-                new Task(() => _calc.BackupVDSCount()),
-                new Task(() => _calc.BackupEMLCount()),
-                new Task(() => _calc.FPSCount()),
-                new Task(() => _calc.IaaSCount_v1()),
-                new Task(() => _calc.IaaSCount_v2())
-            };
-
-            foreach (var task in tasks)
-                task.Start();
-            //if (Task.CompletedTask.IsCompleted && _calc.Koef().Count != 0)
+            //Task[] tasks = new Task[6]
             //{
-            //    List<KoefBackup> list = _calc.Koef();
-            //    MessageBox.Show("RDS: " + list[0].BackupRDS + "\nEML: " + list[0].BackupEML + "\nTAPE: " + list[0].BackupEMLTape, "Koef");
-            //    return;
-            //}
-            Task.WaitAll(tasks);
+            //    new Task(() => _calc.MursCount()),
+            //    new Task(() => _calc.VDSCount()),
+            //    new Task(() => _calc.BackupVDSCount()),
+            //    new Task(() => _calc.BackupEMLCount()),
+            //    new Task(() => _calc.FPSCount()),
+            //    new Task(() => _calc.IaaSCount()),
+            //};
+
+            //foreach (var task in tasks)
+            //    task.Start();
+            ////if (Task.CompletedTask.IsCompleted && _calc.Koef().Count != 0)
+            ////{
+            ////    List<KoefBackup> list = _calc.Koef();
+            ////    MessageBox.Show("RDS: " + list[0].BackupRDS + "\nEML: " + list[0].BackupEML + "\nTAPE: " + list[0].BackupEMLTape, "Koef");
+            ////    return;
+            ////}
+            //Task.WaitAll(tasks);
+
+            _calc.IaaSCount();
+
             sw.Stop();
             MessageBox.Show("Расчет выполнен: " + sw.Elapsed.ToString(), "Готово");
             sw.Reset();
