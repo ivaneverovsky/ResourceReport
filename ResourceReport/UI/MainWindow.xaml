@@ -103,7 +103,7 @@
         <Button Grid.Column="3" Click="Export" Content="Выгрузить" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <Button Content="Очистить" Click="DeleteReports" HorizontalAlignment="Left" Margin="119,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <Button Grid.Column="1" Click="DeleteUploads" Content="Очистить" HorizontalAlignment="Left" Margin="119,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <Button Grid.Column="2" Click="CountMoney" Content="Итог (₽)" HorizontalAlignment="Left" Margin="95,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+        <Button Grid.Column="2" Click="CountMoney" Content="Итого (₽)" HorizontalAlignment="Left" Margin="95,10,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <ListView x:Name="logListView" Grid.Column="2" Grid.Row="1">
             <ListView.View>
                 <GridView>

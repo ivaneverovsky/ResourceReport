@@ -971,9 +971,7 @@ namespace ResourceReport.Data
         public void EMLMoneyCounter()
         {
             foreach (var item in _stor.EML)
-            {
-
-            }
+                item.Price = EMLPriceCount(item).ToString();
 
             string time = DateTime.Now.ToShortTimeString();
             var log = new LogClass(time + ": EML Money посчитан");
@@ -982,23 +980,10 @@ namespace ResourceReport.Data
         public void VDSMoneyCounter()
         {
             foreach (var item in _stor.VDS)
-            {
-
-            }
+                item.Price = VDSPriceCount(item).ToString();
 
             string time = DateTime.Now.ToShortTimeString();
             var log = new LogClass(time + ": VDS Money посчитан");
-            _stor.AddLog(log);
-        }
-        public void FPSMoneyCounter()
-        {
-            foreach (var item in _stor.FPS)
-            {
-
-            }
-
-            string time = DateTime.Now.ToShortTimeString();
-            var log = new LogClass(time + ": FPS Money посчитан");
             _stor.AddLog(log);
         }
         private double IaaSPriceCount(IaaS iaas)
@@ -1013,7 +998,6 @@ namespace ResourceReport.Data
                 double backupTape = 0.0;
                 double avz = 0.0;
                 double siem = 0.0;
-
                 if (iaas.Backup != "")
                     backup = Convert.ToDouble(iaas.Backup);
                 else if (iaas.BackupTape != "")
@@ -1077,6 +1061,91 @@ namespace ResourceReport.Data
             catch (Exception ex)
             {
                 MessageBox.Show("IaaSPriceCount: " + ex.Message + "\nОшибка в расчете стоимости ВМ (FQDN): " + iaas.FQDN, "Ошибка");
+                return price;
+            }
+
+            return price;
+        }
+        private double EMLPriceCount(EML eml)
+        {
+            double price = 0.0;
+            try
+            {
+                double uUser = Convert.ToDouble(eml.UtilizeTenant);
+                double uBackup = Convert.ToDouble(eml.UtilizeBackup);
+                double uTape = Convert.ToDouble(eml.UtilizeBackupTape);
+                double emlPrice = 0.0;
+                double backupPrice = 0.0;
+                double backupTapePrice = 0.0;
+                double diskPrice = 0.0;
+                for (int i = 0; i < _stor.Prices.Count; i++)
+                {
+                    if (_stor.Prices[i].Item.ToLower().Contains("eml"))
+                    {
+                        emlPrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("slow"))
+                    {
+                        diskPrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("tape_dh-1"))
+                    {
+                        backupTapePrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("backup_dh-1"))
+                    {
+                        backupPrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                }
+
+                price = emlPrice + uUser * diskPrice + uBackup * backupPrice + uTape * backupTapePrice;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("EMLPriceCount: " + ex.Message + "\nОшибка в расчете стоимости ящика (SAMAccountName): " + eml.SAMAccountName, "Ошибка");
+                return price;
+            }
+
+            return price;
+        }
+        private double VDSPriceCount(VDS vds)
+        {
+            double price = 0.0;
+            try
+            {
+                double capacity = Convert.ToDouble(vds.ProfileCapacity);
+                double uBackup = Convert.ToDouble(vds.UtilizeBackup);
+                double vdsPrice = 0.0;
+                double fpsPrice = 0.0;
+                double backupPrice = 0.0;
+                for (int i = 0; i < _stor.Prices.Count; i++)
+                {
+                    if (_stor.Prices[i].Item.ToLower().Contains("vds"))
+                    {
+                        vdsPrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("backup_dh-1"))
+                    {
+                        backupPrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("fps"))
+                    {
+                        fpsPrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                }
+
+                price = vdsPrice + capacity * fpsPrice + uBackup * backupPrice;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("VDSPriceCount: " + ex.Message + "\nОшибка в расчете стоимости VDS (SAMAccountName): " + vds.SAMAccountName, "Ошибка");
                 return price;
             }
 

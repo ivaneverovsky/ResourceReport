@@ -59,10 +59,7 @@ namespace ResourceReport
             }
             _fl.Work();
         }
-        private void CountMoney(object sender, RoutedEventArgs e) 
-        {
-            _fl.Money();
-        }
+        private void CountMoney(object sender, RoutedEventArgs e) { _fl.Money(); }
         private void DeleteReports(object sender, RoutedEventArgs e) { _fl.ClearStore(); }
         private void DeleteUploads(object sender, RoutedEventArgs e) { _fl.ClearUploads(); }
         private void Reload(object sender, RoutedEventArgs e)

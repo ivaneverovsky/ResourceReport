@@ -320,12 +320,11 @@ namespace ResourceReport.Data
         }
         public void Money() 
         {
-            Task[] tasks = new Task[4]
+            Task[] tasks = new Task[3]
             {
                 new Task(() => _calc.IaaSMoneyCounter()),
                 new Task(() => _calc.EMLMoneyCounter()),
-                new Task(() => _calc.VDSMoneyCounter()),
-                new Task(() => _calc.FPSMoneyCounter())
+                new Task(() => _calc.VDSMoneyCounter())
             };
 
             foreach (var task in tasks)
