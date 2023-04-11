@@ -4,6 +4,7 @@ using ResourceReport.UI;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace ResourceReport.Data
@@ -423,6 +424,7 @@ namespace ResourceReport.Data
         }
         public void ClearStore() { _stor.ClearStore(); }
         public void ClearUploads() { _stor.ClearUploads(); }
+        public void ClearLogs() { _stor.ClearLogs(); }
 
         //upload's reports
         public void CreatePriceList(List<object> priceList)
@@ -593,6 +595,7 @@ namespace ResourceReport.Data
 
         //collect results  
         public int CollectCounter() { return _stor.EML.Count + _stor.EMLRecord.Count + _stor.FPS.Count + _stor.IaaS.Count + _stor.VDS.Count + _stor.VDSRecord.Count; }
+        public List<LogClass> CollectLogs() { return _stor.Logs; }
 
         //result builder
         public void MursCount()
@@ -655,6 +658,9 @@ namespace ResourceReport.Data
                         MessageBox.Show(ex.Message, "Ошибка EMLRecord");
                         continue;
                     }
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": EML посчитан");
+            _stor.AddLog(log);
         }
         public void VDSCount()
         {
@@ -721,6 +727,9 @@ namespace ResourceReport.Data
                             continue;
                         }
                     }
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": VDS посчитан");
+            _stor.AddLog(log);
         }
         public void BackupVDSCount()
         {
@@ -771,6 +780,9 @@ namespace ResourceReport.Data
             else
                 _stor.KoefBackup[0].BackupRDS = k_b;
 
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": BackupVDS посчитан");
+            _stor.AddLog(log);
         }
         public void BackupEMLCount()
         {
@@ -837,6 +849,9 @@ namespace ResourceReport.Data
                 _stor.KoefBackup[0].BackupEML = k_bEML;
                 _stor.KoefBackup[0].BackupEMLTape = k_bEMLTape;
             }
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": BackupEML посчитан");
+            _stor.AddLog(log);
         }
         public void FPSCount()
         {
@@ -853,6 +868,9 @@ namespace ResourceReport.Data
                         _stor.FPS[i].FreeSpace = _stor.Volume[j].AvailableCapacity;
                         _stor.FPS[i].Backup = _stor.Volume[j].Backup;
                     }
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": FPS посчитан");
+            _stor.AddLog(log);
         }
         public void IaaSCount()
         {
@@ -873,6 +891,7 @@ namespace ResourceReport.Data
                             _stor.IaaS[i].BackupTape = _stor.ReportIaaS[j].BackupTape;
                             _stor.IaaS[i].Color = "Blue";
                             _stor.IaaS[i].ReqChange = _stor.IaaS[i].ReqChange + " + NEW REQUEST NUMBER";
+                            _stor.IaaS[i].Price = "0";
 
                             _stor.RemoveReportIaaS(_stor.ReportIaaS[j]);
                             if (j != 0)
@@ -912,7 +931,7 @@ namespace ResourceReport.Data
                     string isName = _stor.ReportIaaS[j].SystemName;
                     string tenant = _stor.ReportIaaS[j].ResponsibleName;
                     string owner = _stor.ReportIaaS[j].Owner;
-                    string price = _stor.ReportIaaS[j].Price;
+                    string price = "0";
                     string reqCreate = _stor.ReportIaaS[j].RequestCreate;
                     string reqDelete = _stor.ReportIaaS[j].RequestDelete;
                     string reqChange = _stor.ReportIaaS[j].RequestChange;
@@ -928,12 +947,140 @@ namespace ResourceReport.Data
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message + "AllSibintek j: " + j, "Ошибка IaaS v1 (Create)");
+                        MessageBox.Show(ex.Message + "IaaS j: " + j, "Ошибка IaaSCount (Create)");
                         continue;
                     }
                 }
 
             }
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": IaaS посчитан");
+            _stor.AddLog(log);
+        }
+
+        //money counter
+        public void IaaSMoneyCounter()
+        {
+            foreach (var item in _stor.IaaS)
+                item.Price = IaaSPriceCount(item).ToString();
+
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": IaaS Money посчитан");
+            _stor.AddLog(log);
+        }
+        public void EMLMoneyCounter()
+        {
+            foreach (var item in _stor.EML)
+            {
+
+            }
+
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": EML Money посчитан");
+            _stor.AddLog(log);
+        }
+        public void VDSMoneyCounter()
+        {
+            foreach (var item in _stor.VDS)
+            {
+
+            }
+
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": VDS Money посчитан");
+            _stor.AddLog(log);
+        }
+        public void FPSMoneyCounter()
+        {
+            foreach (var item in _stor.FPS)
+            {
+
+            }
+
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": FPS Money посчитан");
+            _stor.AddLog(log);
+        }
+        private double IaaSPriceCount(IaaS iaas)
+        {
+            double price = 0.0;
+            try
+            {
+                double cpu = Convert.ToDouble(iaas.CPU);
+                double ram = Convert.ToDouble(iaas.RAM);
+                double disk = Convert.ToDouble(iaas.Disk);
+                double backup = 0.0;
+                double backupTape = 0.0;
+                double avz = 0.0;
+                double siem = 0.0;
+
+                if (iaas.Backup != "")
+                    backup = Convert.ToDouble(iaas.Backup);
+                else if (iaas.BackupTape != "")
+                    backupTape = Convert.ToDouble(iaas.BackupTape);
+                
+                if (iaas.AVZ == "+")
+                {
+                    for (int i = 0; i < _stor.Prices.Count; i++)
+                        if (_stor.Prices[i].Item.ToLower().Contains("vav-srv"))
+                        {
+                            avz = _stor.Prices[i].Price;
+                            break;
+                        }
+                }
+                else if (iaas.SIEM == "+")
+                {
+                    for (int i = 0; i < _stor.Prices.Count; i++)
+                        if (_stor.Prices[i].Item.ToLower().Contains("siem"))
+                        {
+                            siem = _stor.Prices[i].Price;
+                            break;
+                        }
+                }
+
+                double cpuPrice = 0.0;
+                double ramPrice = 0.0;
+                double diskPrice = 0.0;
+                double backupPrice = 0.0;
+                double backupTapePrice = 0.0;
+                for (int i = 0; i < _stor.Prices.Count; i++)
+                {
+                    if (_stor.Prices[i].Item.ToLower().Contains("cpu_dh-1"))
+                    {
+                        cpuPrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("ram_dh-1"))
+                    {
+                        ramPrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("ssd"))
+                    {
+                        diskPrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("tape_dh-1"))
+                    {
+                        backupTapePrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("backup_dh-1"))
+                    {
+                        backupPrice = _stor.Prices[i].Price;
+                        continue;
+                    }
+                }
+
+                price = cpuPrice * cpu + ramPrice * ram + diskPrice * disk + backupPrice * backup + backupTapePrice * backupTape + avz + siem;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("IaaSPriceCount: " + ex.Message, "Ошибка");
+                return price;
+            }
+
+            return price;
         }
     }
 }

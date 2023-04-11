@@ -1,5 +1,6 @@
 ﻿using ExcelDataReader;
 using Microsoft.Win32;
+using ResourceReport.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -298,8 +299,10 @@ namespace ResourceReport.Data
 
         //connection with reality mthfcka
         public int Check() { return _calc.CollectCounter(); }
+        public List<LogClass> Logs() { return _calc.CollectLogs(); }
         public void ClearStore() { _calc.ClearStore(); }
         public void ClearUploads() { _calc.ClearUploads(); }
+        public void ClearLogs() { _calc.ClearLogs(); }
         public void Work()
         {
             Task[] tasks = new Task[6]
@@ -314,14 +317,19 @@ namespace ResourceReport.Data
 
             foreach (var task in tasks)
                 task.Start();
-            //if (Task.CompletedTask.IsCompleted && _calc.Koef().Count != 0)
-            //{
-            //    List<KoefBackup> list = _calc.Koef();
-            //    MessageBox.Show("RDS: " + list[0].BackupRDS + "\nEML: " + list[0].BackupEML + "\nTAPE: " + list[0].BackupEMLTape, "Koef");
-            //    return;
-            //}
+        }
+        public void Money() 
+        {
+            Task[] tasks = new Task[4]
+            {
+                new Task(() => _calc.IaaSMoneyCounter()),
+                new Task(() => _calc.EMLMoneyCounter()),
+                new Task(() => _calc.VDSMoneyCounter()),
+                new Task(() => _calc.FPSMoneyCounter())
+            };
 
-            //Task.WaitAll(tasks);
+            foreach (var task in tasks)
+                task.Start();
         }
     }
 }

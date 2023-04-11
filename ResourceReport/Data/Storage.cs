@@ -91,6 +91,12 @@ namespace ResourceReport.Data
         {
             _koefBackup.Add(koefBackup);
         }
+        private List<LogClass> _logs = new List<LogClass>();
+        public List<LogClass> Logs { get { return _logs; } }
+        public void AddLog(LogClass log)
+        {
+            _logs.Add(log);
+        }
 
         //reports new info (uploads)
         private List<PriceList> _prices = new List<PriceList>();
@@ -180,6 +186,10 @@ namespace ResourceReport.Data
             _sibCDCTapeBackup.Clear();
             _reportIaaS.Clear();
             MessageBox.Show("Данные выгрузок успешно удалены.", "Готово");
+        }
+        public void ClearLogs()
+        {
+            _logs.Clear();
         }
     }
 }

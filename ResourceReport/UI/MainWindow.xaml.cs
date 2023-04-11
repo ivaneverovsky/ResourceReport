@@ -2,6 +2,7 @@
 using ResourceReport.Data;
 using ResourceReport.Models;
 using ResourceReport.UI;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -12,13 +13,7 @@ namespace ResourceReport
     public partial class MainWindow : Window
     {
         FileLoader _fl = new FileLoader();
-        
-        public MainWindow()
-        {
-            InitializeComponent();
-            //btnCount.IsEnabled = false;
-        }
-
+        public MainWindow() { InitializeComponent(); }
         private void LoadFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
@@ -63,14 +58,24 @@ namespace ResourceReport
                 return;
             }
             _fl.Work();
-
-            //btnCount.IsEnabled = false;
+        }
+        private void CountMoney(object sender, RoutedEventArgs e) 
+        {
+            _fl.Money();
         }
         private void DeleteReports(object sender, RoutedEventArgs e) { _fl.ClearStore(); }
         private void DeleteUploads(object sender, RoutedEventArgs e) { _fl.ClearUploads(); }
+        private void Reload(object sender, RoutedEventArgs e)
+        {
+            logListView.Items.Clear();
+
+            List<LogClass> logs = _fl.Logs();
+            foreach (LogClass log in logs)
+                logListView.Items.Add(log.Message);
+        }
         private void Export(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Здесь будет выгружаться файл");
+            MessageBox.Show("Здесь будет выгружаться файл.");
         }
     }
 }
