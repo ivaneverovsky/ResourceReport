@@ -1076,7 +1076,7 @@ namespace ResourceReport.Data
             }
             catch (Exception ex)
             {
-                MessageBox.Show("IaaSPriceCount: " + ex.Message, "Ошибка");
+                MessageBox.Show("IaaSPriceCount: " + ex.Message + "\nОшибка в расчете стоимости ВМ (FQDN): " + iaas.FQDN, "Ошибка");
                 return price;
             }
 
