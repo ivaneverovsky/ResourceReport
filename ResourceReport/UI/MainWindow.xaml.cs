@@ -1,11 +1,7 @@
 ﻿using Microsoft.Win32;
 using ResourceReport.Data;
 using ResourceReport.Models;
-using ResourceReport.UI;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Windows;
 
 namespace ResourceReport

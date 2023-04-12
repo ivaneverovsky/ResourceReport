@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ResourceReport.Models
+﻿namespace ResourceReport.Models
 {
     internal class IaaS
     {
