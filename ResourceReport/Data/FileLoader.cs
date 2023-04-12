@@ -304,8 +304,6 @@ namespace ResourceReport.Data
         public void ClearLogs() { _calc.ClearLogs(); }
         public void Work()
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
             Task[] tasks = new Task[6]
             {
                 new Task(() => _calc.MursCount()),
@@ -321,10 +319,6 @@ namespace ResourceReport.Data
 
             Task.WaitAll(tasks);
 
-            sw.Stop();
-            MessageBox.Show("Промежуточные вычисления сделаны.", "Внимание");
-            sw.Start();
-
             Task[] tasks2 = new Task[4]
             {
                 new Task(() => _calc.UtilEMLCount()),
@@ -338,24 +332,21 @@ namespace ResourceReport.Data
         
             Task.WaitAll(tasks2);
 
-            sw.Stop();
-            MessageBox.Show("Вычисления выполнены: " + sw.Elapsed, "Готово");
-            sw.Reset();
-        }
-        public void Money()
-        {
-            Task[] tasks = new Task[3]
+            Task[] tasks3 = new Task[3]
             {
                 new Task(() => _calc.IaaSMoneyCounter()),
                 new Task(() => _calc.EMLMoneyCounter()),
                 new Task(() => _calc.VDSMoneyCounter())
             };
 
-            foreach (var task in tasks)
+            foreach (var task in tasks3)
                 task.Start();
 
-            Task.WaitAll(tasks);
-            MessageBox.Show("Деньги посчитаны...", "Готово");
+            Task.WaitAll(tasks3);
+
+            _calc.CreateReport();
+
+            MessageBox.Show("Все вычисления выполнены.", "Готово");
         }
     }
 }

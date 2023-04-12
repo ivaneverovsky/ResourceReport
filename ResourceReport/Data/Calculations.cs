@@ -415,7 +415,13 @@ namespace ResourceReport.Data
         }
         public void CreateReport()
         {
+            foreach (var contract in _stor.Contract)
+            {
+                foreach (var item in _stor.Prices)
+                {
 
+                }
+            }
         }
         public void CreateReportRN()
         {
@@ -434,7 +440,7 @@ namespace ResourceReport.Data
 
                 try
                 {
-                    var item = new PriceList(value[0].ToString(), Convert.ToDouble(value[1]));
+                    var item = new PriceList(value[0].ToString(), Convert.ToDouble(value[1]), value[2].ToString());
                     _stor.AddItem(item);
                 }
                 catch (Exception ex)

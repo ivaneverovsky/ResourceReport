@@ -4,10 +4,12 @@
     {
         public string Item { get; set; }
         public double Price { get; set; }
-        public PriceList(string item, double price)
+        public string Description { get; set; }
+        public PriceList(string item, double price, string description)
         {
             Item = item;
             Price = price;
+            Description = description;
         }
     }
 }
