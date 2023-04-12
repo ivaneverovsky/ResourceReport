@@ -57,9 +57,17 @@ namespace ResourceReport
                 MessageBox.Show("Данных для отчета не обнаружено. Попробуйте загрузить новые.", "Внимание");
                 return;
             }
+            _fl.ClearLogs();
             _fl.Work();
         }
-        private void CountMoney(object sender, RoutedEventArgs e) { _fl.Money(); }
+        private void CountMoney(object sender, RoutedEventArgs e) 
+        {
+            if (_fl.Check() == 0)
+            {
+                MessageBox.Show("Данных для отчета не обнаружено. Попробуйте загрузить новые.", "Внимание");
+                return;
+            }
+            _fl.Money(); }
         private void DeleteReports(object sender, RoutedEventArgs e) { _fl.ClearStore(); }
         private void DeleteUploads(object sender, RoutedEventArgs e) { _fl.ClearUploads(); }
         private void Reload(object sender, RoutedEventArgs e)

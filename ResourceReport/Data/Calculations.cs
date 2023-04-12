@@ -601,8 +601,6 @@ namespace ResourceReport.Data
         public void MursCount()
         {
             List<Murs> mursList = _stor.Murs;
-            //List<EML> emlList = new List<EML>();
-            //List<EMLRecord> emlRecordList = new List<EMLRecord>();
 
             for (int i = 0; i < _stor.EML.Count; i++)
                 for (int j = 0; j < mursList.Count; j++)
@@ -623,9 +621,8 @@ namespace ResourceReport.Data
                         {
                             _stor.RemoveEML(_stor.EML[i]);
 
-                            var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] { '(', ')' }), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
+                            var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), "", "", mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
                             _stor.AddEML(eml_item);
-                            //emlList.Add(eml_item);
 
                             mursList.RemoveAt(j);
                             j--;
@@ -645,9 +642,8 @@ namespace ResourceReport.Data
                         {
                             _stor.RemoveEMLRecord(_stor.EMLRecord[i]);
 
-                            var emlRecord_item = new EMLRecord(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] { '(', ')' }), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].LastLogonTimeDate, "стоимость", "защита");
+                            var emlRecord_item = new EMLRecord(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), "", "", mursList[j].Database, mursList[j].LastLogonTimeDate, "стоимость", "защита");
                             _stor.AddEMLRecord(emlRecord_item);
-                            //emlRecordList.Add(emlRecord_item);
 
                             mursList.RemoveAt(j);
                             j--;
@@ -665,8 +661,6 @@ namespace ResourceReport.Data
         public void VDSCount()
         {
             List<Rds> rdsList = _stor.Rds;
-            //List<VDS> vdsList = new List<VDS>();
-            //List<VDSRecord> vdsRecordList = new List<VDSRecord>();
 
             DateTime last30 = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(-1).Month, 21);
             DateTime currentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
@@ -681,9 +675,8 @@ namespace ResourceReport.Data
                         {
                             _stor.RemoveVDS(_stor.VDS[i]);
 
-                            var vds_item = new VDS(rdsList[j].SAMAccountName, rdsList[j].Company, rdsList[j].Tenant, rdsList[j].Department, rdsList[j].Occupation, rdsList[j].ActualProfileSize, (Convert.ToDouble(rdsList[j].ActualProfileSize) * 1.65).ToString().Trim(new char[] { '(', ')' }), rdsList[j].LastConnection, "стоимость", rdsList[j].ExtensionAttribute);
+                            var vds_item = new VDS(rdsList[j].SAMAccountName, rdsList[j].Company, rdsList[j].Tenant, rdsList[j].Department, rdsList[j].Occupation, rdsList[j].ActualProfileSize, "", rdsList[j].LastConnection, "стоимость", rdsList[j].ExtensionAttribute);
                             _stor.AddVDS(vds_item);
-                            //vdsList.Add(vds_item);
 
                             rdsList.RemoveAt(j);
                             j--;
@@ -692,9 +685,8 @@ namespace ResourceReport.Data
                         {
                             _stor.RemoveVDS(_stor.VDS[i]);
 
-                            var vds_item = new VDS(rdsList[j].SAMAccountName, rdsList[j].Company, rdsList[j].Tenant, rdsList[j].Department, rdsList[j].Occupation, rdsList[j].ActualProfileSize, (Convert.ToDouble(rdsList[j].ActualProfileSize) * 1.65).ToString().Trim(new char[] { '(', ')' }), rdsList[j].LastConnection, "стоимость", rdsList[j].ExtensionAttribute);
+                            var vds_item = new VDS(rdsList[j].SAMAccountName, rdsList[j].Company, rdsList[j].Tenant, rdsList[j].Department, rdsList[j].Occupation, rdsList[j].ActualProfileSize, "", rdsList[j].LastConnection, "стоимость", rdsList[j].ExtensionAttribute);
                             _stor.AddVDS(vds_item);
-                            //vdsList.Add(vds_item);
 
                             rdsList.RemoveAt(j);
                             j--;
@@ -714,9 +706,8 @@ namespace ResourceReport.Data
                         {
                             _stor.RemoveVDSRecord(_stor.VDSRecord[i]);
 
-                            var vdsRecord_item = new VDSRecord(rdsList[j].SAMAccountName, rdsList[j].Company, rdsList[j].Tenant, rdsList[j].Department, rdsList[j].Occupation, rdsList[j].ActualProfileSize, (Convert.ToDouble(rdsList[j].ActualProfileSize) * 1.65).ToString().Trim(new char[] { '(', ')' }), rdsList[j].LastConnection, "стоимость");
+                            var vdsRecord_item = new VDSRecord(rdsList[j].SAMAccountName, rdsList[j].Company, rdsList[j].Tenant, rdsList[j].Department, rdsList[j].Occupation, rdsList[j].ActualProfileSize, "", rdsList[j].LastConnection, "стоимость");
                             _stor.AddVDSRecord(vdsRecord_item);
-                            //vdsRecordList.Add(vdsRecord_item);
 
                             rdsList.RemoveAt(j);
                             j--;
@@ -849,6 +840,7 @@ namespace ResourceReport.Data
                 _stor.KoefBackup[0].BackupEML = k_bEML;
                 _stor.KoefBackup[0].BackupEMLTape = k_bEMLTape;
             }
+
             string time = DateTime.Now.ToShortTimeString();
             var log = new LogClass(time + ": BackupEML посчитан");
             _stor.AddLog(log);
@@ -955,6 +947,46 @@ namespace ResourceReport.Data
             }
             string time = DateTime.Now.ToShortTimeString();
             var log = new LogClass(time + ": IaaS посчитан");
+            _stor.AddLog(log);
+        }
+        public void UtilEMLCount()
+        {
+            for (int i = 0; i < _stor.EML.Count; i++)
+            {
+                _stor.EML[i].UtilizeBackup = (Convert.ToDouble(_stor.EML[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEML).ToString();
+                _stor.EML[i].UtilizeBackupTape = (Convert.ToDouble(_stor.EML[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEMLTape).ToString();
+            }
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": Util EML посчитан");
+            _stor.AddLog(log);
+        }
+        public void UtilEMLRecordCount()
+        {
+            for (int i = 0; i < _stor.EMLRecord.Count; i++)
+            {
+                _stor.EMLRecord[i].UtilizeBackup = (Convert.ToDouble(_stor.EMLRecord[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEML).ToString();
+                _stor.EMLRecord[i].UtilizeBackupTape = (Convert.ToDouble(_stor.EMLRecord[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEMLTape).ToString();
+            }
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": Util EMLRecord посчитан");
+            _stor.AddLog(log);
+        }
+        public void UtilVDSCount()
+        {
+            for (int i = 0; i < _stor.VDS.Count; i++)
+                _stor.VDS[i].UtilizeBackup = (Convert.ToDouble(_stor.VDS[i].ProfileCapacity) * _stor.KoefBackup[0].BackupRDS).ToString();
+
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": Util VDS посчитан");
+            _stor.AddLog(log);
+        }
+        public void UtilVDSRecordCount()
+        {
+            for (int i = 0; i < _stor.VDSRecord.Count; i++)
+                _stor.VDSRecord[i].UtilizeBackup = (Convert.ToDouble(_stor.VDSRecord[i].ProfileCapacity) * _stor.KoefBackup[0].BackupRDS).ToString();
+
+            string time = DateTime.Now.ToShortTimeString();
+            var log = new LogClass(time + ": Util VDS Record посчитан");
             _stor.AddLog(log);
         }
 

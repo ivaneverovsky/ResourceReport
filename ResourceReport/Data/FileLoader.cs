@@ -305,6 +305,8 @@ namespace ResourceReport.Data
         public void ClearLogs() { _calc.ClearLogs(); }
         public void Work()
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             Task[] tasks = new Task[6]
             {
                 new Task(() => _calc.MursCount()),
@@ -317,8 +319,31 @@ namespace ResourceReport.Data
 
             foreach (var task in tasks)
                 task.Start();
+
+            Task.WaitAll(tasks);
+
+            sw.Stop();
+            MessageBox.Show("Промежуточные вычисления сделаны.", "Внимание");
+            sw.Start();
+
+            Task[] tasks2 = new Task[4]
+            {
+                new Task(() => _calc.UtilEMLCount()),
+                new Task(() => _calc.UtilEMLRecordCount()),
+                new Task(() => _calc.UtilVDSCount()),
+                new Task(() => _calc.UtilVDSRecordCount())
+            };
+
+            foreach (var task in tasks2)
+                task.Start();
+        
+            Task.WaitAll(tasks2);
+
+            sw.Stop();
+            MessageBox.Show("Вычисления выполнены: " + sw.Elapsed, "Готово");
+            sw.Reset();
         }
-        public void Money() 
+        public void Money()
         {
             Task[] tasks = new Task[3]
             {
@@ -329,6 +354,9 @@ namespace ResourceReport.Data
 
             foreach (var task in tasks)
                 task.Start();
+
+            Task.WaitAll(tasks);
+            MessageBox.Show("Деньги посчитаны...", "Готово");
         }
     }
 }
