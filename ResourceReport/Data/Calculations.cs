@@ -417,15 +417,227 @@ namespace ResourceReport.Data
         {
             foreach (var contract in _stor.Contract)
             {
-                foreach (var item in _stor.Prices)
-                {
+                double CPU = 0.0;
+                double RAM = 0.0;
+                double HDD = 0.0;
+                double SSD = 0.0;
+                double BACKUPTAPE = 0.0;
+                double BACKUP = 0.0;
+                double EML = 0.0;
+                double ASPAM = 0.0;
+                double VDS = 0.0;
+                double FPS = 0.0;
+                double VAV_SRV = 0.0;
+                double SCAZI_INT = 0.0;
+                double SCAZI_EXT = 0.0;
+                double SIEM = 0.0;
+                double NGFW = 0.0;
+                double SECSIB = 0.0;
+                double CPU_DH2 = 0.0;
+                double RAM_DH2 = 0.0;
+                double HDD_DH2 = 0.0;
+                double BACKUPTAPE_DH2 = 0.0;
 
+                //IaaS
+                double BACKUPTAPE_IAAS = 0.0;
+                double BACKUP_IAAS = 0.0;
+                for (int i = 0; i < _stor.IaaS.Count; i++)
+                {
+                    if (_stor.IaaS[i].ContractName.ToLower().Contains(contract.ContractName.ToLower()))
+                    {
+                        try
+                        {
+                            CPU += Convert.ToDouble(_stor.IaaS[i].CPU);
+                            RAM += Convert.ToDouble(_stor.IaaS[i].RAM);
+                            SSD += Convert.ToDouble(_stor.IaaS[i].Disk);
+                            BACKUPTAPE_IAAS += Convert.ToDouble(_stor.IaaS[i].BackupTape);
+                            BACKUP_IAAS += Convert.ToDouble(_stor.IaaS[i].Backup);
+                            NGFW++;
+                            if (_stor.IaaS[i].AVZ == "+")
+                                VAV_SRV++;
+                            if (_stor.IaaS[i].SKAZI == "+")
+                                SCAZI_INT++;
+                            if (_stor.IaaS[i].SIEM == "+")
+                                SIEM++;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\nIaaS", "Ошибка");
+                            continue;
+                        }
+                    }
                 }
+                if (contract.ContractName.ToLower() == "дитиавп")
+                {
+                    SIEM = 1.0;
+                    NGFW = 1.0;
+                    CPU_DH2 = 1248.0;
+                    RAM_DH2 = 12288.0;
+                    HDD_DH2 = 400832.0;
+                    BACKUPTAPE_DH2 = 480000.0;
+                }
+
+                //EML & EML Record
+                double BACKUPTAPE_EML = 0.0;
+                double BACKUP_EML = 0.0;
+                for (int i = 0; i < _stor.EML.Count; i++)
+                {
+                    if (_stor.EML[i].Company.ToLower().Contains(contract.ContractName.ToLower()) || _stor.EML[i].ExtensionAttribute.ToLower().Contains(contract.ContractName.ToLower()))
+                    {
+                        try
+                        {
+                            HDD += Convert.ToDouble(_stor.EML[i].UtilizeTenant);
+                            BACKUPTAPE_EML += Convert.ToDouble(_stor.EML[i].UtilizeBackupTape);
+                            BACKUP_EML += Convert.ToDouble(_stor.EML[i].UtilizeBackup);
+                            EML++;
+                            ASPAM++;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\nEML", "Ошибка");
+                            continue;
+                        }
+                    }
+                }
+                for (int i = 0; i < _stor.EMLRecord.Count; i++)
+                {
+                    if (_stor.EMLRecord[i].Company.ToLower().Contains(contract.ContractName.ToLower()))
+                    {
+                        try
+                        {
+                            HDD += Convert.ToDouble(_stor.EMLRecord[i].UtilizeTenant);
+                            BACKUPTAPE_EML += Convert.ToDouble(_stor.EMLRecord[i].UtilizeBackupTape);
+                            BACKUP_EML += Convert.ToDouble(_stor.EMLRecord[i].UtilizeBackup);
+                            EML++;
+                            ASPAM++;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\nEML Record", "Ошибка");
+                            continue;
+                        }
+                    }
+                }
+
+                //VDS & VDS Record
+                double BACKUP_FPS = 0.0;
+                for (int i = 0; i < _stor.VDS.Count; i++)
+                {
+                    if (_stor.VDS[i].Company.ToLower().Contains(contract.ContractName.ToLower()) || _stor.VDS[i].ExtensionAttribute.ToLower().Contains(contract.ContractName.ToLower()))
+                    {
+                        try
+                        {
+                            BACKUP_FPS += Convert.ToDouble(_stor.VDS[i].UtilizeBackup);
+                            VDS++;
+                            FPS += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\nVDS", "Ошибка");
+                            continue;
+                        }
+                    }
+                }
+                for (int i = 0; i < _stor.VDSRecord.Count; i++)
+                {
+                    if (_stor.VDSRecord[i].Company.ToLower().Contains(contract.ContractName.ToLower()))
+                    {
+                        try
+                        {
+                            BACKUP_FPS += Convert.ToDouble(_stor.VDSRecord[i].UtilizeBackup);
+                            FPS += Convert.ToDouble(_stor.VDSRecord[i].ProfileCapacity);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\nVDS Record", "Ошибка");
+                            continue;
+                        }
+                    }
+                }
+                if (contract.ContractName.ToLower() == "дитиавп")
+                {
+                    BACKUP_FPS = 0.0;
+                    FPS = 0.0;
+                    SECSIB = 1.0;
+                }
+
+                BACKUPTAPE = BACKUPTAPE_IAAS + BACKUPTAPE_EML;
+                BACKUP = BACKUP_IAAS + BACKUP_EML + BACKUP_FPS;
+
+                for (int i = 0; i < _stor.Prices.Count; i++)
+                {
+                    double sumCPU = 0.0;
+                    double sumRAM = 0.0;
+                    double sumHDD = 0.0;
+                    double sumSSD = 0.0;
+                    double sumTAPE = 0.0;
+                    double sumBACKUP = 0.0;
+                    double sumEML = 0.0;
+                    double sumVDS = 0.0;
+                    double sumFPS = 0.0;
+                    double sumASPAM = 0.0;
+                    double sumVAV_SRV = 0.0;
+                    if (_stor.Prices[i].Item.ToLower().Contains("cpu_dh-1"))
+                    {
+                        sumCPU = _stor.Prices[i].Price * CPU;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("ram_dh-1"))
+                    {
+                        sumRAM = _stor.Prices[i].Price * RAM;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("slow"))
+                    {
+                        sumHDD = _stor.Prices[i].Price * HDD;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("ssd"))
+                    {
+                        sumSSD = _stor.Prices[i].Price * SSD;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("tape_dh-1"))
+                    {
+                        sumTAPE = _stor.Prices[i].Price * BACKUPTAPE;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("backup_dh-1"))
+                    {
+                        sumBACKUP = _stor.Prices[i].Price * BACKUP;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("eml"))
+                    {
+                        sumEML = _stor.Prices[i].Price * EML;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("vds"))
+                    {
+                        sumVDS = _stor.Prices[i].Price * VDS;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("fps"))
+                    {
+                        sumFPS = _stor.Prices[i].Price * FPS;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("aspam"))
+                    {
+                        sumASPAM = _stor.Prices[i].Price * ASPAM;
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("vav-srv"))
+                    {
+                        sumVAV_SRV = _stor.Prices[i].Price * VAV_SRV;
+                        continue;
+                    }
+                    //other
+                }
+
+                //var report = new Report();
+                //_stor.AddReport(report);
             }
-        }
-        public void CreateReportRN()
-        {
-           
         }
         public void ClearStore() { _stor.ClearStore(); }
         public void ClearUploads() { _stor.ClearUploads(); }
@@ -440,7 +652,7 @@ namespace ResourceReport.Data
 
                 try
                 {
-                    var item = new PriceList(value[0].ToString(), Convert.ToDouble(value[1]), value[2].ToString());
+                    var item = new PriceList(value[0].ToString(), Convert.ToDouble(value[1]), value[2].ToString(), value[3].ToString());
                     _stor.AddItem(item);
                 }
                 catch (Exception ex)

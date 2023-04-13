@@ -51,7 +51,7 @@ namespace ResourceReport.Data
                             }
                             else if (contract.Contains("сибинтексофт") || contract.Contains("сибинтек софт"))
                             {
-                                contract = "Сибинтек софт";
+                                contract = "Сибинтек-софт";
                                 _calc.AddContract(contract);
                                 MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
                             }

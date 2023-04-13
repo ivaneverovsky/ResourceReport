@@ -79,12 +79,6 @@ namespace ResourceReport.Data
             _report.Add(report);
         }
 
-        private List<ReportRN> _reportrn = new List<ReportRN>();
-        public List<ReportRN> ReportRN { get { return _reportrn; } }
-        public void AddReportRN(ReportRN reportRN)
-        {
-            _reportrn.Add(reportRN);
-        }
         private List<KoefBackup> _koefBackup = new List<KoefBackup>();
         public List<KoefBackup> KoefBackup { get { return _koefBackup; } }
         public void AddKoefBackup(KoefBackup koefBackup)
@@ -171,7 +165,6 @@ namespace ResourceReport.Data
             _vdsrecord.Clear();
             _fps.Clear();
             _report.Clear();
-            _reportrn.Clear();
             MessageBox.Show("Данные загруженных отчетов успешно удалены.", "Готово");
         }
         public void ClearUploads()
