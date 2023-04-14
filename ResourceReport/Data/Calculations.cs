@@ -450,8 +450,17 @@ namespace ResourceReport.Data
                             CPU += Convert.ToDouble(_stor.IaaS[i].CPU);
                             RAM += Convert.ToDouble(_stor.IaaS[i].RAM);
                             SSD += Convert.ToDouble(_stor.IaaS[i].Disk);
-                            BACKUPTAPE_IAAS += Convert.ToDouble(_stor.IaaS[i].BackupTape);
-                            BACKUP_IAAS += Convert.ToDouble(_stor.IaaS[i].Backup);
+
+                            if (_stor.IaaS[i].BackupTape == "")
+                                BACKUPTAPE_IAAS = 0.0;
+                            else
+                                BACKUPTAPE_IAAS += Convert.ToDouble(_stor.IaaS[i].BackupTape);
+
+                            if (_stor.IaaS[i].Backup == "")
+                                BACKUP_IAAS = 0.0;
+                            else
+                                BACKUP_IAAS += Convert.ToDouble(_stor.IaaS[i].Backup);
+
                             NGFW++;
                             if (_stor.IaaS[i].AVZ == "+")
                                 VAV_SRV++;
