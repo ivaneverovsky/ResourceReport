@@ -299,6 +299,9 @@ namespace ResourceReport.Data
         //connection with reality mthfcka
         public int Check() { return _calc.CollectCounter(); }
         public List<LogClass> Logs() { return _calc.CollectLogs(); }
+        public List<Report> CollectReports() { return _calc.CollectReports(); }
+        public List<Contract> CollectContracts() { return _calc.CollectContracts(); }
+
         public void ClearStore() { _calc.ClearStore(); }
         public void ClearUploads() { _calc.ClearUploads(); }
         public void ClearLogs() { _calc.ClearLogs(); }

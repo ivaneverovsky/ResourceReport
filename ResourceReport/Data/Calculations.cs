@@ -564,81 +564,173 @@ namespace ResourceReport.Data
                 BACKUPTAPE = BACKUPTAPE_IAAS + BACKUPTAPE_EML;
                 BACKUP = BACKUP_IAAS + BACKUP_EML + BACKUP_FPS;
 
+                double sumCPU = 0.0;
+                double sumRAM = 0.0;
+                double sumHDD = 0.0;
+                double sumSSD = 0.0;
+                double sumTAPE = 0.0;
+                double sumBACKUP = 0.0;
+                double sumEML = 0.0;
+                double sumVDS = 0.0;
+                double sumFPS = 0.0;
+                double sumASPAM = 0.0;
+                double sumVAV_SRV = 0.0;
+                double sumSCAZI_INT = 0.0;
+                double sumSCAZI_EXT = 0.0;
+                double sumSIEM = 0.0;
+                double sumCPU_DH2 = 0.0;
+                double sumRAM_DH2 = 0.0;
+                double sumHDD_DH2 = 0.0;
+                double sumBACKUPTAPE_DH2 = 0.0;
+                double sumSECSIB = 0.0;
+                double sumNGFW = 0.0;
                 for (int i = 0; i < _stor.Prices.Count; i++)
                 {
-                    double sumCPU = 0.0;
-                    double sumRAM = 0.0;
-                    double sumHDD = 0.0;
-                    double sumSSD = 0.0;
-                    double sumTAPE = 0.0;
-                    double sumBACKUP = 0.0;
-                    double sumEML = 0.0;
-                    double sumVDS = 0.0;
-                    double sumFPS = 0.0;
-                    double sumASPAM = 0.0;
-                    double sumVAV_SRV = 0.0;
                     if (_stor.Prices[i].Item.ToLower().Contains("cpu_dh-1"))
                     {
                         sumCPU = _stor.Prices[i].Price * CPU;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, CPU.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumCPU.ToString(), (sumCPU * 0.2).ToString(), (sumCPU * 1.2).ToString());
+                        _stor.AddReport(report);
                         continue;
                     }
                     else if (_stor.Prices[i].Item.ToLower().Contains("ram_dh-1"))
                     {
                         sumRAM = _stor.Prices[i].Price * RAM;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, RAM.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumRAM.ToString(), (sumRAM * 0.2).ToString(), (sumRAM * 1.2).ToString());
+                        _stor.AddReport(report);
                         continue;
                     }
                     else if (_stor.Prices[i].Item.ToLower().Contains("slow"))
                     {
                         sumHDD = _stor.Prices[i].Price * HDD;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, HDD.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumHDD.ToString(), (sumHDD * 0.2).ToString(), (sumHDD * 1.2).ToString());
+                        _stor.AddReport(report);
                         continue;
                     }
                     else if (_stor.Prices[i].Item.ToLower().Contains("ssd"))
                     {
                         sumSSD = _stor.Prices[i].Price * SSD;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, SSD.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumSSD.ToString(), (sumSSD * 0.2).ToString(), (sumSSD * 1.2).ToString());
+                        _stor.AddReport(report);
                         continue;
                     }
                     else if (_stor.Prices[i].Item.ToLower().Contains("tape_dh-1"))
                     {
                         sumTAPE = _stor.Prices[i].Price * BACKUPTAPE;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, BACKUPTAPE.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumTAPE.ToString(), (sumTAPE * 0.2).ToString(), (sumTAPE * 1.2).ToString());
+                        _stor.AddReport(report);
                         continue;
                     }
                     else if (_stor.Prices[i].Item.ToLower().Contains("backup_dh-1"))
                     {
                         sumBACKUP = _stor.Prices[i].Price * BACKUP;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, BACKUP.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumBACKUP.ToString(), (sumBACKUP * 0.2).ToString(), (sumBACKUP * 1.2).ToString());
+                        _stor.AddReport(report);
                         continue;
                     }
                     else if (_stor.Prices[i].Item.ToLower().Contains("eml"))
                     {
                         sumEML = _stor.Prices[i].Price * EML;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, EML.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumEML.ToString(), (sumEML * 0.2).ToString(), (sumEML * 1.2).ToString());
+                        _stor.AddReport(report);
                         continue;
                     }
                     else if (_stor.Prices[i].Item.ToLower().Contains("vds"))
                     {
                         sumVDS = _stor.Prices[i].Price * VDS;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, VDS.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumVDS.ToString(), (sumVDS * 0.2).ToString(), (sumVDS * 1.2).ToString());
+                        _stor.AddReport(report);
                         continue;
                     }
                     else if (_stor.Prices[i].Item.ToLower().Contains("fps"))
                     {
                         sumFPS = _stor.Prices[i].Price * FPS;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, FPS.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumFPS.ToString(), (sumFPS * 0.2).ToString(), (sumFPS * 1.2).ToString());
+                        _stor.AddReport(report);
                         continue;
                     }
                     else if (_stor.Prices[i].Item.ToLower().Contains("aspam"))
                     {
                         sumASPAM = _stor.Prices[i].Price * ASPAM;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, ASPAM.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumASPAM.ToString(), (sumASPAM * 0.2).ToString(), (sumASPAM * 1.2).ToString());
+                        _stor.AddReport(report);
                         continue;
                     }
                     else if (_stor.Prices[i].Item.ToLower().Contains("vav-srv"))
                     {
                         sumVAV_SRV = _stor.Prices[i].Price * VAV_SRV;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, VAV_SRV.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumVAV_SRV.ToString(), (sumVAV_SRV * 0.2).ToString(), (sumVAV_SRV * 1.2).ToString());
+                        _stor.AddReport(report);
                         continue;
                     }
-                    //other
+                    else if (_stor.Prices[i].Item.ToLower().Contains("scazi_int"))
+                    {
+                        sumSCAZI_INT = _stor.Prices[i].Price * SCAZI_INT;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, SCAZI_INT.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumSCAZI_INT.ToString(), (sumSCAZI_INT * 0.2).ToString(), (sumSCAZI_INT * 1.2).ToString());
+                        _stor.AddReport(report);
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("scazi_ext"))
+                    {
+                        sumSCAZI_EXT = _stor.Prices[i].Price * SCAZI_EXT;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, SCAZI_EXT.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumSCAZI_EXT.ToString(), (sumSCAZI_EXT * 0.2).ToString(), (sumSCAZI_EXT * 1.2).ToString());
+                        _stor.AddReport(report);
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("siem"))
+                    {
+                        sumSIEM = _stor.Prices[i].Price * SIEM;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, SIEM.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumSIEM.ToString(), (sumSIEM * 0.2).ToString(), (sumSIEM * 1.2).ToString());
+                        _stor.AddReport(report);
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("cpu_dh-2"))
+                    {
+                        sumCPU_DH2 = _stor.Prices[i].Price * CPU_DH2;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, CPU_DH2.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumCPU_DH2.ToString(), (sumCPU_DH2 * 0.2).ToString(), (sumCPU_DH2 * 1.2).ToString());
+                        _stor.AddReport(report);
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("ram_dh-2"))
+                    {
+                        sumRAM_DH2 = _stor.Prices[i].Price * RAM_DH2;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, RAM_DH2.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumRAM_DH2.ToString(), (sumRAM_DH2 * 0.2).ToString(), (sumRAM_DH2 * 1.2).ToString());
+                        _stor.AddReport(report);
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("hdd_sib_dh-2"))
+                    {
+                        sumHDD_DH2 = _stor.Prices[i].Price * HDD_DH2;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, HDD_DH2.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumHDD_DH2.ToString(), (sumHDD_DH2 * 0.2).ToString(), (sumHDD_DH2 * 1.2).ToString());
+                        _stor.AddReport(report);
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("tape_dh-2"))
+                    {
+                        sumBACKUPTAPE_DH2 = _stor.Prices[i].Price * BACKUPTAPE_DH2;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, BACKUPTAPE_DH2.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumBACKUPTAPE_DH2.ToString(), (sumBACKUPTAPE_DH2 * 0.2).ToString(), (sumBACKUPTAPE_DH2 * 1.2).ToString());
+                        _stor.AddReport(report);
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("secsib"))
+                    {
+                        sumSECSIB = _stor.Prices[i].Price * SECSIB;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, SECSIB.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumSECSIB.ToString(), (sumSECSIB * 0.2).ToString(), (sumSECSIB * 1.2).ToString());
+                        _stor.AddReport(report);
+                        continue;
+                    }
+                    else if (_stor.Prices[i].Item.ToLower().Contains("ngfw"))
+                    {
+                        sumNGFW = _stor.Prices[i].Price * NGFW;
+                        var report = new Report(contract.ContractName, _stor.Prices[i].Item, _stor.Prices[i].Description, _stor.Prices[i].Unit, NGFW.ToString(), "24x7", "0", "100%", _stor.Prices[i].Price.ToString(), sumNGFW.ToString(), (sumNGFW * 0.2).ToString(), (sumNGFW * 1.2).ToString());
+                        _stor.AddReport(report);
+                        continue;
+                    }
                 }
-
-                //var report = new Report();
-                //_stor.AddReport(report);
             }
         }
+
+        //clear store
         public void ClearStore() { _stor.ClearStore(); }
         public void ClearUploads() { _stor.ClearUploads(); }
         public void ClearLogs() { _stor.ClearLogs(); }
@@ -813,6 +905,8 @@ namespace ResourceReport.Data
         //collect results  
         public int CollectCounter() { return _stor.EML.Count + _stor.EMLRecord.Count + _stor.FPS.Count + _stor.IaaS.Count + _stor.VDS.Count + _stor.VDSRecord.Count; }
         public List<LogClass> CollectLogs() { return _stor.Logs; }
+        public List<Report> CollectReports() { return _stor.Report; }
+        public List<Contract> CollectContracts() { return _stor.Contract; }
 
         //result builder
         public void MursCount()
