@@ -311,8 +311,8 @@ namespace ResourceReport.Data
             {
                 new Task(() => _calc.MursCount()),
                 new Task(() => _calc.VDSCount()),
-                new Task(() => _calc.BackupVDSCount()),
                 new Task(() => _calc.BackupEMLCount()),
+                new Task(() => _calc.BackupVDSCount()),
                 new Task(() => _calc.FPSCount()),
                 new Task(() => _calc.IaaSCount()),
             };
@@ -332,7 +332,7 @@ namespace ResourceReport.Data
 
             foreach (var task in tasks2)
                 task.Start();
-        
+
             Task.WaitAll(tasks2);
 
             Task[] tasks3 = new Task[3]

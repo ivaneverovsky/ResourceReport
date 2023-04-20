@@ -930,9 +930,8 @@ namespace ResourceReport.Data
                         {
                             _stor.RemoveEML(_stor.EML[i]);
 
-                            var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 3.67).ToString().Trim(new char[] { '(', ')' }), (Convert.ToDouble(mursList[j].TotalItemsSize.Replace(",", ".")) * 29.62).ToString().Trim(new char[] { '(', ')' }), mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
+                            var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize, "", "", mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
                             _stor.AddEML(eml_item);
-                            //emlList.Add(eml_item);
 
                             mursList.RemoveAt(j);
                             j--;
@@ -941,7 +940,7 @@ namespace ResourceReport.Data
                         {
                             _stor.RemoveEML(_stor.EML[i]);
 
-                            var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), "", "", mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
+                            var eml_item = new EML(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Manager, mursList[j].ManagerMail, mursList[j].Mail, mursList[j].TotalItemsSize, "", "", mursList[j].Database, mursList[j].Created, mursList[j].LastLogonTimeDate, mursList[j].Enabled, mursList[j].DescriptionAppeal, mursList[j].ExtensionAttribute3, "стоимость", mursList[j].Enabled, mursList[j].ExtensionAttribute7, "защита");
                             _stor.AddEML(eml_item);
 
                             mursList.RemoveAt(j);
@@ -962,7 +961,7 @@ namespace ResourceReport.Data
                         {
                             _stor.RemoveEMLRecord(_stor.EMLRecord[i]);
 
-                            var emlRecord_item = new EMLRecord(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Mail, mursList[j].TotalItemsSize.Replace(",", "."), "", "", mursList[j].Database, mursList[j].LastLogonTimeDate, "стоимость", "защита");
+                            var emlRecord_item = new EMLRecord(mursList[j].MailBoxType, mursList[j].Company, mursList[j].SAMAccountName, mursList[j].Name, mursList[j].Department, mursList[j].Title, mursList[j].Mail, mursList[j].TotalItemsSize, "", "", mursList[j].Database, mursList[j].LastLogonTimeDate, "стоимость", "защита");
                             _stor.AddEMLRecord(emlRecord_item);
 
                             mursList.RemoveAt(j);
@@ -1062,17 +1061,18 @@ namespace ResourceReport.Data
                         continue;
                     }
 
-            for (int i = 0; i < _stor.VDS.Count; i++)
+            for (int i = 0; i < _stor.Rds.Count; i++)
+            {
                 try
                 {
-                    if (_stor.VDS[i].ExtensionAttribute.ToLower().Contains("дитиавп"))
-                        counterDit += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
-                    else if (_stor.VDS[i].Company.ToLower().Contains("сибинтек-софт"))
-                        counterSibSoft += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
-                    else if (_stor.VDS[i].Company.ToLower().Contains("экспертек"))
-                        counterExpertek += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
-                    else
-                        counterUsiito += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
+                    if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("экспертек"))
+                        counterExpertek += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                    else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("сибинтек софт"))
+                        counterSibSoft += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                    else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("дитиавп"))
+                        counterDit += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                    else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("усиито"))
+                        counterUsiito += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
 
                     //OPTIONAL: add info from RDS-users for Snegir and Sphera
                 }
@@ -1081,7 +1081,9 @@ namespace ResourceReport.Data
                     MessageBox.Show(ex.Message, "Ошибка VDSBackup");
                     continue;
                 }
-            double k_b = counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito);
+            }
+
+            double k_b = Math.Round(counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito), 2);
 
             if (_stor.KoefBackup.Count == 0)
             {
@@ -1117,24 +1119,27 @@ namespace ResourceReport.Data
                     continue;
                 }
 
-            for (int i = 0; i < _stor.EML.Count; i++)
+            for (int i = 0; i < _stor.Murs.Count; i++)
+            {
                 try
                 {
-                    if (_stor.EML[i].ExtensionAttribute.ToLower().Contains("дитиавп"))
-                        counterDit += Convert.ToDouble(_stor.EML[i].UtilizeTenant);
-                    else if (_stor.EML[i].Company.ToLower().Contains("сибинтек-софт") || _stor.EML[i].Company.ToLower().Contains("сфера"))
-                        counterSibSoft += Convert.ToDouble(_stor.EML[i].UtilizeTenant);
-                    else if (_stor.EML[i].Company.ToLower().Contains("экспертек"))
-                        counterExpertek += Convert.ToDouble(_stor.EML[i].UtilizeTenant);
-                    else
-                        counterUsiito += Convert.ToDouble(_stor.EML[i].UtilizeTenant);
+                    if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("дитиавп"))
+                        counterDit += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                    else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("сибинтек софт") || _stor.Murs[i].ExtensionAttribute7.ToLower().Contains("сибинтек-софт"))
+                        counterSibSoft += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                    else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("экспертек"))
+                        counterExpertek += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                    else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("усиито"))
+                        counterUsiito += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Ошибка EMLBackup");
                     continue;
                 }
-            double k_bEML = counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito);
+            }
+
+            double k_bEML = Math.Round(counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito), 2);
         
             for (int i = 0; i < _stor.SIBCDCTapeBackup.Count; i++)
             {
@@ -1148,7 +1153,7 @@ namespace ResourceReport.Data
                     continue;
                 }
             }
-            double k_bEMLTape = counterTape / (counterDit + counterSibSoft + counterExpertek + counterUsiito);
+            double k_bEMLTape = Math.Round(counterTape / (counterDit + counterSibSoft + counterExpertek + counterUsiito), 2);
 
             if (_stor.KoefBackup.Count == 0)
             {
@@ -1273,8 +1278,8 @@ namespace ResourceReport.Data
         {
             for (int i = 0; i < _stor.EML.Count; i++)
             {
-                _stor.EML[i].UtilizeBackup = (Convert.ToDouble(_stor.EML[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEML).ToString();
-                _stor.EML[i].UtilizeBackupTape = (Convert.ToDouble(_stor.EML[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEMLTape).ToString();
+                _stor.EML[i].UtilizeBackup = Math.Round((Convert.ToDouble(_stor.EML[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEML), 2).ToString();
+                _stor.EML[i].UtilizeBackupTape = Math.Round((Convert.ToDouble(_stor.EML[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEMLTape), 2).ToString();
             }
             string time = DateTime.Now.ToShortTimeString();
             var log = new LogClass(time + ": Util EML посчитан");
@@ -1284,8 +1289,8 @@ namespace ResourceReport.Data
         {
             for (int i = 0; i < _stor.EMLRecord.Count; i++)
             {
-                _stor.EMLRecord[i].UtilizeBackup = (Convert.ToDouble(_stor.EMLRecord[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEML).ToString();
-                _stor.EMLRecord[i].UtilizeBackupTape = (Convert.ToDouble(_stor.EMLRecord[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEMLTape).ToString();
+                _stor.EMLRecord[i].UtilizeBackup = Math.Round((Convert.ToDouble(_stor.EMLRecord[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEML), 2).ToString();
+                _stor.EMLRecord[i].UtilizeBackupTape = Math.Round((Convert.ToDouble(_stor.EMLRecord[i].UtilizeTenant) * _stor.KoefBackup[0].BackupEMLTape), 2).ToString();
             }
             string time = DateTime.Now.ToShortTimeString();
             var log = new LogClass(time + ": Util EMLRecord посчитан");
@@ -1294,7 +1299,7 @@ namespace ResourceReport.Data
         public void UtilVDSCount()
         {
             for (int i = 0; i < _stor.VDS.Count; i++)
-                _stor.VDS[i].UtilizeBackup = (Convert.ToDouble(_stor.VDS[i].ProfileCapacity) * _stor.KoefBackup[0].BackupRDS).ToString();
+                _stor.VDS[i].UtilizeBackup = Math.Round((Convert.ToDouble(_stor.VDS[i].ProfileCapacity) * _stor.KoefBackup[0].BackupRDS), 2).ToString();
 
             string time = DateTime.Now.ToShortTimeString();
             var log = new LogClass(time + ": Util VDS посчитан");
@@ -1303,7 +1308,7 @@ namespace ResourceReport.Data
         public void UtilVDSRecordCount()
         {
             for (int i = 0; i < _stor.VDSRecord.Count; i++)
-                _stor.VDSRecord[i].UtilizeBackup = (Convert.ToDouble(_stor.VDSRecord[i].ProfileCapacity) * _stor.KoefBackup[0].BackupRDS).ToString();
+                _stor.VDSRecord[i].UtilizeBackup = Math.Round((Convert.ToDouble(_stor.VDSRecord[i].ProfileCapacity) * _stor.KoefBackup[0].BackupRDS), 2).ToString();
 
             string time = DateTime.Now.ToShortTimeString();
             var log = new LogClass(time + ": Util VDS Record посчитан");

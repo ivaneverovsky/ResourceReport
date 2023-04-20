@@ -3,10 +3,8 @@ using ResourceReport.Data;
 using ResourceReport.Models;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Text;
-using System.Threading;
 using System.Windows;
 
 namespace ResourceReport
@@ -72,7 +70,7 @@ namespace ResourceReport
         private void Export(object sender, RoutedEventArgs e)
         {
             string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            StreamWriter sw = new StreamWriter(filePath + @"\reports.csv", false, Encoding.Default);
+            StreamWriter sw = new StreamWriter(filePath + @"\ResourceReport.csv", false, Encoding.Default);
             try
             {
                 foreach (var contract in _fl.CollectContracts())
@@ -84,7 +82,7 @@ namespace ResourceReport
                         {
                             if (report.Quantity == "0")
                                 continue;
-                            sw.WriteLine(report.Service + ";" + report.Description + ";" + report.Unit + ";" + Math.Round(Convert.ToDouble(report.Quantity), 2) + ";" + report.ServiceDeliveryTime + ";" + report.ServiceDownTime + ";" + report.ServiceAvailability + ";" + Math.Round(Convert.ToDouble(report.PricePerUnit), 2) + ";" + Math.Round(Convert.ToDouble(report.PriceSum), 2) + ";" + Math.Round(Convert.ToDouble(report.VAT), 2) + ";" + Math.Round(Convert.ToDouble(report.VATSum), 2));
+                            sw.WriteLine(report.Service + ";" + report.Description + ";" + report.Unit + ";" + Convert.ToDouble(report.Quantity) + ";" + report.ServiceDeliveryTime + ";" + report.ServiceDownTime + ";" + report.ServiceAvailability + ";" + Math.Round(Convert.ToDouble(report.PricePerUnit), 2) + ";" + Math.Round(Convert.ToDouble(report.PriceSum), 2) + ";" + Math.Round(Convert.ToDouble(report.VAT), 2) + ";" + Math.Round(Convert.ToDouble(report.VATSum), 2));
                         }
                     sw.WriteLine();
                 }
