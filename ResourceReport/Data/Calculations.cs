@@ -56,17 +56,13 @@ namespace ResourceReport.Data
                             RAM += Convert.ToDouble(_stor.IaaS[i].RAM);
                             SSD += Convert.ToDouble(_stor.IaaS[i].Disk);
 
-                            if (_stor.IaaS[i].BackupTape == "")
-                                BACKUPTAPE_IAAS = 0.0;
-                            else
+                            if (_stor.IaaS[i].BackupTape != "")
                                 BACKUPTAPE_IAAS += Convert.ToDouble(_stor.IaaS[i].BackupTape);
-
-                            if (_stor.IaaS[i].Backup == "")
-                                BACKUP_IAAS = 0.0;
-                            else
+                            if (_stor.IaaS[i].Backup != "")
                                 BACKUP_IAAS += Convert.ToDouble(_stor.IaaS[i].Backup);
 
                             NGFW++;
+
                             if (_stor.IaaS[i].AVZ == "+")
                                 VAV_SRV++;
                             if (_stor.IaaS[i].SKAZI == "+")
@@ -76,14 +72,13 @@ namespace ResourceReport.Data
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message + "\nIaaS", "Ошибка");
+                            MessageBox.Show(ex.Message + "\nIaaS", "Ошибка Report");
                             continue;
                         }
                     }
                 }
                 if (contract.ContractName.ToLower() == "дитиавп")
                 {
-                    SIEM = 1.0;
                     NGFW = 1.0;
                     CPU_DH2 = 1248.0;
                     RAM_DH2 = 12288.0;
@@ -108,7 +103,7 @@ namespace ResourceReport.Data
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message + "\nEML", "Ошибка");
+                            MessageBox.Show(ex.Message + "\nEML", "Ошибка Report");
                             continue;
                         }
                     }
@@ -127,11 +122,14 @@ namespace ResourceReport.Data
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message + "\nEML Record", "Ошибка");
+                            MessageBox.Show(ex.Message + "\nEML Record", "Ошибка Report");
                             continue;
                         }
                     }
                 }
+
+                if (contract.ContractName.ToLower() == "усиито")
+                    ASPAM += 310.0;
 
                 //VDS & VDS Record
                 double BACKUP_FPS = 0.0;
@@ -147,7 +145,7 @@ namespace ResourceReport.Data
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message + "\nVDS", "Ошибка");
+                            MessageBox.Show(ex.Message + "\nVDS", "Ошибка Report");
                             continue;
                         }
                     }
@@ -163,15 +161,15 @@ namespace ResourceReport.Data
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message + "\nVDS Record", "Ошибка");
+                            MessageBox.Show(ex.Message + "\nVDS Record", "Ошибка Report");
                             continue;
                         }
                     }
                 }
+
                 if (contract.ContractName.ToLower() == "дитиавп")
                 {
-                    BACKUP_FPS = 0.0;
-                    FPS = 0.0;
+                    FPS = Convert.ToDouble(_stor.FPS[0].Value);
                     SECSIB = 1.0;
                 }
 
@@ -661,7 +659,7 @@ namespace ResourceReport.Data
                     }
                     else if (rdsList[i].ExtensionAttribute != "" && rdsList[i].ExtensionAttribute.ToLower() != "дитиавп" && DateTime.Parse(rdsList[i].LastConnection) < start)
                     {
-                        var vdsRecord_item = new VDSRecord(rdsList[i].SAMAccountName, rdsList[i].Company, rdsList[i].Tenant, rdsList[i].Department, rdsList[i].Occupation, rdsList[i].ActualProfileSize, "", rdsList[i].LastConnection, "");
+                        var vdsRecord_item = new VDSRecord(rdsList[i].SAMAccountName, rdsList[i].Company, rdsList[i].Tenant, rdsList[i].Department, rdsList[i].Occupation, rdsList[i].ActualProfileSize, "", rdsList[i].LastConnection, "", rdsList[i].ExtensionAttribute);
                         _stor.AddVDSRecord(vdsRecord_item);
                     }
                 }
@@ -809,6 +807,14 @@ namespace ResourceReport.Data
             double counter = 0.0;
             for (int i = 0; i < _stor.Volume.Count; i++)
                 counter += Convert.ToDouble(_stor.Volume[i].UsedCapacity);
+
+            for (int i = 0; i < _stor.VDS.Count; i++)
+                if (_stor.VDS[i].ExtensionAttribute.ToLower().Contains("усиито") || _stor.VDS[i].ExtensionAttribute.ToLower().Contains("сибинтек софт") || _stor.VDS[i].ExtensionAttribute.ToLower().Contains("айэмти") || _stor.VDS[i].ExtensionAttribute.ToLower().Contains("экспертек") || _stor.VDS[i].ExtensionAttribute.ToLower().Contains("снегирь-софт") || _stor.VDS[i].ExtensionAttribute.ToLower().Contains("звезда") || _stor.VDS[i].ExtensionAttribute.ToLower().Contains("сфера"))
+                    counter -= Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
+            
+            for (int i = 0; i < _stor.VDSRecord.Count; i++)
+                if (_stor.VDSRecord[i].ExtensionAttribute.ToLower().Contains("усиито") || _stor.VDSRecord[i].ExtensionAttribute.ToLower().Contains("сибинтек софт") || _stor.VDSRecord[i].ExtensionAttribute.ToLower().Contains("айэмти") || _stor.VDSRecord[i].ExtensionAttribute.ToLower().Contains("экспертек") || _stor.VDSRecord[i].ExtensionAttribute.ToLower().Contains("снегирь-софт") || _stor.VDSRecord[i].ExtensionAttribute.ToLower().Contains("звезда") || _stor.VDSRecord[i].ExtensionAttribute.ToLower().Contains("сфера"))
+                    counter -= Convert.ToDouble(_stor.VDSRecord[i].ProfileCapacity);
 
             var fps = new FPS(counter.ToString());
             _stor.FPS.Add(fps);

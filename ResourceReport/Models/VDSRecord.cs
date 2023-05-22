@@ -11,7 +11,8 @@
         public string UtilizeBackup { get; set; }
         public string LastConnection { get; set; }
         public string Price { get; set; }
-        public VDSRecord(string sAMAccountName, string company, string tenant, string department, string occupation, string profileCapacity, string utilizeBackup, string lastConnection, string price)
+        public string ExtensionAttribute { get; set; }
+        public VDSRecord(string sAMAccountName, string company, string tenant, string department, string occupation, string profileCapacity, string utilizeBackup, string lastConnection, string price, string extensionAttribute)
         {
             SAMAccountName = sAMAccountName;
             Company = company;
@@ -22,6 +23,7 @@
             UtilizeBackup = utilizeBackup;
             LastConnection = lastConnection;
             Price = price;
+            ExtensionAttribute = extensionAttribute;
         }
     }
 }
