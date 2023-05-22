@@ -449,17 +449,17 @@ namespace ResourceReport.Data
                         {
                             CPU += Convert.ToDouble(_stor.IaaS[i].CPU);
                             RAM += Convert.ToDouble(_stor.IaaS[i].RAM);
-                            SSD += Convert.ToDouble(_stor.IaaS[i].Disk);
+                            SSD += Convert.ToDouble(_stor.IaaS[i].Disk.Replace(",", "."));
 
                             if (_stor.IaaS[i].BackupTape == "")
                                 BACKUPTAPE_IAAS = 0.0;
                             else
-                                BACKUPTAPE_IAAS += Convert.ToDouble(_stor.IaaS[i].BackupTape);
+                                BACKUPTAPE_IAAS += Convert.ToDouble(_stor.IaaS[i].BackupTape.Replace(",", "."));
 
                             if (_stor.IaaS[i].Backup == "")
                                 BACKUP_IAAS = 0.0;
                             else
-                                BACKUP_IAAS += Convert.ToDouble(_stor.IaaS[i].Backup);
+                                BACKUP_IAAS += Convert.ToDouble(_stor.IaaS[i].Backup.Replace(",", "."));
 
                             NGFW++;
                             if (_stor.IaaS[i].AVZ == "+")
@@ -1145,7 +1145,8 @@ namespace ResourceReport.Data
             {
                 try
                 {
-                    counterTape += Convert.ToDouble(_stor.SIBCDCTapeBackup[i].Size) / Math.Pow(1024, 3);
+                    if (_stor.SIBCDCTapeBackup[i].Size != "")
+                        counterTape += Convert.ToDouble(_stor.SIBCDCTapeBackup[i].Size) / Math.Pow(1024, 3);
                 }
                 catch (Exception ex)
                 {
