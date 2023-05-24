@@ -164,6 +164,7 @@ namespace ResourceReport.Data
             _vdsrecord.Clear();
             _fps.Clear();
             _report.Clear();
+
             MessageBox.Show("Данные загруженных отчетов успешно удалены.", "Готово");
         }
         public void ClearUploads()
@@ -177,6 +178,7 @@ namespace ResourceReport.Data
             _cdcTapeBackup.Clear();
             _sibCDCTapeBackup.Clear();
             _reportIaaS.Clear();
+
             MessageBox.Show("Данные выгрузок успешно удалены.", "Готово");
         }
         public void ClearLogs()

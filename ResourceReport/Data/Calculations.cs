@@ -1048,6 +1048,9 @@ namespace ResourceReport.Data
             double counterSibSoft = 0.0;
             double counterExpertek = 0.0;
             double counterUsiito = 0.0;
+            double counterSnegir = 0.0;
+            double counterSphera = 0.0;
+            double counterZvezda = 0.0;
 
             for (int i = 0; i < _stor.Backup.Count; i++)
                 if (_stor.Backup[i].Volume.Contains("RD"))
@@ -1073,8 +1076,12 @@ namespace ResourceReport.Data
                         counterDit += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
                     else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("усиито"))
                         counterUsiito += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
-
-                    //OPTIONAL: add info from RDS-users for Snegir and Sphera
+                    else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("снегирь-софт"))
+                        counterSnegir += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                    else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("лв сфера"))
+                        counterSphera += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                    else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("сибинтек-звезда"))
+                        counterZvezda += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
                 }
                 catch (Exception ex)
                 {
@@ -1083,7 +1090,8 @@ namespace ResourceReport.Data
                 }
             }
 
-            double k_b = Math.Round(counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito), 2);
+            double k_b = Math.Round(counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito + counterSnegir + counterSphera + counterZvezda), 2);
+            //k_b = 1.39;
 
             if (_stor.KoefBackup.Count == 0)
             {
@@ -1106,6 +1114,9 @@ namespace ResourceReport.Data
             double counterSibSoft = 0.0;
             double counterExpertek = 0.0;
             double counterUsiito = 0.0;
+            double counterSnegir = 0.0;
+            double counterSphera = 0.0;
+            double counterZvezda = 0.0;
 
             for (int i = 0; i < _stor.BackupsRepo.Count; i++)
                 try
@@ -1131,6 +1142,12 @@ namespace ResourceReport.Data
                         counterExpertek += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
                     else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("усиито"))
                         counterUsiito += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                    else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("снегирь-софт"))
+                        counterSnegir += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                    else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("лв сфера"))
+                        counterSphera += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                    else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("сибинтек-звезда"))
+                        counterZvezda += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
                 }
                 catch (Exception ex)
                 {
@@ -1139,7 +1156,8 @@ namespace ResourceReport.Data
                 }
             }
 
-            double k_bEML = Math.Round(counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito), 2);
+            double k_bEML = Math.Round(counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito + counterSnegir + counterSphera + counterZvezda), 2);
+            //k_bEML = 3.85;
         
             for (int i = 0; i < _stor.SIBCDCTapeBackup.Count; i++)
             {
@@ -1155,6 +1173,7 @@ namespace ResourceReport.Data
                 }
             }
             double k_bEMLTape = Math.Round(counterTape / (counterDit + counterSibSoft + counterExpertek + counterUsiito), 2);
+            //k_bEMLTape = 28.78;
 
             if (_stor.KoefBackup.Count == 0)
             {
