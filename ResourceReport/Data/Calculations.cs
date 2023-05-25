@@ -926,7 +926,7 @@ namespace ResourceReport.Data
                 for (int j = 0; j < mursList.Count; j++)
                     try
                     {
-                        if (_stor.EML[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].Enabled == "True")
+                        if (mursList[j].ExtensionAttribute7 != "" && _stor.EML[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].Enabled == "True" && mursList[j].ExtensionAttribute7.ToLower() != "дитиавп")
                         {
                             _stor.RemoveEML(_stor.EML[i]);
 
@@ -936,7 +936,7 @@ namespace ResourceReport.Data
                             mursList.RemoveAt(j);
                             j--;
                         }
-                        else if (_stor.EML[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].ExtensionAttribute7.ToLower() == "дитиавп")
+                        else if (mursList[j].ExtensionAttribute7 != "" && _stor.EML[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].ExtensionAttribute7.ToLower() == "дитиавп")
                         {
                             _stor.RemoveEML(_stor.EML[i]);
 
@@ -957,7 +957,7 @@ namespace ResourceReport.Data
                 for (int j = 0; j < mursList.Count; j++)
                     try
                     {
-                        if (_stor.EMLRecord[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].Enabled == "False")
+                        if (mursList[j].ExtensionAttribute7 != "" && _stor.EMLRecord[i].SAMAccountName == mursList[j].SAMAccountName && mursList[j].Enabled == "False")
                         {
                             _stor.RemoveEMLRecord(_stor.EMLRecord[i]);
 
@@ -982,7 +982,7 @@ namespace ResourceReport.Data
             List<Rds> rdsList = _stor.Rds;
 
             DateTime last30 = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(-1).Month, 21);
-            DateTime currentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime currentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(-1).Month, DateTime.Now.Day);
 
             CultureInfo.CurrentCulture = new CultureInfo("ru-RU");
             
@@ -1019,7 +1019,7 @@ namespace ResourceReport.Data
 
             for (int i = 0; i < _stor.VDSRecord.Count; i++)
                 for (int j = 0; j < rdsList.Count; j++)
-                    if (_stor.VDSRecord[i].SAMAccountName == rdsList[j].SAMAccountName)
+                    if (_stor.VDSRecord[i].SAMAccountName == rdsList[j].SAMAccountName && DateTime.Parse(rdsList[j].LastConnection) < currentMonth)
                     {
                         try
                         {
@@ -1172,7 +1172,7 @@ namespace ResourceReport.Data
                     continue;
                 }
             }
-            double k_bEMLTape = Math.Round(counterTape / (counterDit + counterSibSoft + counterExpertek + counterUsiito), 2);
+            double k_bEMLTape = Math.Round(counterTape / (counterDit + counterSibSoft + counterExpertek + counterUsiito + counterSphera + counterZvezda), 2);
             //k_bEMLTape = 28.78;
 
             if (_stor.KoefBackup.Count == 0)
