@@ -181,6 +181,10 @@ namespace ResourceReport.Data
 
             MessageBox.Show("Данные выгрузок успешно удалены.", "Готово");
         }
+        public void ClearCalculations()
+        {
+            MessageBox.Show("это бесполезно");
+        }
         public void ClearLogs()
         {
             _logs.Clear();

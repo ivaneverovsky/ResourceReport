@@ -67,6 +67,7 @@ namespace ResourceReport
         }
         private void DeleteReports(object sender, RoutedEventArgs e) { _fl.ClearStore(); }
         private void DeleteUploads(object sender, RoutedEventArgs e) { _fl.ClearUploads(); }
+        private void DeleteCalculations(object sender, RoutedEventArgs e) { _fl.ClearCalculations(); }
         private void Export(object sender, RoutedEventArgs e)
         {
             string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);

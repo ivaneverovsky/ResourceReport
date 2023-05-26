@@ -304,50 +304,69 @@ namespace ResourceReport.Data
 
         public void ClearStore() { _calc.ClearStore(); }
         public void ClearUploads() { _calc.ClearUploads(); }
+        public void ClearCalculations() { _calc.ClearCalculations(); }
         public void ClearLogs() { _calc.ClearLogs(); }
         public void Work()
         {
-            Task[] tasks = new Task[6]
-            {
-                new Task(() => _calc.MursCount()),
-                new Task(() => _calc.VDSCount()),
-                new Task(() => _calc.BackupEMLCount()),
-                new Task(() => _calc.BackupVDSCount()),
-                new Task(() => _calc.FPSCount()),
-                new Task(() => _calc.IaaSCount()),
-            };
+            _calc.MursCount();
+            _calc.VDSCount();
+            _calc.BackupEMLCount();
+            _calc.BackupVDSCount();
+            _calc.FPSCount();
+            _calc.IaaSCount();
 
-            foreach (var task in tasks)
-                task.Start();
+            _calc.UtilEMLCount();
+            _calc.UtilEMLRecordCount();
+            _calc.UtilVDSCount();
+            _calc.UtilVDSRecordCount();
 
-            Task.WaitAll(tasks);
-
-            Task[] tasks2 = new Task[4]
-            {
-                new Task(() => _calc.UtilEMLCount()),
-                new Task(() => _calc.UtilEMLRecordCount()),
-                new Task(() => _calc.UtilVDSCount()),
-                new Task(() => _calc.UtilVDSRecordCount())
-            };
-
-            foreach (var task in tasks2)
-                task.Start();
-
-            Task.WaitAll(tasks2);
-
-            Task[] tasks3 = new Task[3]
-            {
-                new Task(() => _calc.IaaSMoneyCounter()),
-                new Task(() => _calc.EMLMoneyCounter()),
-                new Task(() => _calc.VDSMoneyCounter())
-            };
-
-            foreach (var task in tasks3)
-                task.Start();
-
-            Task.WaitAll(tasks3);
+            _calc.IaaSMoneyCounter();
+            _calc.EMLMoneyCounter();
+            _calc.VDSMoneyCounter();
 
             _calc.CreateReport();
+
+            //Task[] tasks = new Task[6]
+            //{
+            //    new Task(() => _calc.MursCount()),
+            //    new Task(() => _calc.VDSCount()),
+            //    new Task(() => _calc.BackupEMLCount()),
+            //    new Task(() => _calc.BackupVDSCount()),
+            //    new Task(() => _calc.FPSCount()),
+            //    new Task(() => _calc.IaaSCount()),
+            //};
+
+            //foreach (var task in tasks)
+            //    task.Start();
+
+            //Task.WaitAll(tasks);
+
+            //Task[] tasks2 = new Task[4]
+            //{
+            //    new Task(() => _calc.UtilEMLCount()),
+            //    new Task(() => _calc.UtilEMLRecordCount()),
+            //    new Task(() => _calc.UtilVDSCount()),
+            //    new Task(() => _calc.UtilVDSRecordCount())
+            //};
+
+            //foreach (var task in tasks2)
+            //    task.Start();
+
+            //Task.WaitAll(tasks2);
+
+            //Task[] tasks3 = new Task[3]
+            //{
+            //    new Task(() => _calc.IaaSMoneyCounter()),
+            //    new Task(() => _calc.EMLMoneyCounter()),
+            //    new Task(() => _calc.VDSMoneyCounter())
+            //};
+
+            //foreach (var task in tasks3)
+            //    task.Start();
+
+            //Task.WaitAll(tasks3);
+
+            //_calc.CreateReport();
 
             MessageBox.Show("Все вычисления выполнены.", "Готово");
         }

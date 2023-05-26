@@ -742,6 +742,7 @@ namespace ResourceReport.Data
         //clear store
         public void ClearStore() { _stor.ClearStore(); }
         public void ClearUploads() { _stor.ClearUploads(); }
+        public void ClearCalculations() { _stor.ClearCalculations(); }
         public void ClearLogs() { _stor.ClearLogs(); }
 
         //upload's reports
@@ -982,15 +983,13 @@ namespace ResourceReport.Data
             List<Rds> rdsList = _stor.Rds;
 
             DateTime last30 = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(-1).Month, 21);
-            DateTime currentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(-1).Month, DateTime.Now.Day);
+            DateTime currentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(-1).Month, 20);
 
-            CultureInfo.CurrentCulture = new CultureInfo("ru-RU");
-            
             for (int i = 0; i < _stor.VDS.Count; i++)
                 for (int j = 0; j < rdsList.Count; j++)
                     try
                     {
-                        if (_stor.VDS[i].SAMAccountName == rdsList[j].SAMAccountName && DateTime.Parse(rdsList[j].LastConnection) >= last30 && rdsList[j].ExtensionAttribute.ToLower() == "дитиавп")
+                        if (_stor.VDS[i].SAMAccountName == rdsList[j].SAMAccountName && DateTime.Parse(rdsList[j].LastConnection) >= last30 && rdsList[j].ExtensionAttribute.ToLower() != "" && DateTime.Parse(rdsList[j].LastConnection) <= currentMonth)
                         {
                             _stor.RemoveVDS(_stor.VDS[i]);
 
@@ -1000,16 +999,18 @@ namespace ResourceReport.Data
                             rdsList.RemoveAt(j);
                             j--;
                         }
-                        else if (_stor.VDS[i].SAMAccountName == rdsList[j].SAMAccountName && DateTime.Parse(rdsList[j].LastConnection) >= currentMonth)
-                        {
-                            _stor.RemoveVDS(_stor.VDS[i]);
+                        else
+                            continue;
+                        //else if (_stor.VDS[i].SAMAccountName == rdsList[j].SAMAccountName && DateTime.Parse(rdsList[j].LastConnection) >= currentMonth)
+                        //{
+                        //    _stor.RemoveVDS(_stor.VDS[i]);
 
-                            var vds_item = new VDS(rdsList[j].SAMAccountName, rdsList[j].Company, rdsList[j].Tenant, rdsList[j].Department, rdsList[j].Occupation, rdsList[j].ActualProfileSize, "", rdsList[j].LastConnection, "стоимость", rdsList[j].ExtensionAttribute);
-                            _stor.AddVDS(vds_item);
+                        //    var vds_item = new VDS(rdsList[j].SAMAccountName, rdsList[j].Company, rdsList[j].Tenant, rdsList[j].Department, rdsList[j].Occupation, rdsList[j].ActualProfileSize, "", rdsList[j].LastConnection, "стоимость", rdsList[j].ExtensionAttribute);
+                        //    _stor.AddVDS(vds_item);
 
-                            rdsList.RemoveAt(j);
-                            j--;
-                        }
+                        //    rdsList.RemoveAt(j);
+                        //    j--;
+                        //}
                     }
                     catch (Exception ex)
                     {
@@ -1019,7 +1020,7 @@ namespace ResourceReport.Data
 
             for (int i = 0; i < _stor.VDSRecord.Count; i++)
                 for (int j = 0; j < rdsList.Count; j++)
-                    if (_stor.VDSRecord[i].SAMAccountName == rdsList[j].SAMAccountName && DateTime.Parse(rdsList[j].LastConnection) < currentMonth)
+                    if (_stor.VDSRecord[i].SAMAccountName == rdsList[j].SAMAccountName && DateTime.Parse(rdsList[j].LastConnection) < last30)
                     {
                         try
                         {
@@ -1044,6 +1045,7 @@ namespace ResourceReport.Data
         public void BackupVDSCount()
         {
             double counter = 0.0;
+
             double counterDit = 0.0;
             double counterSibSoft = 0.0;
             double counterExpertek = 0.0;
@@ -1069,19 +1071,19 @@ namespace ResourceReport.Data
                 try
                 {
                     if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("экспертек"))
-                        counterExpertek += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                        counterExpertek += Convert.ToDouble(_stor.Rds[i].ActualProfileSize);
                     else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("сибинтек софт"))
-                        counterSibSoft += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                        counterSibSoft += Convert.ToDouble(_stor.Rds[i].ActualProfileSize);
                     else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("дитиавп"))
-                        counterDit += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                        counterDit += Convert.ToDouble(_stor.Rds[i].ActualProfileSize);
                     else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("усиито"))
-                        counterUsiito += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                        counterUsiito += Convert.ToDouble(_stor.Rds[i].ActualProfileSize);
                     else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("снегирь-софт"))
-                        counterSnegir += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                        counterSnegir += Convert.ToDouble(_stor.Rds[i].ActualProfileSize);
                     else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("лв сфера"))
-                        counterSphera += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                        counterSphera += Convert.ToDouble(_stor.Rds[i].ActualProfileSize);
                     else if (_stor.Rds[i].ExtensionAttribute.ToLower().Contains("сибинтек-звезда"))
-                        counterZvezda += Convert.ToDouble(_stor.Rds[i].ActualProfileSize.Replace(",", "."));
+                        counterZvezda += Convert.ToDouble(_stor.Rds[i].ActualProfileSize);
                 }
                 catch (Exception ex)
                 {
@@ -1135,19 +1137,19 @@ namespace ResourceReport.Data
                 try
                 {
                     if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("дитиавп"))
-                        counterDit += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                        counterDit += Convert.ToDouble(_stor.Murs[i].TotalItemsSize);
                     else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("сибинтек софт") || _stor.Murs[i].ExtensionAttribute7.ToLower().Contains("сибинтек-софт"))
-                        counterSibSoft += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                        counterSibSoft += Convert.ToDouble(_stor.Murs[i].TotalItemsSize);
                     else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("экспертек"))
-                        counterExpertek += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                        counterExpertek += Convert.ToDouble(_stor.Murs[i].TotalItemsSize);
                     else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("усиито"))
-                        counterUsiito += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                        counterUsiito += Convert.ToDouble(_stor.Murs[i].TotalItemsSize);
                     else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("снегирь-софт"))
-                        counterSnegir += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                        counterSnegir += Convert.ToDouble(_stor.Murs[i].TotalItemsSize);
                     else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("лв сфера"))
-                        counterSphera += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                        counterSphera += Convert.ToDouble(_stor.Murs[i].TotalItemsSize);
                     else if (_stor.Murs[i].ExtensionAttribute7.ToLower().Contains("сибинтек-звезда"))
-                        counterZvezda += Convert.ToDouble(_stor.Murs[i].TotalItemsSize.Replace(",", "."));
+                        counterZvezda += Convert.ToDouble(_stor.Murs[i].TotalItemsSize);
                 }
                 catch (Exception ex)
                 {
