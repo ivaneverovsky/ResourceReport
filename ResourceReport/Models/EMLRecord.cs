@@ -14,9 +14,10 @@
         public string UtilizeBackupTape { get; set; }
         public string Quota { get; set; }
         public string LastConnection { get; set; }
+        public string ExtensionAttribute { get; set; }
         public string Price { get; set; }
         public string Security { get; set; }
-        public EMLRecord(string mailBoxType, string company, string sAMAccountName, string tenant, string department, string occupation, string tenantMail, string utilizeTenant, string utilizeBackup, string utilizeBackupTape, string quota, string lastConnection, string price, string security)
+        public EMLRecord(string mailBoxType, string company, string sAMAccountName, string tenant, string department, string occupation, string tenantMail, string utilizeTenant, string utilizeBackup, string utilizeBackupTape, string quota, string lastConnection, string extensionAttribute, string price, string security)
         {
             MailBoxType = mailBoxType;
             Company = company;
@@ -30,6 +31,7 @@
             UtilizeBackupTape = utilizeBackupTape;
             Quota = quota;
             LastConnection = lastConnection;
+            ExtensionAttribute = extensionAttribute;
             Price = price;
             Security = security;
         }
