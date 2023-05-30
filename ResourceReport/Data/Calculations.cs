@@ -924,16 +924,19 @@ namespace ResourceReport.Data
         {
             List<Murs> mursList = _stor.Murs;
 
+            DateTime start = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(-1).Month, 21);
+            DateTime end = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 20);
+
             for (int i = 0; i < mursList.Count; i++)
             {
                 try
                 {
-                    if (mursList[i].ExtensionAttribute7 != "" && mursList[i].Enabled == "True")
+                    if (mursList[i].ExtensionAttribute7 != "" && (mursList[i].ExtensionAttribute7.ToLower() != "cибинтек софт" || mursList[i].ExtensionAttribute7.ToLower() != "cибинтек-софт") || (mursList[i].ExtensionAttribute7.ToLower() == "cибинтек софт" || mursList[i].ExtensionAttribute7.ToLower() == "cибинтек-софт") && DateTime.Parse(mursList[i].LastLogonTimeDate) >= start && DateTime.Parse(mursList[i].LastLogonTimeDate) <= end)
                     {
                         var eml_item = new EML(mursList[i].MailBoxType, mursList[i].Company, mursList[i].SAMAccountName, mursList[i].Name, mursList[i].Department, mursList[i].Title, mursList[i].Manager, mursList[i].ManagerMail, mursList[i].Mail, mursList[i].TotalItemsSize, "", "", mursList[i].Database, mursList[i].Created, mursList[i].LastLogonTimeDate, mursList[i].Enabled, mursList[i].DescriptionAppeal, mursList[i].ExtensionAttribute3, "стоимость", mursList[i].Enabled, mursList[i].ExtensionAttribute7, "защита");
                         _stor.AddEML(eml_item);
                     }
-                    else if (mursList[i].ExtensionAttribute7 != "" && mursList[i].ExtensionAttribute7.ToLower() != "дитиавп" && mursList[i].Enabled == "False")
+                    else if ((mursList[i].ExtensionAttribute7.ToLower() == "cибинтек софт" || mursList[i].ExtensionAttribute7.ToLower() == "cибинтек-софт") && DateTime.Parse(mursList[i].LastLogonTimeDate) < start)
                     {
                         var emlRecord_item = new EMLRecord(mursList[i].MailBoxType, mursList[i].Company, mursList[i].SAMAccountName, mursList[i].Name, mursList[i].Department, mursList[i].Title, mursList[i].Mail, mursList[i].TotalItemsSize, "", "", mursList[i].Database, mursList[i].LastLogonTimeDate, mursList[i].ExtensionAttribute7, "стоимость", "защита");
                         _stor.AddEMLRecord(emlRecord_item);
@@ -961,12 +964,12 @@ namespace ResourceReport.Data
             {
                 try
                 {
-                    if (rdsList[i].ExtensionAttribute.ToLower() != "" && DateTime.Parse(rdsList[i].LastConnection) >= start &&  DateTime.Parse(rdsList[i].LastConnection) <= end)
+                    if (rdsList[i].ExtensionAttribute != "" && DateTime.Parse(rdsList[i].LastConnection) >= start &&  DateTime.Parse(rdsList[i].LastConnection) <= end)
                     {
                         var vds_item = new VDS(rdsList[i].SAMAccountName, rdsList[i].Company, rdsList[i].Tenant, rdsList[i].Department, rdsList[i].Occupation, rdsList[i].ActualProfileSize, "", rdsList[i].LastConnection, "стоимость", rdsList[i].ExtensionAttribute);
                         _stor.AddVDS(vds_item);
                     }
-                    else if (rdsList[i].ExtensionAttribute.ToLower() != "" && DateTime.Parse(rdsList[i].LastConnection) < start)
+                    else if (rdsList[i].ExtensionAttribute != "" && rdsList[i].ExtensionAttribute.ToLower() != "дитиавп" && DateTime.Parse(rdsList[i].LastConnection) < start)
                     {
                         var vdsRecord_item = new VDSRecord(rdsList[i].SAMAccountName, rdsList[i].Company, rdsList[i].Tenant, rdsList[i].Department, rdsList[i].Occupation, rdsList[i].ActualProfileSize, "", rdsList[i].LastConnection, "стоимость");
                         _stor.AddVDSRecord(vdsRecord_item);
@@ -987,16 +990,10 @@ namespace ResourceReport.Data
         {
             double counter = 0.0;
 
-            double counterDit = 0.0;
-            double counterSibSoft = 0.0;
-            double counterExpertek = 0.0;
-            double counterUsiito = 0.0;
-            double counterSnegir = 0.0;
-            double counterSphera = 0.0;
-            double counterZvezda = 0.0;
+            double vdsCounter = 0.0;
 
             for (int i = 0; i < _stor.Backup.Count; i++)
-                if (_stor.Backup[i].Volume.Contains("RD"))
+                if (_stor.Backup[i].Volume.Contains("RD") && _stor.Backup[i].Volume != "vol_05_RDS_old_DR")
                     try
                     {
                         counter += Convert.ToDouble(_stor.Backup[i].TotalCapacity);
@@ -1011,20 +1008,8 @@ namespace ResourceReport.Data
             {
                 try
                 {
-                    if (_stor.VDS[i].ExtensionAttribute.ToLower().Contains("экспертек"))
-                        counterExpertek += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
-                    else if (_stor.VDS[i].ExtensionAttribute.ToLower().Contains("сибинтек софт"))
-                        counterSibSoft += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
-                    else if (_stor.VDS[i].ExtensionAttribute.ToLower().Contains("дитиавп"))
-                        counterDit += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
-                    else if (_stor.VDS[i].ExtensionAttribute.ToLower().Contains("усиито"))
-                        counterUsiito += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
-                    else if (_stor.VDS[i].ExtensionAttribute.ToLower().Contains("снегирь-софт"))
-                        counterSnegir += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
-                    else if (_stor.VDS[i].ExtensionAttribute.ToLower().Contains("лв сфера"))
-                        counterSphera += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
-                    else if (_stor.VDS[i].ExtensionAttribute.ToLower().Contains("сибинтек-звезда"))
-                        counterZvezda += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
+                    if (_stor.VDS[i].ExtensionAttribute.ToLower() != "лв сфера" && _stor.VDS[i].ExtensionAttribute.ToLower() != "айэмти")
+                        vdsCounter += Convert.ToDouble(_stor.VDS[i].ProfileCapacity);
                 }
                 catch (Exception ex)
                 {
@@ -1033,8 +1018,20 @@ namespace ResourceReport.Data
                 }
             }
 
-            double k_b = Math.Round(counter / (counterDit + counterSibSoft + counterExpertek + counterUsiito + counterSnegir + counterSphera + counterZvezda), 2);
-            //k_b = 1.39;
+            for (int i = 0; i < _stor.VDSRecord.Count; i++)
+            {
+                try
+                {
+                    vdsCounter += Convert.ToDouble(_stor.VDSRecord[i].ProfileCapacity);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка VDSRecBackup");
+                    continue;
+                }
+            }
+
+            double k_b = Math.Round(counter / vdsCounter, 2);
 
             if (_stor.KoefBackup.Count == 0)
             {
@@ -1067,25 +1064,11 @@ namespace ResourceReport.Data
                     continue;
                 }
 
-            //for (int i = 0; i < _stor.ReportIaaS.Count; i++)
-            //{
-            //    for (int j = 0; j < _stor.BackupsRepo.Count; j++)
-            //        if (_stor.ReportIaaS[i].VMName.ToLower().Contains(_stor.BackupsRepo[j].VirtualMachine.ToLower()))
-            //            _stor.ReportIaaS[i].Backup = _stor.BackupsRepo[j].TotalBackupsSize.Replace(".", ",");
-            //}
-
-            //for (int i = 0; i < _stor.ReportIaaS.Count; i++)
-            //{
-            //    for (int j = 0; j < _stor.SIBCDCTapeBackup.Count; j++)
-            //    {
-                    
-            //    }
-            //}
-
             for (int i = 0; i < _stor.EML.Count; i++)
                 try
                 {
-                    emlCounter += Convert.ToDouble(_stor.EML[i].UtilizeTenant);
+                    if (_stor.EML[i].ExtensionAttribute.ToLower() != "лв сфера" || _stor.EML[i].ExtensionAttribute.ToLower() != "айэмти")
+                        emlCounter += Convert.ToDouble(_stor.EML[i].UtilizeTenant);
                 }
                 catch (Exception ex)
                 {

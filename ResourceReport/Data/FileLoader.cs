@@ -310,8 +310,8 @@ namespace ResourceReport.Data
         {
             _calc.MursCount();
             _calc.VDSCount();
-            _calc.BackupEMLCount();
             _calc.BackupVDSCount();
+            _calc.BackupEMLCount();
             _calc.FPSCount();
             _calc.IaaSCount();
 
