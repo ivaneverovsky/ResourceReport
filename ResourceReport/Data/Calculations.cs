@@ -19,401 +19,6 @@ namespace ResourceReport.Data
             var contract_item = new Contract(contract);
             _stor.AddContract(contract_item);
         }
-        public void CreateIaaS(List<object> iaas, string contractName)
-        {
-            //List<object> columns = (List<object>)iaas[0];
-            //bool bull = false;
-
-            //for (int i = 0; i < columns.Count; i++)
-            //{
-            //    if (columns[i].ToString() == "")
-            //    {
-            //        columns.RemoveAt(i);
-            //        i--;
-            //    }
-            //}
-            //columns.Add("(нет)");
-
-            //NewIaaSWindow nisw = new NewIaaSWindow
-            //{
-            //    DataContext = columns,
-            //    Title = "IaaS"
-            //};
-            //nisw.ShowDialog();
-
-            //if (!nisw.Bull)
-            //{
-            //    MessageBox.Show("Данные на листе IaaS не были обработаны.", "Внимание");
-            //    return;
-            //}
-
-            //for (int i = 1; i < iaas.Count - 1; i++)
-            //{
-            //    List<object> value = (List<object>)iaas[i];
-
-            //    while (value.Count < 23)
-            //        value.Add("");
-
-            //    try
-            //    {
-            //        string virtualizationPlatform = value[nisw.id0].ToString();
-            //        string project = value[nisw.id1].ToString();
-            //        string vmName = value[nisw.id2].ToString();
-            //        string fqdn = value[nisw.id3].ToString();
-            //        string ip = value[nisw.id4].ToString();
-            //        string disk = value[nisw.id5].ToString();
-            //        string cpu = value[nisw.id6].ToString();
-            //        string ram = value[nisw.id7].ToString();
-            //        string os = value[nisw.id8].ToString();
-            //        string backup = value[nisw.id9].ToString();
-            //        string backupTape = value[nisw.id10].ToString();
-            //        string vmCreation = value[nisw.id11].ToString();
-            //        string isName = value[nisw.id12].ToString();
-            //        string tenant = value[nisw.id13].ToString();
-            //        string owner = value[nisw.id14].ToString();
-            //        string price = value[nisw.id15].ToString();
-            //        string reqCreate = value[nisw.id16].ToString();
-            //        string reqDelete = value[nisw.id17].ToString();
-            //        string reqChange = value[nisw.id18].ToString();
-            //        string avz = value[nisw.id19].ToString();
-            //        string siem = value[nisw.id20].ToString();
-            //        string skazi = value[nisw.id21].ToString();
-
-            //        var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, "color");
-            //        _stor.AddIaaS(iaasItem);
-
-            //        bull = true;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Невозможно создать элемент IaaS: " + ex.Message, "Ошибка");
-            //        return;
-            //    }
-            //}
-            //if (!bull)
-            //    MessageBox.Show("Данных IaaS не найдено.", "Внимание");
-        }
-        public void CreateEML(List<object> eml)
-        {
-            //List<object> columns = (List<object>)eml[0];
-            //bool bull = false;
-
-            //for (int i = 0; i < columns.Count; i++)
-            //{
-            //    if (columns[i].ToString() == "")
-            //    {
-            //        columns.RemoveAt(i);
-            //        i--;
-            //    }
-            //}
-            //columns.Add("(нет)");
-
-            //NewEMLWindow nemlw = new NewEMLWindow
-            //{
-            //    DataContext = columns,
-            //    Title = "EML"
-            //};
-            //nemlw.ShowDialog();
-
-            //if (!nemlw.Bull)
-            //{
-            //    MessageBox.Show("Данные на листе EML не были обработаны.", "Внимание");
-            //    return;
-            //}
-
-            //for (int i = 1; i < eml.Count - 1; i++)
-            //{
-            //    List<object> value = (List<object>)eml[i];
-            //    while (value.Count < 22)
-            //        value.Add("");
-
-            //    try
-            //    {
-            //        string mailBoxType = value[nemlw.id0].ToString();
-            //        string company = value[nemlw.id1].ToString();
-            //        string samAccountName = value[nemlw.id2].ToString();
-            //        string tenant = value[nemlw.id3].ToString();
-            //        string department = value[nemlw.id4].ToString();
-            //        string occupation = value[nemlw.id5].ToString();
-            //        string owner = value[nemlw.id6].ToString();
-            //        string ownerMail = value[nemlw.id7].ToString();
-            //        string tenantMail = value[nemlw.id8].ToString();
-            //        string utilizeTenant = value[nemlw.id9].ToString();
-            //        string utilizeBackup = value[nemlw.id10].ToString();
-            //        string utilizeBackupTape = value[nemlw.id11].ToString();
-            //        string quota = value[nemlw.id12].ToString();
-            //        string creationDate = value[nemlw.id13].ToString();
-            //        string lastConnection = value[nemlw.id14].ToString();
-            //        string vmValidity = value[nemlw.id15].ToString();
-            //        string description = value[nemlw.id16].ToString();
-            //        string reason = value[nemlw.id17].ToString();
-            //        string price = value[nemlw.id18].ToString();
-            //        string accountStatus = value[nemlw.id19].ToString();
-            //        string extensionAttribute = value[nemlw.id20].ToString();
-            //        string security = value[nemlw.id21].ToString();
-
-            //        if (samAccountName == "")
-            //            return;
-
-            //        var eml_item = new EML(mailBoxType, company, samAccountName, tenant, department, occupation, owner, ownerMail, tenantMail, utilizeTenant, utilizeBackup, utilizeBackupTape, quota, creationDate, lastConnection, vmValidity, description, reason, price, accountStatus, extensionAttribute, security);
-            //        _stor.AddEML(eml_item);
-
-            //        bull = true;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Невозможно создать элемент EML: " + ex.Message, "Ошибка");
-            //        return;
-            //    }
-            //}
-            //if (!bull)
-            //    MessageBox.Show("Данных EML не найдено.", "Внимание");
-        }
-        public void CreateEMLRec(List<object> eml_rec)
-        {
-            //List<object> columns = (List<object>)eml_rec[0];
-            //bool bull = false;
-
-            //for (int i = 0; i < columns.Count; i++)
-            //{
-            //    if (columns[i].ToString() == "")
-            //    {
-            //        columns.RemoveAt(i);
-            //        i--;
-            //    }
-            //}
-            //columns.Add("(нет)");
-
-            //NewEMLRecordWindow nemlrw = new NewEMLRecordWindow
-            //{
-            //    DataContext = columns,
-            //    Title = "EML Record"
-            //};
-            //nemlrw.ShowDialog();
-
-            //if (!nemlrw.Bull)
-            //{
-            //    MessageBox.Show("Данные на листе EML Архив не были обработаны.", "Внимание");
-            //    return;
-            //}
-
-            //for (int i = 1; i < eml_rec.Count - 1; i++)
-            //{
-            //    List<object> value = (List<object>)eml_rec[i];
-            //    while (value.Count < 15)
-            //        value.Add("");
-
-            //    try
-            //    {
-            //        string mailBoxType = value[nemlrw.id0].ToString();
-            //        string company = value[nemlrw.id1].ToString();
-            //        string samAccountName = value[nemlrw.id2].ToString();
-            //        string tenant = value[nemlrw.id3].ToString();
-            //        string department = value[nemlrw.id4].ToString();
-            //        string occupation = value[nemlrw.id5].ToString();
-            //        string tenantMail = value[nemlrw.id6].ToString();
-            //        string utilizeTenant = value[nemlrw.id7].ToString();
-            //        string utilizeBackup = value[nemlrw.id8].ToString();
-            //        string utilizeBackupTape = value[nemlrw.id9].ToString();
-            //        string quota = value[nemlrw.id10].ToString();
-            //        string lastConnection = value[nemlrw.id11].ToString();
-            //        string price = value[nemlrw.id12].ToString();
-            //        string security = value[nemlrw.id13].ToString();
-
-            //        var eml_rec_item = new EMLRecord(mailBoxType, company, samAccountName, tenant, department, occupation, tenantMail, utilizeTenant, utilizeBackup, utilizeBackupTape, quota, lastConnection, price, security);
-            //        _stor.AddEMLRecord(eml_rec_item);
-
-            //        bull = true;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Невозможно создать элемент EML Архив: " + ex.Message, "Ошибка");
-            //        return;
-            //    }
-            //}
-            //if (!bull)
-            //    MessageBox.Show("Данных EML Архив не найдено.", "Внимание");
-        }
-        public void CreateVDS(List<object> vds)
-        {
-            //List<object> columns = (List<object>)vds[0];
-            //bool bull = false;
-
-            //for (int i = 0; i < columns.Count; i++)
-            //{
-            //    if (columns[i].ToString() == "")
-            //    {
-            //        columns.RemoveAt(i);
-            //        i--;
-            //    }
-            //}
-            //columns.Add("(нет)");
-
-            //NewVDSWindow nvdsw = new NewVDSWindow
-            //{
-            //    DataContext = columns,
-            //    Title = "VDS"
-            //};
-            //nvdsw.ShowDialog();
-
-            //if (!nvdsw.Bull)
-            //{
-            //    MessageBox.Show("Данные на листе VDS не были обработаны.", "Внимание");
-            //    return;
-            //}
-
-            //for (int i = 1; i < vds.Count - 1; i++)
-            //{
-            //    List<object> value = (List<object>)vds[i];
-            //    while (value.Count < 10)
-            //        value.Add("");
-
-            //    try
-            //    {
-            //        string samAccountName = value[nvdsw.id0].ToString();
-            //        string company = value[nvdsw.id1].ToString();
-            //        string tenant = value[nvdsw.id2].ToString();
-            //        string department = value[nvdsw.id3].ToString();
-            //        string occupation = value[nvdsw.id4].ToString();
-            //        string profileCapacity = value[nvdsw.id5].ToString();
-            //        string utilizeBackup = value[nvdsw.id6].ToString();
-            //        string lastConnection = value[nvdsw.id7].ToString();
-            //        string price = value[nvdsw.id8].ToString();
-            //        string extensionAttribute = value[nvdsw.id9].ToString();
-
-            //        if (tenant == "")
-            //            return;
-
-            //        var vds_item = new VDS(samAccountName, company, tenant, department, occupation, profileCapacity, utilizeBackup, lastConnection, price, extensionAttribute);
-            //        _stor.AddVDS(vds_item);
-
-            //        bull = true;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Невозможно создать элемент VDS: " + ex.Message, "Ошибка");
-            //        return;
-            //    }
-            //}
-            //if (!bull)
-            //    MessageBox.Show("Данных VDS не найдено.", "Внимание");
-        }
-        public void CreateVDSRec(List<object> vds_rec)
-        {
-            //List<object> columns = (List<object>)vds_rec[0];
-            //bool bull = false;
-
-            //for (int i = 0; i < columns.Count; i++)
-            //{
-            //    if (columns[i].ToString() == "")
-            //    {
-            //        columns.RemoveAt(i);
-            //        i--;
-            //    }
-            //}
-            //columns.Add("(нет)");
-
-            //NewVDSRecordWindow nvdsrw = new NewVDSRecordWindow
-            //{
-            //    DataContext = columns,
-            //    Title = "VDS Record"
-            //};
-            //nvdsrw.ShowDialog();
-
-            //if (!nvdsrw.Bull)
-            //{
-            //    MessageBox.Show("Данные на листе VDS Архив не были обработаны.", "Внимание");
-            //    return;
-            //}
-
-            //for (int i = 1; i < vds_rec.Count - 1; i++)
-            //{
-            //    List<object> value = (List<object>)vds_rec[i];
-            //    while (value.Count < 9)
-            //        value.Add("");
-
-            //    try
-            //    {
-            //        string samAccountName = value[nvdsrw.id0].ToString();
-            //        string company = value[nvdsrw.id1].ToString();
-            //        string tenant = value[nvdsrw.id2].ToString();
-            //        string department = value[nvdsrw.id3].ToString();
-            //        string occupation = value[nvdsrw.id4].ToString();
-            //        string profileCapacity = value[nvdsrw.id5].ToString();
-            //        string utilizeBackup = value[nvdsrw.id6].ToString();
-            //        string lastConnection = value[nvdsrw.id7].ToString();
-            //        string price = value[nvdsrw.id8].ToString();
-
-            //        var vds_rec_item = new VDSRecord(samAccountName, company, tenant, department, occupation, profileCapacity, utilizeBackup, lastConnection, price);
-            //        _stor.AddVDSRecord(vds_rec_item);
-
-            //        bull = true;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Невозможно создать элемент VDS Архив: " + ex.Message, "Ошибка");
-            //        return;
-            //    }
-            //}
-            //if (!bull)
-            //    MessageBox.Show("Данных VDS Архив не найдено.", "Внимание");
-        }
-        public void CreateFPS(List<object> fps)
-        {
-            List<object> columns = (List<object>)fps[0];
-            bool bull = false;
-
-            for (int i = 0; i < columns.Count; i++)
-            {
-                if (columns[i].ToString() == "")
-                {
-                    columns.RemoveAt(i);
-                    i--;
-                }
-            }
-            columns.Add("(нет)");
-
-            NewFPSWindow nfpsw = new NewFPSWindow
-            {
-                DataContext = columns,
-                Title = "FPS"
-            };
-            nfpsw.ShowDialog();
-
-            if (!nfpsw.Bull)
-            {
-                MessageBox.Show("Данные на листе FPS не были обработаны.", "Внимание");
-                return;
-            }
-
-            for (int i = 1; i < fps.Count - 1; i++)
-            {
-                List<object> value = (List<object>)fps[i];
-                while (value.Count < 5)
-                    value.Add("");
-
-                try
-                {
-                    string volume = value[nfpsw.id0].ToString();
-                    string volumeCapacity = value[nfpsw.id1].ToString();
-                    string freeSapce = value[nfpsw.id2].ToString();
-                    string backup = value[nfpsw.id3].ToString();
-                    string sharingFolder = value[nfpsw.id4].ToString();
-
-                    var fps_item = new FPS(volume, volumeCapacity, freeSapce, backup, sharingFolder);
-                    _stor.AddFPS(fps_item);
-
-                    bull = true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Невозможно создать элемент FPS: " + ex.Message, "Ошибка");
-                    return;
-                }
-            }
-            if (!bull)
-                MessageBox.Show("Данных FPS не найдено.", "Внимание");
-        }
         public void CreateReport()
         {
             foreach (var contract in _stor.Contract)
@@ -450,17 +55,17 @@ namespace ResourceReport.Data
                         {
                             CPU += Convert.ToDouble(_stor.IaaS[i].CPU);
                             RAM += Convert.ToDouble(_stor.IaaS[i].RAM);
-                            SSD += Convert.ToDouble(_stor.IaaS[i].Disk.Replace(",", "."));
+                            SSD += Convert.ToDouble(_stor.IaaS[i].Disk);
 
                             if (_stor.IaaS[i].BackupTape == "")
                                 BACKUPTAPE_IAAS = 0.0;
                             else
-                                BACKUPTAPE_IAAS += Convert.ToDouble(_stor.IaaS[i].BackupTape.Replace(",", "."));
+                                BACKUPTAPE_IAAS += Convert.ToDouble(_stor.IaaS[i].BackupTape);
 
                             if (_stor.IaaS[i].Backup == "")
                                 BACKUP_IAAS = 0.0;
                             else
-                                BACKUP_IAAS += Convert.ToDouble(_stor.IaaS[i].Backup.Replace(",", "."));
+                                BACKUP_IAAS += Convert.ToDouble(_stor.IaaS[i].Backup);
 
                             NGFW++;
                             if (_stor.IaaS[i].AVZ == "+")
@@ -741,9 +346,7 @@ namespace ResourceReport.Data
         }
 
         //clear store
-        public void ClearStore() { _stor.ClearStore(); }
         public void ClearUploads() { _stor.ClearUploads(); }
-        public void ClearCalculations() { _stor.ClearCalculations(); }
         public void ClearLogs() { _stor.ClearLogs(); }
 
         //upload's reports
@@ -914,7 +517,6 @@ namespace ResourceReport.Data
         }
 
         //collect results  
-        public int CollectCounter() { return _stor.EML.Count + _stor.EMLRecord.Count + _stor.FPS.Count + _stor.IaaS.Count + _stor.VDS.Count + _stor.VDSRecord.Count; }
         public List<LogClass> CollectLogs() { return _stor.Logs; }
         public List<Report> CollectReports() { return _stor.Report; }
         public List<Contract> CollectContracts() { return _stor.Contract; }
@@ -931,14 +533,29 @@ namespace ResourceReport.Data
             {
                 try
                 {
-                    if (mursList[i].ExtensionAttribute7 != "" && (mursList[i].ExtensionAttribute7.ToLower() != "cибинтек софт" || mursList[i].ExtensionAttribute7.ToLower() != "cибинтек-софт") || (mursList[i].ExtensionAttribute7.ToLower() == "cибинтек софт" || mursList[i].ExtensionAttribute7.ToLower() == "cибинтек-софт") && DateTime.Parse(mursList[i].LastLogonTimeDate) >= start && DateTime.Parse(mursList[i].LastLogonTimeDate) <= end)
+                    if (mursList[i].ExtensionAttribute7.ToLower() != "сибинтек софт" && mursList[i].ExtensionAttribute7.ToLower() != "сибинтек-софт" && mursList[i].ExtensionAttribute7 != "")
                     {
-                        var eml_item = new EML(mursList[i].MailBoxType, mursList[i].Company, mursList[i].SAMAccountName, mursList[i].Name, mursList[i].Department, mursList[i].Title, mursList[i].Manager, mursList[i].ManagerMail, mursList[i].Mail, mursList[i].TotalItemsSize, "", "", mursList[i].Database, mursList[i].Created, mursList[i].LastLogonTimeDate, mursList[i].Enabled, mursList[i].DescriptionAppeal, mursList[i].ExtensionAttribute3, "стоимость", mursList[i].Enabled, mursList[i].ExtensionAttribute7, "защита");
+                        var eml_item = new EML(mursList[i].MailBoxType, mursList[i].Company, mursList[i].SAMAccountName, mursList[i].Name, mursList[i].Department, mursList[i].Title, mursList[i].Manager, mursList[i].ManagerMail, mursList[i].Mail, mursList[i].TotalItemsSize, "", "", mursList[i].Database, mursList[i].Created, mursList[i].LastLogonTimeDate, mursList[i].Enabled, mursList[i].DescriptionAppeal, mursList[i].ExtensionAttribute3, "", mursList[i].Enabled, mursList[i].ExtensionAttribute7, "");
                         _stor.AddEML(eml_item);
                     }
-                    else if ((mursList[i].ExtensionAttribute7.ToLower() == "cибинтек софт" || mursList[i].ExtensionAttribute7.ToLower() == "cибинтек-софт") && DateTime.Parse(mursList[i].LastLogonTimeDate) < start)
+                    else if ((mursList[i].ExtensionAttribute7.ToLower() == "сибинтек софт" || mursList[i].ExtensionAttribute7.ToLower() == "сибинтек софт") && mursList[i].LastLogonTimeDate != "" && DateTime.Parse(mursList[i].LastLogonTimeDate) >= start && DateTime.Parse(mursList[i].LastLogonTimeDate) <= end)
                     {
-                        var emlRecord_item = new EMLRecord(mursList[i].MailBoxType, mursList[i].Company, mursList[i].SAMAccountName, mursList[i].Name, mursList[i].Department, mursList[i].Title, mursList[i].Mail, mursList[i].TotalItemsSize, "", "", mursList[i].Database, mursList[i].LastLogonTimeDate, mursList[i].ExtensionAttribute7, "стоимость", "защита");
+                        var eml_item = new EML(mursList[i].MailBoxType, mursList[i].Company, mursList[i].SAMAccountName, mursList[i].Name, mursList[i].Department, mursList[i].Title, mursList[i].Manager, mursList[i].ManagerMail, mursList[i].Mail, mursList[i].TotalItemsSize, "", "", mursList[i].Database, mursList[i].Created, mursList[i].LastLogonTimeDate, mursList[i].Enabled, mursList[i].DescriptionAppeal, mursList[i].ExtensionAttribute3, "", mursList[i].Enabled, mursList[i].ExtensionAttribute7, "");
+                        _stor.AddEML(eml_item);
+                    }
+                    else if ((mursList[i].ExtensionAttribute7.ToLower() == "сибинтек софт" || mursList[i].ExtensionAttribute7.ToLower() == "сибинтек софт") && mursList[i].LastLogonTimeDate == "" && DateTime.Parse(mursList[i].Created) >= start && DateTime.Parse(mursList[i].Created) <= end)
+                    {
+                        var eml_item = new EML(mursList[i].MailBoxType, mursList[i].Company, mursList[i].SAMAccountName, mursList[i].Name, mursList[i].Department, mursList[i].Title, mursList[i].Manager, mursList[i].ManagerMail, mursList[i].Mail, mursList[i].TotalItemsSize, "", "", mursList[i].Database, mursList[i].Created, mursList[i].LastLogonTimeDate, mursList[i].Enabled, mursList[i].DescriptionAppeal, mursList[i].ExtensionAttribute3, "", mursList[i].Enabled, mursList[i].ExtensionAttribute7, "");
+                        _stor.AddEML(eml_item);
+                    }
+                    else if ((mursList[i].ExtensionAttribute7.ToLower() == "сибинтек софт" || mursList[i].ExtensionAttribute7.ToLower() == "сибинтек софт") && mursList[i].LastLogonTimeDate != "" && DateTime.Parse(mursList[i].LastLogonTimeDate) < start)
+                    {
+                        var emlRecord_item = new EMLRecord(mursList[i].MailBoxType, mursList[i].Company, mursList[i].SAMAccountName, mursList[i].Name, mursList[i].Department, mursList[i].Title, mursList[i].Mail, mursList[i].TotalItemsSize, "", "", mursList[i].Database, mursList[i].LastLogonTimeDate, mursList[i].ExtensionAttribute7, "", "");
+                        _stor.AddEMLRecord(emlRecord_item);
+                    }
+                    else if ((mursList[i].ExtensionAttribute7.ToLower() == "сибинтек софт" || mursList[i].ExtensionAttribute7.ToLower() == "сибинтек софт") && mursList[i].LastLogonTimeDate == "" && DateTime.Parse(mursList[i].Created) < start)
+                    {
+                        var emlRecord_item = new EMLRecord(mursList[i].MailBoxType, mursList[i].Company, mursList[i].SAMAccountName, mursList[i].Name, mursList[i].Department, mursList[i].Title, mursList[i].Mail, mursList[i].TotalItemsSize, "", "", mursList[i].Database, mursList[i].LastLogonTimeDate, mursList[i].ExtensionAttribute7, "", "");
                         _stor.AddEMLRecord(emlRecord_item);
                     }
                 }
@@ -966,12 +583,12 @@ namespace ResourceReport.Data
                 {
                     if (rdsList[i].ExtensionAttribute != "" && DateTime.Parse(rdsList[i].LastConnection) >= start &&  DateTime.Parse(rdsList[i].LastConnection) <= end)
                     {
-                        var vds_item = new VDS(rdsList[i].SAMAccountName, rdsList[i].Company, rdsList[i].Tenant, rdsList[i].Department, rdsList[i].Occupation, rdsList[i].ActualProfileSize, "", rdsList[i].LastConnection, "стоимость", rdsList[i].ExtensionAttribute);
+                        var vds_item = new VDS(rdsList[i].SAMAccountName, rdsList[i].Company, rdsList[i].Tenant, rdsList[i].Department, rdsList[i].Occupation, rdsList[i].ActualProfileSize, "", rdsList[i].LastConnection, "", rdsList[i].ExtensionAttribute);
                         _stor.AddVDS(vds_item);
                     }
                     else if (rdsList[i].ExtensionAttribute != "" && rdsList[i].ExtensionAttribute.ToLower() != "дитиавп" && DateTime.Parse(rdsList[i].LastConnection) < start)
                     {
-                        var vdsRecord_item = new VDSRecord(rdsList[i].SAMAccountName, rdsList[i].Company, rdsList[i].Tenant, rdsList[i].Department, rdsList[i].Occupation, rdsList[i].ActualProfileSize, "", rdsList[i].LastConnection, "стоимость");
+                        var vdsRecord_item = new VDSRecord(rdsList[i].SAMAccountName, rdsList[i].Company, rdsList[i].Tenant, rdsList[i].Department, rdsList[i].Occupation, rdsList[i].ActualProfileSize, "", rdsList[i].LastConnection, "");
                         _stor.AddVDSRecord(vdsRecord_item);
                     }
                 }
@@ -983,7 +600,7 @@ namespace ResourceReport.Data
             }
             
             string time = DateTime.Now.ToShortTimeString();
-            var log = new LogClass(time + ": VDS посчитан");
+            var log = new LogClass(time + ": VDS, VDSRecord посчитан");
             _stor.AddLog(log);
         }
         public void BackupVDSCount()

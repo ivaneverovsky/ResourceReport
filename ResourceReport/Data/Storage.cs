@@ -27,20 +27,12 @@ namespace ResourceReport.Data
         {
             _eml.Add(eml);
         }
-        public void RemoveEML(EML eml)
-        {
-            _eml.Remove(eml);
-        }
 
         private List<EMLRecord> _emlrecord = new List<EMLRecord>();
         public List<EMLRecord> EMLRecord { get { return _emlrecord; } }
         public void AddEMLRecord(EMLRecord record)
         {
             _emlrecord.Add(record);
-        }
-        public void RemoveEMLRecord(EMLRecord record)
-        {
-            _emlrecord.Remove(record);
         }
 
         private List<VDS> _vds = new List<VDS>();
@@ -49,20 +41,12 @@ namespace ResourceReport.Data
         {
             _vds.Add(vds);
         }
-        public void RemoveVDS(VDS vds)
-        {
-            _vds.Remove(vds);
-        }
 
         private List<VDSRecord> _vdsrecord = new List<VDSRecord>();
         public List<VDSRecord> VDSRecord { get { return _vdsrecord; } }
         public void AddVDSRecord(VDSRecord record)
         {
             _vdsrecord.Add(record);
-        }
-        public void RemoveVDSRecord(VDSRecord record)
-        {
-            _vdsrecord.Remove(record);
         }
 
         private List<FPS> _fps = new List<FPS>();
@@ -103,7 +87,6 @@ namespace ResourceReport.Data
         public List<Murs> Murs { get { return _murs; } }
         public void AddMURS(Murs murs)
         {
-            //if (murs.Company.ToLower().Contains("айэмти") || murs.Company.ToLower().Contains("экспертек") || murs.Company.ToLower().Contains("сибинтек-софт") || murs.ExtensionAttribute7.ToLower().Contains("усиито") || murs.ExtensionAttribute7.ToLower().Contains("дитиавп"))
             _murs.Add(murs);
         }
         private List<Rds> _rds = new List<Rds>();
@@ -130,12 +113,18 @@ namespace ResourceReport.Data
         {
             _backupsRepo.Add(backupsRepo);
         }
+
+
+
         private List<CDCTapeBackup> _cdcTapeBackup = new List<CDCTapeBackup>();
         public List<CDCTapeBackup> CDCTapeBackup { get { return _cdcTapeBackup; } }
         public void AddCDCTapeBackup(CDCTapeBackup backup)
         {
             _cdcTapeBackup.Add(backup);
         }
+
+
+
         private List<SIBCDCTapeBackup> _sibCDCTapeBackup = new List<SIBCDCTapeBackup>();
         public List<SIBCDCTapeBackup> SIBCDCTapeBackup { get { return _sibCDCTapeBackup; } }
         public void AddSIBCDCTapeBackup(SIBCDCTapeBackup backup)
@@ -154,19 +143,6 @@ namespace ResourceReport.Data
         }
 
         //clear report store
-        public void ClearStore()
-        {
-            _contract.Clear();
-            _iaas.Clear();
-            _eml.Clear();
-            _emlrecord.Clear();
-            _vds.Clear();
-            _vdsrecord.Clear();
-            _fps.Clear();
-            _report.Clear();
-
-            MessageBox.Show("Данные загруженных отчетов успешно удалены.", "Готово");
-        }
         public void ClearUploads()
         {
             _prices.Clear();
@@ -180,10 +156,6 @@ namespace ResourceReport.Data
             _reportIaaS.Clear();
 
             MessageBox.Show("Данные выгрузок успешно удалены.", "Готово");
-        }
-        public void ClearCalculations()
-        {
-            MessageBox.Show("это бесполезно");
         }
         public void ClearLogs()
         {

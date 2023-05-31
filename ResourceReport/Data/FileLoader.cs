@@ -3,9 +3,7 @@ using Microsoft.Win32;
 using ResourceReport.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ResourceReport.Data
@@ -13,149 +11,7 @@ namespace ResourceReport.Data
     internal class FileLoader
     {
         Calculations _calc = new Calculations();
-        public void LoadFile(OpenFileDialog ofd)
-        {
-            string[] files = ofd.FileNames;
-
-            foreach (var item in files)
-            {
-                try
-                {
-                    using (var stream = File.Open(item, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                    {
-                        using (var reader = ExcelReaderFactory.CreateReader(stream))
-                        {
-                            var result = reader.AsDataSet(); //get data from file
-                            string contract = item.ToLower();
-                            for (int i = 0; i < contract.Length; i++)
-                                if (char.IsPunctuation(contract[i]))
-                                    contract = contract.Replace(contract[i].ToString(), "");
-
-                            if (contract.Contains("экспертек"))
-                            {
-                                contract = "Экспертек";
-                                _calc.AddContract(contract);
-                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
-                            }
-                            else if (contract.Contains("дитиавп"))
-                            {
-                                contract = "ДИТиАВП";
-                                _calc.AddContract(contract);
-                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
-                            }
-                            else if (contract.Contains("усиито"))
-                            {
-                                contract = "УСИиТО";
-                                _calc.AddContract(contract);
-                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
-                            }
-                            else if (contract.Contains("сибинтексофт") || contract.Contains("сибинтек софт"))
-                            {
-                                contract = "Сибинтек-софт";
-                                _calc.AddContract(contract);
-                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
-                            }
-                            else
-                            {
-                                MessageBox.Show("Не удалось определить контракт.", "Ошибка");
-                                return;
-                            }
-
-                            for (int i = 0; i < result.Tables.Count; i++)
-                            {
-                                var table = result.Tables[i];
-                                string tablename = table.TableName.ToLower().Replace("ё", "е");
-
-                                for (int j = 0; j < tablename.Length; j++)
-                                    if (char.IsPunctuation(tablename[j]))
-                                        tablename = tablename.Replace(tablename[j].ToString(), "");
-
-                                switch (tablename)
-                                {
-                                    case "iaas":
-                                        List<object> iaas = new List<object>();
-                                        for (int j = 0; j < table.Rows.Count; j++)
-                                        {
-                                            List<object> rows = new List<object>();
-                                            for (int k = 0; k < table.Columns.Count; k++)
-                                                rows.Add(table.Rows[j][k]);
-                                            iaas.Add(rows);
-                                        }
-                                        _calc.CreateIaaS(iaas, contract);
-                                        break;
-                                    case "eml":
-                                        List<object> eml = new List<object>();
-                                        for (int j = 0; j < table.Rows.Count; j++)
-                                        {
-                                            List<object> rows = new List<object>();
-                                            for (int k = 0; k < table.Columns.Count; k++)
-                                                rows.Add(table.Rows[j][k]);
-                                            eml.Add(rows);
-                                        }
-                                        _calc.CreateEML(eml);
-                                        break;
-                                    case "eml архив":
-                                        List<object> eml_rec = new List<object>();
-                                        for (int j = 0; j < table.Rows.Count; j++)
-                                        {
-                                            List<object> rows = new List<object>();
-                                            for (int k = 0; k < table.Columns.Count; k++)
-                                                rows.Add(table.Rows[j][k]);
-                                            eml_rec.Add(rows);
-                                        }
-                                        _calc.CreateEMLRec(eml_rec);
-                                        break;
-                                    case "vds":
-                                        List<object> vds = new List<object>();
-                                        for (int j = 0; j < table.Rows.Count; j++)
-                                        {
-                                            List<object> rows = new List<object>();
-                                            for (int k = 0; k < table.Columns.Count; k++)
-                                                rows.Add(table.Rows[j][k]);
-                                            vds.Add(rows);
-                                        }
-                                        _calc.CreateVDS(vds);
-                                        break;
-                                    case "vds архив":
-                                        List<object> vds_rec = new List<object>();
-                                        for (int j = 0; j < table.Rows.Count; j++)
-                                        {
-                                            List<object> rows = new List<object>();
-                                            for (int k = 0; k < table.Columns.Count; k++)
-                                                rows.Add(table.Rows[j][k]);
-                                            vds_rec.Add(rows);
-                                        }
-                                        _calc.CreateVDSRec(vds_rec);
-                                        break;
-                                    case "fps":
-                                        List<object> fps = new List<object>();
-                                        for (int j = 0; j < table.Rows.Count; j++)
-                                        {
-                                            List<object> rows = new List<object>();
-                                            for (int k = 0; k < table.Columns.Count; k++)
-                                                rows.Add(table.Rows[j][k]);
-                                            fps.Add(rows);
-                                        }
-                                        _calc.CreateFPS(fps);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                    if (_calc.CollectCounter() > 0)
-                        MessageBox.Show("Файл загружен.", "Готово");
-                    else
-                        MessageBox.Show("Данных не найдено, загрузите другой файл.", "Внимание");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Невозможно загрузить файл: " + ex.Message, "Ошибка");
-                    return;
-                }
-            }
-        }
+        public void AddContract(string contract) { _calc.AddContract(contract); }
         public void Upload(OpenFileDialog ofd)
         {
             string[] files = ofd.FileNames;
@@ -296,15 +152,11 @@ namespace ResourceReport.Data
             MessageBox.Show("Загрузка завершена.", "Готово");
         }
 
-        //connection with reality mthfcka
-        public int Check() { return _calc.CollectCounter(); }
         public List<LogClass> Logs() { return _calc.CollectLogs(); }
         public List<Report> CollectReports() { return _calc.CollectReports(); }
         public List<Contract> CollectContracts() { return _calc.CollectContracts(); }
 
-        public void ClearStore() { _calc.ClearStore(); }
         public void ClearUploads() { _calc.ClearUploads(); }
-        public void ClearCalculations() { _calc.ClearCalculations(); }
         public void ClearLogs() { _calc.ClearLogs(); }
         public void Work()
         {
@@ -325,48 +177,6 @@ namespace ResourceReport.Data
             _calc.VDSMoneyCounter();
 
             _calc.CreateReport();
-
-            //Task[] tasks = new Task[6]
-            //{
-            //    new Task(() => _calc.MursCount()),
-            //    new Task(() => _calc.VDSCount()),
-            //    new Task(() => _calc.BackupEMLCount()),
-            //    new Task(() => _calc.BackupVDSCount()),
-            //    new Task(() => _calc.FPSCount()),
-            //    new Task(() => _calc.IaaSCount()),
-            //};
-
-            //foreach (var task in tasks)
-            //    task.Start();
-
-            //Task.WaitAll(tasks);
-
-            //Task[] tasks2 = new Task[4]
-            //{
-            //    new Task(() => _calc.UtilEMLCount()),
-            //    new Task(() => _calc.UtilEMLRecordCount()),
-            //    new Task(() => _calc.UtilVDSCount()),
-            //    new Task(() => _calc.UtilVDSRecordCount())
-            //};
-
-            //foreach (var task in tasks2)
-            //    task.Start();
-
-            //Task.WaitAll(tasks2);
-
-            //Task[] tasks3 = new Task[3]
-            //{
-            //    new Task(() => _calc.IaaSMoneyCounter()),
-            //    new Task(() => _calc.EMLMoneyCounter()),
-            //    new Task(() => _calc.VDSMoneyCounter())
-            //};
-
-            //foreach (var task in tasks3)
-            //    task.Start();
-
-            //Task.WaitAll(tasks3);
-
-            //_calc.CreateReport();
 
             MessageBox.Show("Все вычисления выполнены.", "Готово");
         }
