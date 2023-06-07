@@ -74,8 +74,8 @@
     <Compile Include="Models\KoefBackup.cs" />
     <Compile Include="ModelsUpload\PriceList.cs" />
     <Compile Include="Models\LogClass.cs" />
-    <Compile Include="UI\NewFPSWindow.xaml.cs">
-      <DependentUpon>NewFPSWindow.xaml</DependentUpon>
+    <Compile Include="UI\NewIaaSWindow.xaml.cs">
+      <DependentUpon>NewIaaSWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -99,7 +99,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UI\NewFPSWindow.xaml">
+    <Page Include="UI\NewIaaSWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

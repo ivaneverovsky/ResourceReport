@@ -13,6 +13,23 @@ namespace ResourceReport
     {
         FileLoader _fl = new FileLoader();
         public MainWindow() { InitializeComponent(); }
+        private void LoadFile(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Filter = "Excel files|*.xlsx;*.xlsb;*.xls|All files (*.*)|*.*",
+                Multiselect = true
+            };
+            ofd.ShowDialog();
+
+            if (ofd.FileName == "")
+            {
+                MessageBox.Show("Файл не выбран.", "Внимание");
+                return;
+            }
+
+            _fl.LoadFile(ofd);
+        }
         private void Upload(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
@@ -32,11 +49,6 @@ namespace ResourceReport
         }
         private void Count(object sender, RoutedEventArgs e)
         {
-            List<string> list = new List<string> { "Экспертек", "ДИТиАВП", "УСИиТО", "Сибинтек-софт" };
-
-            for (int i = 0; i < list.Count; i++)
-                _fl.AddContract(list[i]);
-
             _fl.ClearLogs();
             _fl.Work();
 

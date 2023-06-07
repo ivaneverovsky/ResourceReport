@@ -11,7 +11,89 @@ namespace ResourceReport.Data
     internal class FileLoader
     {
         Calculations _calc = new Calculations();
-        public void AddContract(string contract) { _calc.AddContract(contract); }
+        public void LoadFile(OpenFileDialog ofd)
+        {
+            string[] files = ofd.FileNames;
+
+            foreach (var item in files)
+            {
+                try
+                {
+                    using (var stream = File.Open(item, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    {
+                        using (var reader = ExcelReaderFactory.CreateReader(stream))
+                        {
+                            var result = reader.AsDataSet(); //get data from file
+                            string contract = item.ToLower();
+                            for (int i = 0; i < contract.Length; i++)
+                                if (char.IsPunctuation(contract[i]))
+                                    contract = contract.Replace(contract[i].ToString(), "");
+
+                            if (contract.Contains("экспертек"))
+                            {
+                                contract = "Экспертек";
+                                _calc.AddContract(contract);
+                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
+                            }
+                            else if (contract.Contains("дитиавп"))
+                            {
+                                contract = "ДИТиАВП";
+                                _calc.AddContract(contract);
+                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
+                            }
+                            else if (contract.Contains("усиито"))
+                            {
+                                contract = "УСИиТО";
+                                _calc.AddContract(contract);
+                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
+                            }
+                            else if (contract.Contains("сибинтексофт") || contract.Contains("сибинтек софт"))
+                            {
+                                contract = "Сибинтек-софт";
+                                _calc.AddContract(contract);
+                                MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Не удалось определить контракт.", "Ошибка");
+                                return;
+                            }
+
+                            for (int i = 0; i < result.Tables.Count; i++)
+                            {
+                                var table = result.Tables[i];
+                                string tablename = table.TableName.ToLower().Replace("ё", "е");
+
+                                for (int j = 0; j < tablename.Length; j++)
+                                    if (char.IsPunctuation(tablename[j]))
+                                        tablename = tablename.Replace(tablename[j].ToString(), "");
+
+                                switch (tablename)
+                                {
+                                    case "iaas":
+                                        List<object> iaas = new List<object>();
+                                        for (int j = 0; j < table.Rows.Count; j++)
+                                        {
+                                            List<object> rows = new List<object>();
+                                            for (int k = 0; k < table.Columns.Count; k++)
+                                                rows.Add(table.Rows[j][k]);
+                                            iaas.Add(rows);
+                                        }
+                                        _calc.CreateIaaS(iaas, contract);
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    MessageBox.Show("Файл: " + item + " успешно загружен.", "Готово");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Невозможно загрузить файл: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+        }
         public void Upload(OpenFileDialog ofd)
         {
             string[] files = ofd.FileNames;

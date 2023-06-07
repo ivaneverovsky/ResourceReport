@@ -3,8 +3,6 @@ using ResourceReport.ModelsUpload;
 using ResourceReport.UI;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Windows;
 
 namespace ResourceReport.Data
@@ -515,6 +513,80 @@ namespace ResourceReport.Data
                 }
             }
         }
+        public void CreateIaaS(List<object> iaas, string contractName)
+        {
+            List<object> columns = (List<object>)iaas[0];
+            bool bull = false;
+
+            for (int i = 0; i < columns.Count; i++)
+            {
+                if (columns[i].ToString() == "")
+                {
+                    columns.RemoveAt(i);
+                    i--;
+                }
+            }
+            columns.Add("(нет)");
+
+            NewIaaSWindow nisw = new NewIaaSWindow
+            {
+                DataContext = columns,
+                Title = "IaaS"
+            };
+            nisw.ShowDialog();
+
+            if (!nisw.Bull)
+            {
+                MessageBox.Show("Данные на листе IaaS не были обработаны.", "Внимание");
+                return;
+            }
+
+            for (int i = 1; i < iaas.Count - 1; i++)
+            {
+                List<object> value = (List<object>)iaas[i];
+
+                while (value.Count < 23)
+                    value.Add("");
+
+                try
+                {
+                    string virtualizationPlatform = value[nisw.id0].ToString();
+                    string project = value[nisw.id1].ToString();
+                    string vmName = value[nisw.id2].ToString();
+                    string fqdn = value[nisw.id3].ToString();
+                    string ip = value[nisw.id4].ToString();
+                    string disk = value[nisw.id5].ToString();
+                    string cpu = value[nisw.id6].ToString();
+                    string ram = value[nisw.id7].ToString();
+                    string os = value[nisw.id8].ToString();
+                    string backup = value[nisw.id9].ToString();
+                    string backupTape = value[nisw.id10].ToString();
+                    string vmCreation = value[nisw.id11].ToString();
+                    string isName = value[nisw.id12].ToString();
+                    string tenant = value[nisw.id13].ToString();
+                    string owner = value[nisw.id14].ToString();
+                    string price = value[nisw.id15].ToString();
+                    string reqCreate = value[nisw.id16].ToString();
+                    string reqDelete = value[nisw.id17].ToString();
+                    string reqChange = value[nisw.id18].ToString();
+                    string avz = value[nisw.id19].ToString();
+                    string siem = value[nisw.id20].ToString();
+                    string skazi = value[nisw.id21].ToString();
+
+                    var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, "color");
+                    _stor.AddIaaS(iaasItem);
+
+                    bull = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Невозможно создать элемент IaaS: " + ex.Message, "Ошибка");
+                    return;
+                }
+            }
+            if (!bull)
+                MessageBox.Show("Данных IaaS не найдено.", "Внимание");
+        }
 
         //collect results  
         public List<LogClass> CollectLogs() { return _stor.Logs; }
@@ -733,14 +805,15 @@ namespace ResourceReport.Data
                     if (_stor.Backup[i].Volume.Contains(_stor.Volume[j].VolumeMain))
                         _stor.Volume[j].Backup = _stor.Backup[i].UsedCapacity;
 
-            for (int i = 0; i < _stor.FPS.Count; i++)
-                for (int j = 0; j < _stor.Volume.Count; j++)
-                    if (_stor.FPS[i].Volume.Contains(_stor.Volume[j].VolumeMain))
-                    {
-                        _stor.FPS[i].VolumeCapacity = _stor.Volume[j].UsedCapacity;
-                        _stor.FPS[i].FreeSpace = _stor.Volume[j].AvailableCapacity;
-                        _stor.FPS[i].Backup = _stor.Volume[j].Backup;
-                    }
+            double counter = 0.0;
+            for (int i = 0; i < _stor.Volume.Count; i++)
+            {
+                counter += Convert.ToDouble(_stor.Volume[i].UsedCapacity);
+            }
+
+            var fps = new FPS(counter.ToString());
+            _stor.FPS.Add(fps);
+
             string time = DateTime.Now.ToShortTimeString();
             var log = new LogClass(time + ": FPS посчитан");
             _stor.AddLog(log);
@@ -752,19 +825,22 @@ namespace ResourceReport.Data
                 bool bull = false;
                 for (int j = 0; j < _stor.ReportIaaS.Count; j++)
                 {
-                    if (_stor.IaaS[i].FQDN.Contains(_stor.ReportIaaS[j].VMName) || _stor.IaaS[i].FQDN == _stor.ReportIaaS[j].FQDN)
+                    if (_stor.IaaS[i].FQDN.Contains(_stor.ReportIaaS[j].VMName) && _stor.ReportIaaS[j].FQDN != "" || _stor.IaaS[i].FQDN == _stor.ReportIaaS[j].FQDN && _stor.ReportIaaS[j].FQDN != "")
                     {
                         bull = true;
-                        if (_stor.IaaS[i].Disk != _stor.ReportIaaS[j].Disk || _stor.IaaS[i].CPU != _stor.ReportIaaS[j].CPU || _stor.IaaS[i].RAM != _stor.ReportIaaS[j].Ram || _stor.IaaS[i].Backup != _stor.ReportIaaS[j].Backup || _stor.IaaS[i].BackupTape != _stor.ReportIaaS[j].BackupTape)
+
+                        _stor.IaaS[i].Backup = _stor.ReportIaaS[j].Backup;
+                        _stor.IaaS[i].BackupTape = _stor.ReportIaaS[j].BackupTape;
+
+                        if (_stor.IaaS[i].Disk != _stor.ReportIaaS[j].Disk || _stor.IaaS[i].CPU != _stor.ReportIaaS[j].CPU || _stor.IaaS[i].RAM != _stor.ReportIaaS[j].Ram)
                         {
                             _stor.IaaS[i].Disk = _stor.ReportIaaS[j].Disk;
                             _stor.IaaS[i].CPU = _stor.ReportIaaS[j].CPU;
                             _stor.IaaS[i].RAM = _stor.ReportIaaS[j].Ram;
-                            _stor.IaaS[i].Backup = _stor.ReportIaaS[j].Backup;
-                            _stor.IaaS[i].BackupTape = _stor.ReportIaaS[j].BackupTape;
+                            
                             _stor.IaaS[i].Color = "Blue";
                             _stor.IaaS[i].ReqChange = _stor.IaaS[i].ReqChange + " + NEW REQUEST NUMBER";
-                            _stor.IaaS[i].Price = "0";
+                            _stor.IaaS[i].Price = "";
 
                             _stor.RemoveReportIaaS(_stor.ReportIaaS[j]);
                             if (j != 0)
@@ -788,43 +864,47 @@ namespace ResourceReport.Data
             {
                 for (int j = 0; j < _stor.ReportIaaS.Count; j++)
                 {
-                    string contractName = _stor.ReportIaaS[j].ContractName;
-                    string virtualizationPlatform = _stor.ReportIaaS[j].VirtualizationPlatform;
-                    string project = _stor.ReportIaaS[j].Project;
-                    string vmName = _stor.ReportIaaS[j].VMName;
-                    string fqdn = _stor.ReportIaaS[j].FQDN;
-                    string ip = _stor.ReportIaaS[j].IP;
-                    string disk = _stor.ReportIaaS[j].Disk;
-                    string cpu = _stor.ReportIaaS[j].CPU;
-                    string ram = _stor.ReportIaaS[j].Ram;
-                    string os = _stor.ReportIaaS[j].OS;
-                    string backup = _stor.ReportIaaS[j].Backup;
-                    string backupTape = _stor.ReportIaaS[j].BackupTape;
-                    string vmCreation = _stor.ReportIaaS[j].CreationDate;
-                    string isName = _stor.ReportIaaS[j].SystemName;
-                    string tenant = _stor.ReportIaaS[j].ResponsibleName;
-                    string owner = _stor.ReportIaaS[j].Owner;
-                    string price = "0";
-                    string reqCreate = _stor.ReportIaaS[j].RequestCreate;
-                    string reqDelete = _stor.ReportIaaS[j].RequestDelete;
-                    string reqChange = _stor.ReportIaaS[j].RequestChange;
-                    string avz = _stor.ReportIaaS[j].AVZ;
-                    string siem = _stor.ReportIaaS[j].SIEM;
-                    string skazi = "";
-                    string color = "Yellow";
+                    if (_stor.ReportIaaS[j].FQDN != "")
+                    {
+                        string contractName = _stor.ReportIaaS[j].ContractName;
+                        string virtualizationPlatform = _stor.ReportIaaS[j].VirtualizationPlatform;
+                        string project = _stor.ReportIaaS[j].Project;
+                        string vmName = _stor.ReportIaaS[j].VMName;
+                        string fqdn = _stor.ReportIaaS[j].FQDN;
+                        string ip = _stor.ReportIaaS[j].IP;
+                        string disk = _stor.ReportIaaS[j].Disk;
+                        string cpu = _stor.ReportIaaS[j].CPU;
+                        string ram = _stor.ReportIaaS[j].Ram;
+                        string os = _stor.ReportIaaS[j].OS;
+                        string backup = _stor.ReportIaaS[j].Backup;
+                        string backupTape = _stor.ReportIaaS[j].BackupTape;
+                        string vmCreation = _stor.ReportIaaS[j].CreationDate;
+                        string isName = _stor.ReportIaaS[j].SystemName;
+                        string tenant = _stor.ReportIaaS[j].ResponsibleName;
+                        string owner = _stor.ReportIaaS[j].Owner;
+                        string price = "";
+                        string reqCreate = _stor.ReportIaaS[j].RequestCreate;
+                        string reqDelete = _stor.ReportIaaS[j].RequestDelete;
+                        string reqChange = _stor.ReportIaaS[j].RequestChange;
+                        string avz = _stor.ReportIaaS[j].AVZ;
+                        string siem = _stor.ReportIaaS[j].SIEM;
+                        string skazi = "";
+                        string color = "Yellow";
 
-                    try
-                    {
-                        var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, color);
-                        _stor.AddIaaS(iaasItem);
+                        try
+                        {
+                            var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, color);
+                            _stor.AddIaaS(iaasItem);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "IaaS j: " + j, "Ошибка IaaSCount (Create)");
+                            continue;
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message + "IaaS j: " + j, "Ошибка IaaSCount (Create)");
+                    else
                         continue;
-                    }
                 }
-
             }
             string time = DateTime.Now.ToShortTimeString();
             var log = new LogClass(time + ": IaaS посчитан");
