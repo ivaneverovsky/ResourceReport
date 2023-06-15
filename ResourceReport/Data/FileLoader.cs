@@ -15,9 +15,9 @@ namespace ResourceReport.Data
         {
             string[] files = ofd.FileNames;
 
-            foreach (var item in files)
+            try
             {
-                try
+                foreach (var item in files)
                 {
                     using (var stream = File.Open(item, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
@@ -49,7 +49,7 @@ namespace ResourceReport.Data
                             }
                             else if (contract.Contains("сибинтексофт") || contract.Contains("сибинтек софт"))
                             {
-                                contract = "Сибинтек-софт";
+                                contract = "Сибинтек софт";
                                 _calc.AddContract(contract);
                                 MessageBox.Show("Загружаемый контракт: " + contract, "Внимание");
                             }
@@ -85,13 +85,12 @@ namespace ResourceReport.Data
                             }
                         }
                     }
-                    MessageBox.Show("Файл: " + item + " успешно загружен.", "Готово");
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Невозможно загрузить файл: " + ex.Message, "Ошибка");
-                    return;
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Невозможно загрузить файл: " + ex.Message, "Ошибка");
+                return;
             }
         }
         public void Upload(OpenFileDialog ofd)

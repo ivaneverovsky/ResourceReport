@@ -3,6 +3,7 @@ using ResourceReport.ModelsUpload;
 using ResourceReport.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 
 namespace ResourceReport.Data
@@ -573,7 +574,7 @@ namespace ResourceReport.Data
                     string siem = value[nisw.id20].ToString();
                     string skazi = value[nisw.id21].ToString();
 
-                    var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, "color");
+                    var iaasItem = new IaaS(contractName, virtualizationPlatform, project, vmName, fqdn, ip, disk, cpu, ram, os, backup, backupTape, vmCreation, isName, tenant, owner, price, reqCreate, reqDelete, reqChange, avz, siem, skazi, "");
                     _stor.AddIaaS(iaasItem);
 
                     bull = true;
@@ -807,9 +808,7 @@ namespace ResourceReport.Data
 
             double counter = 0.0;
             for (int i = 0; i < _stor.Volume.Count; i++)
-            {
                 counter += Convert.ToDouble(_stor.Volume[i].UsedCapacity);
-            }
 
             var fps = new FPS(counter.ToString());
             _stor.FPS.Add(fps);
@@ -837,10 +836,8 @@ namespace ResourceReport.Data
                             _stor.IaaS[i].Disk = _stor.ReportIaaS[j].Disk;
                             _stor.IaaS[i].CPU = _stor.ReportIaaS[j].CPU;
                             _stor.IaaS[i].RAM = _stor.ReportIaaS[j].Ram;
-                            
                             _stor.IaaS[i].Color = "Blue";
                             _stor.IaaS[i].ReqChange = _stor.IaaS[i].ReqChange + " + NEW REQUEST NUMBER";
-                            _stor.IaaS[i].Price = "";
 
                             _stor.RemoveReportIaaS(_stor.ReportIaaS[j]);
                             if (j != 0)
