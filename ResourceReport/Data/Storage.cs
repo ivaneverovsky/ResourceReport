@@ -113,7 +113,12 @@ namespace ResourceReport.Data
         {
             _backupsRepo.Add(backupsRepo);
         }
-
+        private List<Siem> _siem = new List<Siem>();
+        public List<Siem> Siem { get { return _siem; } }
+        public void AddSiem(Siem siem)
+        {
+            _siem.Add(siem);
+        }
 
 
         private List<CDCTapeBackup> _cdcTapeBackup = new List<CDCTapeBackup>();

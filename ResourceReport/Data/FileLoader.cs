@@ -1,4 +1,6 @@
-﻿using ExcelDataReader;
+﻿using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
+using ExcelDataReader;
 using Microsoft.Win32;
 using ResourceReport.Models;
 using System;
@@ -206,9 +208,46 @@ namespace ResourceReport.Data
                                     }
                                     _calc.CreatePriceList(data);
                                 }
+                                else if (item.ToLower().Contains("сцсас"))
+                                {
+                                    var table = result.Tables[0];
+                                    List<object> data = new List<object>();
+
+                                    for (int i = 0; i < table.Rows.Count; i++)
+                                    {
+                                        List<object> rows = new List<object>();
+                                        for (int j = 0; j < table.Columns.Count; j++)
+                                            rows.Add(table.Rows[i][j]);
+                                        data.Add(rows);
+                                    }
+                                    _calc.CreateSiem(data);
+                                }
                                 else
                                     MessageBox.Show("Не удалось определить имя файла. \nФайл будет пропущен: " + item, "Внимание");
                             }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Невозможно загрузить файл: " + item + "\nОшибка: " + ex.Message, "Ошибка");
+                        continue;
+                    }
+                }
+                else if (Path.GetExtension(item) == ".docx")
+                {
+                    try
+                    {
+                        using (WordprocessingDocument wpd = WordprocessingDocument.Open(item, false))
+                        {
+                            if (item.ToLower().Contains("отчет об объемах оказания услуг диб"))
+                            {
+                                Body body = wpd.MainDocumentPart.Document.Body;
+                                var result = body.InnerText.ToString();
+
+
+                            }
+                            else
+                                throw new Exception();
                         }
                     }
                     catch (Exception ex)
