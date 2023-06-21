@@ -81,6 +81,9 @@
     <Compile Include="UI\NewIaaSWindow.xaml.cs">
       <DependentUpon>NewIaaSWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\NewSecWindow.xaml.cs">
+      <DependentUpon>NewSecWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,6 +107,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UI\NewIaaSWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\NewSecWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

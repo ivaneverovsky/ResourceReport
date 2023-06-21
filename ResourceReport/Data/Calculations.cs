@@ -919,6 +919,14 @@ namespace ResourceReport.Data
             var log = new LogClass(time + ": IaaS посчитан");
             _stor.AddLog(log);
         }
+        public void SecCount()
+        {
+            NewSecWindow nsw = new NewSecWindow
+            {
+                Title = "Security"
+            };
+            nsw.ShowDialog();
+        }
         public void UtilEMLCount()
         {
             for (int i = 0; i < _stor.EML.Count; i++)

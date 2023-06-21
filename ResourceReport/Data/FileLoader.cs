@@ -233,29 +233,6 @@ namespace ResourceReport.Data
                         continue;
                     }
                 }
-                else if (Path.GetExtension(item) == ".docx")
-                {
-                    try
-                    {
-                        using (WordprocessingDocument wpd = WordprocessingDocument.Open(item, false))
-                        {
-                            if (item.ToLower().Contains("отчет об объемах оказания услуг диб"))
-                            {
-                                Body body = wpd.MainDocumentPart.Document.Body;
-                                var result = body.InnerText.ToString();
-
-
-                            }
-                            else
-                                throw new Exception();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Невозможно загрузить файл: " + item + "\nОшибка: " + ex.Message, "Ошибка");
-                        continue;
-                    }
-                }
                 else
                 {
                     try
@@ -286,6 +263,7 @@ namespace ResourceReport.Data
             _calc.BackupEMLCount();
             _calc.FPSCount();
             _calc.IaaSCount();
+            _calc.SecCount();
 
             _calc.UtilEMLCount();
             _calc.UtilEMLRecordCount();
